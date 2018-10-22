@@ -1,0 +1,118 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 9, 2018, 9:00:34 AM
+    Author     : luisr
+*/
+@font-face{
+    font-family:                    Bebas Neue;
+    src:                            url('../BebasNeue Book.ttf');
+    font-style:                     normal;
+    font-weight:                    normal;
+}
+
+@font-face{
+    font-family:                    questrial;
+    src:                            url('../Questrial-Regular.ttf');
+    font-style:                     normal;
+    font-weight:                    normal;
+}
+
+body, html{
+    width:                          100%;
+    height:                         100%;
+    margin:                         0;
+    overflow:                       hidden;
+    font-family:                    Impact;
+    color:                          white;
+}
+#contenedor{
+    width:                          100%;
+    height:                         100%;
+    /*background:                     url('../Images/Login1.jpg') no-repeat center center fixed; 
+    -webkit-background-size:        cover;
+    -moz-background-size:           cover;
+    -o-background-size:             cover;
+    background-size:                cover;*/
+}
+#login{
+    position:                       absolute;
+    width:                          20%;
+    height:                         100%;
+    background-color:               rgba(20, 20, 20 , 0.7);
+    float:                          left;
+    margin-left:                    15%;
+    z-index:                        1000;
+    transition:                     all 0.2s ease;
+}
+#login:hover{
+    background-color:               rgba(20, 20, 20 , 0.95);
+}
+#forgot{
+    position:                       absolute;
+    width:                          20%;
+    height:                         100%;
+    background-color:               rgba(20, 20, 20 , 0.9);
+    float:                          left;
+    margin-left:                    35%;
+    z-index:                        1000;
+    display:                        none;
+}
+#logo{
+    width:                          65%;
+    margin-left:                    17.5%;
+    margin-bottom:                  20%;
+    margin-top:                     50px;
+}
+#formulario{
+    margin-top:                     5%;
+}
+.info{
+    font-size:                      185%;
+    width:                          80%;
+    height:                         20%;
+    float:                          left;
+    margin-bottom:                  10px;
+    margin-left:                    10%;
+}
+.input{
+    width:                          80%;
+    height:                         4%;
+    float:                          left;
+    margin-bottom:                  9%;
+    margin-left:                    10%;
+}
+input {
+    font-size:                      120%;
+    font-family:                    'questrial';
+    width:                          100%;
+    height:                         30px;
+    transition:                     all 0.4s ease;
+}
+input:hover{
+    border-color:                   rgb(15, 208, 249);
+}
+input[type=submit]{
+    margin-top:                     30px;
+    width:                          65%;
+    margin-left:                    17.5%;
+    background-color:               rgb(96, 176, 244);
+    border:                         none;
+    color:                          white;
+    cursor:                         pointer;
+    transition:                     all 0.2 ease;
+}
+input[type=submit]:hover{
+    background-color:               rgb(36, 116, 180);
+}
+#recuperar{
+    margin-left:                    10%;
+    cursor:                         pointer;
+}
+#enviarRecuperar{
+    height:                         30%;
+    margin-top:                     90%;
+}
