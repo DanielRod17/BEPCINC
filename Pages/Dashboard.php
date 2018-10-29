@@ -31,11 +31,17 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     <div id="informacion">
                         <div id="opciones">
                             <div class="opcion" onclick="LoadPage('Timecards.php')">Dashboard</div>
-                            <div class="opcion" onclick="LoadPage('Timecards.php')">Timecards</div>
+                            <div class="opcion">
+                                Timecards
+                                <div class="dropdown-content">
+                                    <div class='links' onclick="LoadPage('Timecards.php');" >Timecards</div>
+                                    <div class='links' onclick="LoadPage('AddTimecard.php');" >New Timecard</div>
+                                </div>
+                            </div>
                             <?php
                                 if($_SESSION['consultor']['Type'] == '0'){
                                     ?>
-                                    <div class='opcion' onclick="LoadPage('AddUser.php');" >
+                                    <div class='opcion'>
                                         Users
                                         <div class="dropdown-content">
                                             <div class='links' onclick="LoadPage('AddUser.php');" >Add User</div>

@@ -9,6 +9,7 @@ session_start();
 //echo $_SESSION['dataBase']. " ". $_SESSION['loggedin']. " ". $_SESSION['userID']. " ". $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
+$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
 ?>
     <html>
@@ -64,26 +65,24 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <th>Total Hours</th>
                             </tr>
                         </thead>
-                        <tr>
-                            <td>TPASGAS-54651</td>
-                            <td>Herr Señor</td>
-                            <td>Compra de Materiales</td>
-                            <td>29-10-2017</td>
-                            <td>29-10-2018</td>
-                            <td>Approved</td>
-                            <td>365</td>
-                            <td>340</td>
-                        </tr>
-                        <tr>
-                            <td>TPGAS-54651</td>
-                            <td>Herr Señores</td>
-                            <td>Venta de Materiales</td>
-                            <td>30-10-2018</td>
-                            <td>02-11-2018</td>
-                            <td>Approved</td>
-                            <td>3</td>
-                            <td>27</td>
-                        </tr>
+                        <?php
+                            $query =            $connection->query("SELECT * FROM timecards WHERE ConsultorID='".$_SESSION['consultor']['ID']."'");
+                            while($row = $query->fetch_array()){
+                                $id =           $row['ID'];
+                                echo"
+                                   <tr>
+                                       <td>".$row['Name']."</td>
+                                       <td>Herr Señores</td>
+                                       <td>Venta de Materiales</td>
+                                       <td>30-10-2018</td>
+                                       <td>02-11-2018</td>
+                                       <td>Approved</td>
+                                       <td>3</td>
+                                       <td>27</td>
+                                   </tr>
+                               ";   
+                            }
+                        ?>
                     </table>
                 </div>
                 <div id="bottom">

@@ -15,6 +15,7 @@ if(isset($_POST['newAssignment'])){
     $po =               $arreglo[2];
     $br =               $arreglo[3];
     $pr =               $arreglo[4];
+    $em =               $arreglo[5];
     $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ?");
     $querty ->          bind_param("s", $name);
     $querty ->          execute();
@@ -30,29 +31,40 @@ if(isset($_POST['newAssignment'])){
             $queryPo ->        execute();
             $queryPo ->        store_result();
             if($queryPo -> num_rows > 0){
-                $queryID =          $connection->query("SELECT ID FROM assignment ORDER BY ID DESC Limit 1");
-                $queryID =          $queryID->fetch_object();
-                if($queryID === null){
-                    $ID =               1;
+                $queryUs =         $connection->prepare("SELECT ID FROM consultors WHERE SN = ?");
+                $queryUs ->        bind_param("s", $em);
+                $queryUs ->        execute();
+                $queryUs ->        store_result();
+                if($queryUs -> num_rows > 0){
+                    $queryID =          $connection->query("SELECT ID FROM assignment ORDER BY ID DESC Limit 1");
+                    $queryID =          $queryID->fetch_object();
+                    if($queryID === null){
+                        $ID =               1;
+                    }else{
+                        $ID =               $queryID->ID;
+                        $ID =               $ID+1;
+                    }
+                    $queryPro ->        bind_result($Pro);
+                    $queryPro ->        fetch();
+                    $queryPo ->         bind_result($PuO);
+                    $queryPo ->         fetch();
+                    $insertar =         $connection->prepare("INSERT INTO assignment (ID, Name, BR, PR, ProjectID, PO) VALUES (?, ?, ?, ?, ?, ?)");
+                    $insertar ->        bind_param('isddii', $I, $N, $B, $P,$PI, $PO);
+                    $I =                $ID;
+                    $N =                $name;
+                    $B =                $br;
+                    $P =                $pr;
+                    $PI =               $Pro;
+                    $PO =               $PuO;
+                    $insertar ->        execute();
+                    $insertar ->        close();
+                    
+                    $queryUp =          $connection->query("UPDATE consultors SET Assignment = '$ID' WHERE SN='$em'");
+                    
+                    echo "Assignment Added";
                 }else{
-                    $ID =               $queryID->ID;
-                    $ID =               $ID+1;
+                    echo "Select a Valid Username";
                 }
-                $queryPro ->        bind_result($Pro);
-                $queryPro ->        fetch();
-                $queryPo ->         bind_result($PuO);
-                $queryPo ->         fetch();
-                $insertar =         $connection->prepare("INSERT INTO assignment (ID, Name, BR, PR, ProjectID, PO) VALUES (?, ?, ?, ?, ?, ?)");
-                $insertar ->        bind_param('isddii', $I, $N, $B, $P,$PI, $PO);
-                $I =                $ID;
-                $N =                $name;
-                $B =                $br;
-                $P =                $pr;
-                $PI =               $Pro;
-                $PO =               $PuO;
-                $insertar ->        execute();
-                $insertar ->        close();
-                echo "Assignment Added";
             }else{
                 echo "Select a Valid PO";
             }

@@ -63,6 +63,14 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         </div>
                     </div>
                     <div class="Linea">
+                        <div class="plaecHolder">
+                            Employee
+                        </div>
+                        <div class="entrada">
+                            <input type='text' class='unico' id='Employee' required style="width: 50%;">
+                        </div>
+                    </div>
+                    <div class="Linea">
                         <div class="plaecHolder2">
                             BR
                         </div>

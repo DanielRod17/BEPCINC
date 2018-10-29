@@ -6,7 +6,12 @@
 
 $(document).ready(function()
 {
-
+    
+    $( "#Employee" ).autocomplete({
+        source: "../Resources/WebResponses/AutocompleteConsultor.php",
+        minLength: 0
+    });
+    
     $( "#Project" ).autocomplete({
         source: "../Resources/WebResponses/AutocompleteProject.php",
         minLength: 0
@@ -33,7 +38,8 @@ function RevisarInfo(){
     var po =            document.getElementById('PO').value;
     var br =            document.getElementById('BR').value;
     var pr =            document.getElementById('PR').value;
-    var info = new Array(name, project, po, br, pr);
+    var em =            document.getElementById('Employee').value;
+    var info = new Array(name, project, po, br, pr, em);
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post', 
         url:                    '../Resources/WebResponses/AssignmentAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
