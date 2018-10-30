@@ -36,7 +36,8 @@ if(isset($_POST['checkNames'])){
 }
 
 if(isset($_POST['insertar'])){
-    $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fecha']."' AND ConsultorID='".$_SESSION['consultor']['ID']."' ");
+    if(isset($_SESSION['fecha'])){
+        $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fecha']."' AND ConsultorID='".$_SESSION['consultor']['ID']."' ");
         if(isset($_SESSION['fecha']) && $_SESSION['fecha'] !== "" && $queryComa -> num_rows == 0){
             $lineas =            $_POST['lineas'];
             if($_POST['delete'] == '1'){
@@ -83,7 +84,7 @@ if(isset($_POST['insertar'])){
                     $Sa =               $linea[6];
                     $Su =               $linea[7];
                     $SD =               $_SESSION['fecha'];
-                    $CD =               date("Y-m-d H:i:s",time()-60*60*4);
+                    $CD =               date("d-m-Y H:i:s",time()-60*60*4);
                     $insertar ->        execute();
                     $insertar ->        close();
                 }
@@ -105,6 +106,9 @@ if(isset($_POST['insertar'])){
                 echo "Select a Date";
             }
         }
+    }else{
+         echo "Select a Date";
+    }
 }
 
 if(isset($_POST['fecha'])){
@@ -123,7 +127,17 @@ if(isset($_POST['finishTimecard'])){
                 $ID =           $ID->ID;
                 $ID =           $ID+1;
             }
-            $queryInsert =      $connection->query("INSERT INTO timecards (ID, Name, ConsultorID, StartingDay, CreatedDate) VALUES ('$ID', 'Test$ID', '".$_SESSION['consultor']['ID']."','".$_SESSION['fecha']."', '".date("Y-m-d H:i:s",time()-60*60*4)."')");
+            
+            $querty =           $connection->query("SELECT Dailycount FROM timecards WHERE DATE(CreatedDate) = DATE(NOW()) ORDER BY ID DESC LIMIT 1 ");
+            if($querty -> num_rows == 0){
+                $Daily =            1;
+            }else{
+                $Daily =            $querty->fetch_object();
+                $Daily =            $Daily->Dailycount;
+                $Daily =            $Daily+1;
+            }
+            $Name =             "TCH-".date("Y-m-d",time()-60*60*4)."-$Daily";
+            $queryInsert =      $connection->query("INSERT INTO timecards (ID, Name, ConsultorID, StartingDay, CreatedDate, Dailycount) VALUES ('$ID', '$Name', '".$_SESSION['consultor']['ID']."','".$_SESSION['fecha']."', '".date("Y-m-d H:i:s",time()-60*60*4)."', '$Daily')");
             echo "Timecard Submitted!";
             $queryDel =         $connection->query("UPDATE lineas SET TimecardID='$ID' WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
 

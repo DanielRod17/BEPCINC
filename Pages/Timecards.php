@@ -69,17 +69,50 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             $query =            $connection->query("SELECT * FROM timecards WHERE ConsultorID='".$_SESSION['consultor']['ID']."'");
                             while($row = $query->fetch_array()){
                                 $id =           $row['ID'];
+                                $start =        substr($row['StartingDay'], 0, 10);
+                                //$end =          strtotime(str_replace("/","-", $start));
+                                $end =          new DateTime($start);
+                                $end ->         add(new DateInterval('P6D'));
+                                $date =         $end ->format('Y-m-d');
+                                $queryDatos =   $connection->query("SELECT t.*, sponsor.Name as a, assignment.Name as b
+                                                                    FROM timecards t 
+                                                                    INNER JOIN sponsor ON (sponsor.ID = '".$_SESSION['consultor']['ID']."') 
+                                                                    INNER JOIN assignment ON (assignment.ID = '".$_SESSION['consultor']['ID']."')");
+                                $queryDatosR =  $queryDatos->fetch_object();
+                                $Sponcor =      $queryDatosR->a;
+                                $Acign =        $queryDatosR->b;
+                                $timeID =       $queryDatosR->ID;
+                                $queryNo =      $connection->query("SELECT Name FROM Assignment WHERE ID = (SELECT AssignmentID FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='$id' ORDER BY ID ASC Limit 1)");
+                                $queryNoR =     $queryNo->fetch_object();
+                                $nombrecito =   $queryNoR->Name;
+                                $hours =        0;
+                                $days =         0;
+                                
+                                $queryLineas =  $connection->query("SELECT AssignmentID, SUM(Mon), SUM(Tue), SUM(Wed), SUM(Thu), SUM(Fri), SUM(Sat), SUM(Sun) FROM `lineas` WHERE TimecardID='$id' GROUP BY AssignmentID");
+                                while($fila = $queryLineas->fetch_array()){
+                                    //if(intval($fila['AssignmentID']) >= 5 ){ ESTE
+                                    if(intval($fila['AssignmentID']) < 5 ){ 
+                                        for($j = 1 ; $j < 8; $j++){
+                                            $hours += $fila[$j];
+                                            if(intval($fila[$j]) !== 0){
+                                                $days++;
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                
                                 echo"
-                                   <tr>
-                                       <td>".$row['Name']."</td>
-                                       <td>Herr Señores</td>
-                                       <td>Venta de Materiales</td>
-                                       <td>30-10-2018</td>
-                                       <td>02-11-2018</td>
-                                       <td>Approved</td>
-                                       <td>3</td>
-                                       <td>27</td>
-                                   </tr>
+                                    <tr>
+                                        <td>".$row['Name']."</td>
+                                        <td>$Sponcor</td>
+                                        <td>$nombrecito</td>
+                                        <td>$start</td>
+                                        <td>$date</td>
+                                        <td>Approved</td>
+                                        <td>$days</td>
+                                        <td>$hours</td>
+                                    </tr>
                                ";   
                             }
                         ?>

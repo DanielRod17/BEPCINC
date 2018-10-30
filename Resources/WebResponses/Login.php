@@ -17,17 +17,14 @@ if(isset($_POST['usuario'])){
     $stmt ->                execute();
     $stmt ->                store_result();
     if ($stmt -> num_rows != 0){
-        $stmt ->                bind_result($ID, $SN, $FirstName, $LastName, $Email, $Phone, $Roster, $Sponsor, $Assignment, $State, $Type, $Schedule, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat, $Hash, $Status, $Login, $Logged, $SessionID, $Hours);
+        $stmt ->                bind_result($ID, $SN, $FirstName, $LastName, $Email, $Phone, $Roster, $Sponsor, $Assignment, $State, $Type, $Schedule, $MexID, $PayrollID, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat, $Hash, $Status, $Login, $Logged, $SessionID, $Hours);
         $stmt ->                fetch();
         $query =                $connection->query("UPDATE consultors SET LastLogin=NOW(), Logged='1', SessionID='$sID' WHERE ID='$ID'");
         $_SESSION['consultor'] = array("ID" => $ID, "SN" => $SN, "FirstName" => $FirstName, "Email" => $Email, "Phone" => $Phone, "Roster" => $Roster, "Sponsor" => $Sponsor, "Assignment" => $Assignment,
             "State" => $State, "Type" => $Type, "Schedule" => $Schedule, "Sun" => $Sun, "Mon" => $Mon, "Tue" => $Tue, "Wed" => $Wed, "Thu" => $Thu,
             "Fri" => $Fri, "Sat" => $Sat ,"Status" => $Status, "Login" => $Login, "Logged" => $Logged, 
-            "SessionID" => $SessionID, "Hours" => $Hours);
+            "SessionID" => $SessionID, "Hours" => $Hours, "MexID" => $MexID, "PayrollID" => $PayrollID);
         echo "success";
-        //$arr =                  array('A' => $a, 'B' => $b);
-        //array_push($return,$arr);
-        //echo json_encode($return);
     }
     else{
         echo    "Wrong Credentials";
