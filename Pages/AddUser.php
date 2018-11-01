@@ -10,7 +10,7 @@ if(!isset($_SESSION))
     session_start();
 }
 
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('../Resources/WebResponses/connection.php');
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true && $_SESSION['consultor']['Type'] == '0'){
@@ -24,6 +24,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
             <meta charset="UTF-8">
+            <script src="../Resources/Javascript/AddUser/AddUserJS.js"></script>
             <title>
 
             </title>

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 $Name =                 $_GET['term'];
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('connection.php');
 $sql =                  $connection->query("SELECT ID, NoPO FROM po WHERE NoPO LIKE '%$Name%'");  
 $output = array();
 

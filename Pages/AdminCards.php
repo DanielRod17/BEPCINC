@@ -11,7 +11,7 @@ $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 include('../Resources/WebResponses/connection.php');
 unset($_SESSION['fecha']);
-if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
+if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true && $_SESSION['consultor']['Type'] == '0'){
     $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
 ?>
     <html>
@@ -31,7 +31,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
             
             
-            <script src="../Resources/Javascript/Timecards/TimecardsJS.js"></script>
+            <script src="../Resources/Javascript/Timecards/AdminCardsJS.js"></script>
             <link rel="stylesheet" href="../Resources/CSS/Timecards/Timecards_Layout.css">
             <script>
                 $( function() {
@@ -51,7 +51,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         </head>
         <body>
             <div id='modal'>
-                <div id='modalContent'>
+                <div id='modalContent' class="modalesCon">
                     <div class='banner'>My Assignments</div>
                     <div class='projectos'>
                         <?php
@@ -80,6 +80,21 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             }  
                         ?>
                     </div>
+                    </div>
+                    <div id='modalContent2' class="modalesCon">
+                        <div class='banner'>Empleados</div>
+                        <div class='projectos'>
+                            <?php
+                                if($_SESSION['consultor']['Type'] == '0'){
+                                    $query =            $connection->query("SELECT SN FROM consultors WHERE Type!='0'");
+                                    if($query -> num_rows > 0){
+                                        while($row = $query -> fetch_array()){
+                                            echo "<div class='projItem' onclick=\"AssignName(this);\" >".$row['SN']."</div>";
+                                        }
+                                    }
+                                }  
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,6 +129,13 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         <button onclick="weekChange('0');"><<</button><input type="text" id="datepicker" onchange="actualizarTabla(this);" autocomplete="off"><button onclick="weekChange('1');">>></button>
                         <input type='submit' form='timeForms' value='Save'>
                         <button onclick="Approve();" disabled id="approve">Submit</button>
+                        <?php
+                            if($_SESSION['consultor']['Type'] == '0'){
+                                ?>
+                                    Source <input type="text" disabled id="sourceEm" onclick="DisplayEmployees()" autocomplete="off">
+                                <?php
+                            }
+                        ?>
                     </div>
                     <table id="timeTable">
                         <thead>

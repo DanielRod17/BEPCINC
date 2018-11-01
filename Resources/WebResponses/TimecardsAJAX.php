@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 session_start();
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('connection.php');
 
 if(isset($_POST['checkNames'])){
     if(isset($_POST['names']) && sizeof($_POST['names']) > 0){

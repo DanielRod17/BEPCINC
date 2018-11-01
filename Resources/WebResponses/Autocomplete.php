@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 $SN =                   $_GET['term'];
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('connection.php');
 $sql =                  $connection->query("SELECT ID, SN FROM consultors WHERE SN LIKE '%$SN%'");  
 $output = array();
 

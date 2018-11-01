@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 $Name =                 $_GET['term'];
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('connection.php');
 $sql =                  $connection->query("SELECT ID, Name FROM project WHERE Name LIKE '%$Name%'");  
 $output = array();
 

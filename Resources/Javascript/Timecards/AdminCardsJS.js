@@ -60,23 +60,32 @@ function nuevoTimecard(){
 }
 
 function actualizarTabla(e){
-    var res =               e.value.split("/");
-    var fecha =             res[2] + "-"+ res[0] + "-" + res[1];
-    res[0]--;
-    $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
-        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-        data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-        success: function() {
-            var fechaInicial =      new Date(res[2], res[0], res[1]);
-            var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
-            //alert(fechaInicial.toDateString());
-            for (var i = 0; i < 7 ; i++){
-                var d2 = addDays(fechaInicial, i, '0');
-                document.getElementById(days[i]).innerHTML = d2.toDateString().substring(0,10);
+    if(e.value !== ""){
+        document.getElementById('sourceEm').disabled = false;
+        var res =               e.value.split("/");
+        var fecha =             res[2] + "-"+ res[0] + "-" + res[1];
+        res[0]--;
+        $.ajax({ //PERFORM AN AJAX CALL
+            type:                   'post', 
+            url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+            data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+            success: function() {
+                var fechaInicial =      new Date(res[2], res[0], res[1]);
+                var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
+                //alert(fechaInicial.toDateString());
+                for (var i = 0; i < 7 ; i++){
+                    var d2 = addDays(fechaInicial, i, '0');
+                    document.getElementById(days[i]).innerHTML = d2.toDateString().substring(0,10);
+                }
             }
+        });
+    }else{
+        document.getElementById('sourceEm').disabled = true;
+         var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
+        for (var i = 0; i < 7 ; i++){
+            document.getElementById(days[i]).innerHTML = days[i];
         }
-    });
+    }
 }
 
 

@@ -3,12 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/*var images = [], x = -1;
-images[0] = "../LeRP/Resources/Images/Login2.jpg";
-images[1] = "../LeRP/Resources/Images/Login3.jpeg";
-images[2] = "../LeRP/Resources/Images/Login4.jpg";
-images[3] = "../LeRP/Resources/Images/Login5.jpg";
-images[4] = "../LeRP/Resources/Images/Login1.jpg";*/
 /*
  * 
  * 
@@ -16,7 +10,7 @@ images[4] = "../LeRP/Resources/Images/Login1.jpg";*/
 var images =                new Array();
 var  x =                    0;
 var temp =                  1;
-function preload() {
+/*function preload() {
     for (i = 0; i < preload.arguments.length; i++) {
             images[i] =                 new Image();
             images[i].src =             preload.arguments[i];
@@ -29,9 +23,7 @@ function preload() {
     }
 }
 preload(
-        "../LeRP/Resources/Images/Login2.jpg",
-        "../LeRP/Resources/Images/Login5.jpg",
-        "../LeRP/Resources/Images/Login1.jpg"
+        "../Resources/Login5.jpg",
 );
 /*
  * 

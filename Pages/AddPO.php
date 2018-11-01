@@ -11,7 +11,7 @@ if(!isset($_SESSION))
     session_start();
 }
 
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('../Resources/WebResponses/connection.php');
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true && $_SESSION['consultor']['Type'] == '0'){

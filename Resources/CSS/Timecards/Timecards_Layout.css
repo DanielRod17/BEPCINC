@@ -109,7 +109,6 @@ body, html{
 #tableInfo{
     width:                          100%;
     height:                         65px;
-    background-color:               black;
 }
 #searchButton{
     height:                         30px;
@@ -237,7 +236,7 @@ th{
     }
 }
 
-#modalContent{
+.modalesCon{
     width:                          400px;
     min-height:                     450px;
     background-color:               white;

@@ -9,7 +9,7 @@ session_start();
 //echo $_SESSION['dataBase']. " ". $_SESSION['loggedin']. " ". $_SESSION['userID']. " ". $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('../Resources/WebResponses/connection.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
 ?>
     <html>
@@ -82,7 +82,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 $Sponcor =      $queryDatosR->a;
                                 $Acign =        $queryDatosR->b;
                                 $timeID =       $queryDatosR->ID;
-                                $queryNo =      $connection->query("SELECT Name FROM Assignment WHERE ID = (SELECT AssignmentID FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='$id' ORDER BY ID ASC Limit 1)");
+                                $queryNo =      $connection->query("SELECT Name FROM assignment WHERE ID = (SELECT AssignmentID FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='$id' ORDER BY ID ASC Limit 1)");
                                 $queryNoR =     $queryNo->fetch_object();
                                 $nombrecito =   $queryNoR->Name;
                                 $hours =        0;
@@ -100,8 +100,6 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                         }
                                     }
                                 }
-                                
-                                
                                 echo"
                                     <tr>
                                         <td>".$row['Name']."</td>

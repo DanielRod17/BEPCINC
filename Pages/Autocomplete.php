@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$connection =           mysqli_connect("localhost", "root", "peloncio1234.", "bepcinc");
+include('../Resources/WebResponses/connection.php');
 $sql =                  $connection->query("SELECT ID, SN FROM consultors");  
 $output = array();
 
