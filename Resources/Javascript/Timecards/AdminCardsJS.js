@@ -59,6 +59,34 @@ function nuevoTimecard(){
     });
 }
 
+function Search(nambre, fecha){
+    //
+    
+    var table =         document.getElementById('timeTable');
+    var rowLength =     table.rows.length;
+    //alert(nambre + " " + fecha);
+    //
+    $.ajax({ //PERFORM AN AJAX CALL
+        type:                   'post', 
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        data:                   {nombreSearch: nambre, fechaSearch: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+        success: function(e) {
+            var lineas = JSON.parse(e);
+            for(var i = 0; i < lineas.length; i++){
+                var row =   table.rows[i+1];
+                var Name =  row.cells[0].children[1].value = lineas[i]['Name'];
+                var Mon =   row.cells[1].children[0].value = lineas[i]['Mon'];
+                var Tue =   row.cells[2].children[0].value = lineas[i]['Tue'];
+                var Wed =   row.cells[3].children[0].value = lineas[i]['Wed'];
+                var Thu =   row.cells[4].children[0].value = lineas[i]['Thu'];
+                var Fri =   row.cells[5].children[0].value = lineas[i]['Fri'];
+                var Sat =   row.cells[6].children[0].value = lineas[i]['Sat'];
+                var Sun =   row.cells[7].children[0].value = lineas[i]['Sun'];
+            }
+        }
+    });
+}
+
 function actualizarTabla(e){
     if(e.value !== ""){
         document.getElementById('sourceEm').disabled = false;
@@ -69,7 +97,21 @@ function actualizarTabla(e){
             type:                   'post', 
             url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
             data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-            success: function() {
+            success: function(e) {
+                var cadenita =  "";
+                var empleados = JSON.parse(e);
+                if(e.length > 2){
+                    $(".projItem").remove();
+                    for(var i = 0; i < empleados.length; i++){
+                        cadenita += "<div class='projItem' onclick=\"Search('"+empleados[i]['ID']+"', '"+fecha+"');\" >"+ empleados[i]['First'] +" "+ empleados[i]['Last'] +"</div>";
+                    }
+                    $( ".projectos" ).append( cadenita );
+                }
+                else
+                {
+                    $(".projItem").remove();
+                    $( ".projectos" ).append( cadenita );
+                }
                 var fechaInicial =      new Date(res[2], res[0], res[1]);
                 var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
                 //alert(fechaInicial.toDateString());

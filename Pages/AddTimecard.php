@@ -51,7 +51,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         </head>
         <body>
             <div id='modal'>
-                <div id='modalContent'>
+                <div id='modalContent'  class="modalesCon">
                     <div class='banner'>My Assignments</div>
                     <div class='projectos'>
                         <?php

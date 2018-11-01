@@ -9,6 +9,7 @@ session_start();
 //echo $_SESSION['dataBase']. " ". $_SESSION['loggedin']. " ". $_SESSION['userID']. " ". $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
+$Sponsor =              $_SESSION['consultor']["Sponsor"];
 include('../Resources/WebResponses/connection.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
 ?>
@@ -76,7 +77,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 $date =         $end ->format('Y-m-d');
                                 $queryDatos =   $connection->query("SELECT t.*, sponsor.Name as a, assignment.Name as b
                                                                     FROM timecards t 
-                                                                    INNER JOIN sponsor ON (sponsor.ID = '".$_SESSION['consultor']['ID']."') 
+                                                                    INNER JOIN sponsor ON (sponsor.ID = '".$_SESSION['consultor']['Sponsor']."') 
                                                                     INNER JOIN assignment ON (assignment.ID = '".$_SESSION['consultor']['ID']."')");
                                 $queryDatosR =  $queryDatos->fetch_object();
                                 $Sponcor =      $queryDatosR->a;

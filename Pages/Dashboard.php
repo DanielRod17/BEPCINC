@@ -36,7 +36,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Timecards
                                 <div class="dropdown-content">
                                     <div class='links' onclick="LoadPage('Timecards.php');" >Timecards</div>
-                                    <div class='links' onclick="LoadPage('AddTimecard.php');" >New Timecard</div>
+                                    <div class='links' onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('AdminCards.php');"; }else{  echo "LoadPage('AddTimecard.php');"; } ?>" >New Timecard</div>
                                 </div>
                             </div>
                             <?php

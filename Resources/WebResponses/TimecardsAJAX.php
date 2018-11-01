@@ -112,7 +112,21 @@ if(isset($_POST['insertar'])){
 }
 
 if(isset($_POST['fecha'])){
+    $output =                   array();
     $_SESSION['fecha'] =        $_POST['fecha'];
+    $query =                    $connection->prepare("SELECT c.ID, Firstname, Lastname FROM consultors AS c 
+                                                        LEFT JOIN timecards AS t ON c.id = t.ConsultorID 
+                                                        WHERE DATE(t.StartingDay)=DATE(?) AND c.Type!='0'");
+    $query ->                   bind_param("s", $feca);
+    $feca =                     $_POST['fecha'];
+    $query ->                   execute();
+    $query ->                   bind_result($SN, $first, $last);
+    while($query -> fetch()){
+        //echo "$SN $first $last";
+        $array =                    array("ID" => $SN, "First" => $first, "Last" => $last);
+        array_push($output, $array);
+    }
+    echo json_encode($output);
 }
 
 if(isset($_POST['finishTimecard'])){
@@ -139,7 +153,7 @@ if(isset($_POST['finishTimecard'])){
             $Name =             "TCH-".date("Y-m-d",time()-60*60*4)."-$Daily";
             $queryInsert =      $connection->query("INSERT INTO timecards (ID, Name, ConsultorID, StartingDay, CreatedDate, Dailycount) VALUES ('$ID', '$Name', '".$_SESSION['consultor']['ID']."','".$_SESSION['fecha']."', '".date("Y-m-d H:i:s",time()-60*60*4)."', '$Daily')");
             echo "Timecard Submitted!";
-            $queryDel =         $connection->query("UPDATE lineas SET TimecardID='$ID' WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
+            $queryDel =         $connection->query("UPDATE lineas SET TimecardID='$ID', StartingDay='".$_SESSION['fecha']."' WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
 
         }else{
             echo "Select a Date";
@@ -147,6 +161,43 @@ if(isset($_POST['finishTimecard'])){
     }else{
         echo "No Timecard Saved to Submit Available";
     }
+}
+
+if(isset($_POST['nombreSearch'])){
+    $nombre =           $_POST['nombreSearch'];
+    $fecha =            $_POST['fechaSearch'];
+    /*$query =            $connection->prepare("SELECT * FROM lineas WHERE ConsultorID=? AND DATE(StartingDay)=DATE(?)");
+    $query ->           bind_param("is", $i, $s);
+    $i =                $_POST['nombreSearch'];
+    $s =                $_POST['fechaSearch'];
+    $query ->           execute();
+    $query ->           bind_result($ID, $AssID, $CID, $TID, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
+    while($query->fetch()){
+        echo "$ID, $AssID, $CID, $TID, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD<br>\n";
+    }
+    $query ->            close();*/
+    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name 
+                                                    FROM lineas 
+                                                    LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID 
+                                                    WHERE DATE(lineas.StartingDay)=DATE(?) AND lineas.ConsultorID = ?");
+    $query ->                   bind_param("si", $feca, $idi);
+    $feca =                     $_POST['fechaSearch'];
+    $idi =                      $_POST['nombreSearch'];
+    $query ->                   execute();
+    $meta =                     $query->result_metadata(); 
+    while ($field = $meta->fetch_field()) 
+    { 
+        $params[] = &$row[$field->name]; 
+    }
+    call_user_func_array(array($query, 'bind_result'), $params);
+    while ($query->fetch()) { 
+        foreach($row as $key => $val) 
+        { 
+            $c[$key] = $val; 
+        } 
+        $result[] = $c; 
+    }
+    echo json_encode($result);
 }
 
 

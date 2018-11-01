@@ -117,7 +117,6 @@ function DisplayEmployees(){
 }
 
 function DisplayProjects(e){
-    document.getElementById("modalContent2").style.display =   'none';
     row =                           e;
     document.getElementById("modalContent").style.display =   'inline-block';
     var modales =                   document.getElementById("modal");
