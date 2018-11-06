@@ -164,18 +164,11 @@ if(isset($_POST['finishTimecard'])){
 }
 
 if(isset($_POST['nombreSearch'])){
+    $arreglo =          array();
     $nombre =           $_POST['nombreSearch'];
     $fecha =            $_POST['fechaSearch'];
-    /*$query =            $connection->prepare("SELECT * FROM lineas WHERE ConsultorID=? AND DATE(StartingDay)=DATE(?)");
-    $query ->           bind_param("is", $i, $s);
-    $i =                $_POST['nombreSearch'];
-    $s =                $_POST['fechaSearch'];
-    $query ->           execute();
-    $query ->           bind_result($ID, $AssID, $CID, $TID, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
-    while($query->fetch()){
-        echo "$ID, $AssID, $CID, $TID, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD<br>\n";
-    }
-    $query ->            close();*/
+    $_SESSION['fechaSearch'] =  $fecha;
+    $_SESSION['nombreSearch'] = $nombre;
     $query =                    $connection->prepare("SELECT lineas.*, assignment.Name 
                                                     FROM lineas 
                                                     LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID 
@@ -195,13 +188,117 @@ if(isset($_POST['nombreSearch'])){
         { 
             $c[$key] = $val; 
         } 
-        $result[] = $c; 
+        $result[] = $c;
+        array_push($arreglo, $result);
     }
     echo json_encode($result);
 }
 
 
+if(isset($_POST['actualizar'])){
+    //$_SESSION['fechaSearch'] =  $fecha;
+    //$_SESSION['nombreSearch'] = $nombre;
+    if(isset($_SESSION['fechaSearch'])){
+        $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fechaSearch']."' AND ConsultorID='".$_SESSION['nombreSearch']."' ");
+        if(isset($_SESSION['fechaSearch']) && $_SESSION['fechaSearch'] !== "" && $queryComa -> num_rows != 0){
+            $queryComaR =       $queryComa->fetch_object();
+            $timecardID =       $queryComaR->ID;
+            $lineas =           $_POST['lineas'];
+            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");       
+            $matrix;
+            $counterLinea =     1;
+            $arreglo =          array();
+            $bandera =          0;
+            foreach($lineas as $linea){
+                if($linea[0] != "" && ($linea[1] != "" || $linea[2] != "" || $linea[3] != "" || $linea[4] != "" || $linea[5] != "" || $linea[6] != "" || $linea[7] != "")){
+                    $matrix[] =     $linea;
+                }else{
+                    array_push($arreglo, $counterLinea);
+                    $bandera = 1;
+                }
+                $counterLinea++;
+            }
+            if($bandera == 0){
+                foreach($matrix as $linea){
+                    $queryID =          $connection->query("SELECT ID FROM lineas ORDER BY ID DESC Limit 1");
+                    $queryID =          $queryID->fetch_object();
+                    if($queryID !== null){
+                        $ID =               $queryID->ID;
+                        $ID =               $ID+1;
+                    }else{
+                        $ID =               1;
+                    }
+                    $query =            $connection->query("SELECT ID FROM assignment WHERE Name='".$linea[0]."'");
+                    $queryR =           $query->fetch_object();
+                    $AsI =              $queryR->ID;
+                    $Co =               $_SESSION['nombreSearch'];
+                    $insertar =         $connection->prepare("INSERT INTO lineas (ID, AssignmentID, ConsultorID, TimecardID, Mon, Tue, Wed, Thu, Fri, Sat, Sun, StartingDay, CreatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $insertar ->        bind_param('iiiiiiiiiiiss', $I, $A, $C, $T, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
+                    $I =                $ID;
+                    $A =                $AsI;
+                    $C =                $Co;
+                    $T =                $timecardID;
+                    $Mo =               $linea[1];
+                    $Tu =               $linea[2];
+                    $We =               $linea[3];
+                    $Th =               $linea[4];
+                    $Fr =               $linea[5];
+                    $Sa =               $linea[6];
+                    $Su =               $linea[7];
+                    $SD =               $_SESSION['fechaSearch'];
+                    $CD =               date("d-m-Y H:i:s",time()-60*60*4);
+                    $insertar ->        execute();
+                    $insertar ->        close();
+                }
+                echo "Timecard Saved! Leaving the page will delete it";
+            }else{
+                echo "Set at least an hour for line(s):   ";
+               foreach($arreglo as $key => $a){
+                   echo $arreglo[$key];
+                   if(isset($arreglo[$key+1]))
+                       echo ", ";
+               }
+            }
+        }else{
+            if($queryComa -> num_rows > 0)
+            {
+                echo "No week's timecard registered";
+            }
+            else{
+                echo "Select a Date";
+            }
+        }
+    }else{
+         echo "Select a Date";
+    }
+}
 
+if(isset($_POST['checkNaems'])){
+    if(isset($_POST['names']) && sizeof($_POST['names']) > 0){
+        $nombres =          $_POST['names'];
+        $flag =             0;
+        $idUsuario =        $_SESSION['nombreSearch'];
+        foreach($nombres as $nombre){
+            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
+            $querty ->          bind_param("si", $nome, $idi);
+            $nome =             $nombre;
+            $idi =              $idUsuario;
+            $querty ->          execute();
+            $querty ->          store_result();
+            if($querty -> num_rows == 0){
+                $flag =         1;
+            }
+            $querty ->          close();
+        }
+        if($flag == 0){
+            echo "Alles gut";
+        }else{
+            echo "Check your projects' names";
+        }
+    }else{
+        echo "Select at least one project";
+    }
+}
 
 
 

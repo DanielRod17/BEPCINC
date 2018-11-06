@@ -127,7 +127,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 <div id="timecards">
                     <div id="tableInfo">
                         <button onclick="weekChange('0');"><<</button><input type="text" id="datepicker" onchange="actualizarTabla(this);" autocomplete="off"><button onclick="weekChange('1');">>></button>
-                        <input type='submit' form='timeForms' value='Save'>
+                        <input type='submit' form='timeFormsUpdate' value='Save Changes'>
                         <button onclick="Approve();" disabled id="approve">Submit</button>
                         <?php
                             if($_SESSION['consultor']['Type'] == '0'){
@@ -152,7 +152,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <th>Status</th>
                             </tr>
                             <?php
-                                echo "<form id='timeForms' onsubmit='return guardarTimecard();'>";
+                                echo "<form id='timeFormsUpdate' onsubmit='return updateTimecard();'>";
                                 for($i = 1; $i <= 5; $i++){
                                     echo"
                                     <tr class='DaysInput $i'>

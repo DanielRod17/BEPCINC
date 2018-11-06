@@ -71,17 +71,18 @@ function Search(nambre, fecha){
         url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {nombreSearch: nambre, fechaSearch: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(e) {
+            alert(e);
             var lineas = JSON.parse(e);
-            for(var i = 0; i < lineas.length; i++){
+            for(var i = 0; i <= lineas.length; i++){
                 var row =   table.rows[i+1];
-                var Name =  row.cells[0].children[1].value = lineas[i]['Name'];
-                var Mon =   row.cells[1].children[0].value = lineas[i]['Mon'];
-                var Tue =   row.cells[2].children[0].value = lineas[i]['Tue'];
-                var Wed =   row.cells[3].children[0].value = lineas[i]['Wed'];
-                var Thu =   row.cells[4].children[0].value = lineas[i]['Thu'];
-                var Fri =   row.cells[5].children[0].value = lineas[i]['Fri'];
-                var Sat =   row.cells[6].children[0].value = lineas[i]['Sat'];
-                var Sun =   row.cells[7].children[0].value = lineas[i]['Sun'];
+                row.cells[0].children[1].value = lineas[i]['Name'];
+                row.cells[1].children[0].value = lineas[i]['Mon'];
+                row.cells[2].children[0].value = lineas[i]['Tue'];
+                row.cells[3].children[0].value = lineas[i]['Wed'];
+                row.cells[4].children[0].value = lineas[i]['Thu'];
+                row.cells[5].children[0].value = lineas[i]['Fri'];
+                row.cells[6].children[0].value = lineas[i]['Sat'];
+                row.cells[7].children[0].value = lineas[i]['Sun'];
             }
         }
     });
@@ -321,4 +322,72 @@ function weekChange(e){
         }
         actualizarTabla(document.getElementById('datepicker'));
     }
+}
+
+function updateTimecard(){
+    var banderita =     0;
+    var table =         document.getElementById('timeTable');
+    var rowLength =     table.rows.length;
+    var totalProjs =    new Array();
+    var Names =         new Array();
+    for(var i = 1; i < rowLength; i++){
+        var row = table.rows[i];
+        //your code goes here, looping over every row.
+        //cells are accessed as easy
+        //var cellLength = row.cells.length;
+        banderita = 1;
+        var Name =  row.cells[0].children[1].value;
+        var Mon =   row.cells[1].children[0].value;
+        var Tue =   row.cells[2].children[0].value;
+        var Wed =   row.cells[3].children[0].value;
+        var Thu =   row.cells[4].children[0].value;
+        var Fri =   row.cells[5].children[0].value;
+        var Sat =   row.cells[6].children[0].value;
+        var Sun =   row.cells[7].children[0].value;
+        ;
+        if(Name !== ""){
+            var info = new Array(Name, Mon, Tue, Wed, Thu, Fri, Sat, Sun);
+            totalProjs.push(info);
+            Names.push(Name);
+        }
+    }
+    //alert ("Nombres\n" + Names);
+    //alert ("Projects\n" + totalProjs);
+    $.ajax({ //PERFORM AN AJAX CALL
+        type:                   'post', 
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        data:                   {checkNaems: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+        success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
+            if(data === "Alles gut"){
+                $.ajax({ //PERFORM AN AJAX CALL
+                    type:                   'post', 
+                    url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+                    data:                   {actualizar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+                    success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
+                        DisplayError(data);
+                        if(data === "Timecard Saved! Leaving the page will delete it"){
+                            document.getElementById('approve').disabled =           false;
+                            for(var i = 1; i < rowLength; i++){
+                                var row = table.rows[i];
+                                if(row.cells[0].children[1].value !== ""){
+                                    row.cells[9].innerHTML = 'Saved';
+                                }
+                            }
+                        }
+                        /*window.parent.$("body").animate({scrollTop:0}, 'fast');
+                        if(data == "User Added Successfully"){
+                            //document.getElementById('newCustomer').reset();
+                        }*/
+                    }
+                });
+            }else{
+                DisplayError(data);
+            }
+            /*window.parent.$("body").animate({scrollTop:0}, 'fast');
+            if(data == "User Added Successfully"){
+                //document.getElementById('newCustomer').reset();
+            }*/
+        }
+    });
+    return false;
 }
