@@ -35,6 +35,10 @@ if(isset($_POST['checkNames'])){
     }
 }
 
+if(isset($_POST['usuarioBorrar'])){
+    $_SESSION['usuarioBorrar'] =        $_POST['usuarioBorrar'];
+}
+
 if(isset($_POST['insertar'])){
     if(isset($_SESSION['fecha'])){
         $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fecha']."' AND ConsultorID='".$_SESSION['consultor']['ID']."' ");
@@ -204,7 +208,7 @@ if(isset($_POST['actualizar'])){
             $queryComaR =       $queryComa->fetch_object();
             $timecardID =       $queryComaR->ID;
             $lineas =           $_POST['lineas'];
-            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");       
+            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['nombreSearch']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");       
             $matrix;
             $counterLinea =     1;
             $arreglo =          array();

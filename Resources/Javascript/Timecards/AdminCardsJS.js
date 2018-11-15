@@ -191,7 +191,7 @@ function hideProjects(){
 function AssignName(e){
     //alert(e.innerHTML);
     var nombreInput = "project " + row;
-    document.getElementsByClassName(nombreInput)[0].value = e.innerHTML;
+    var name = document.getElementsByClassName(nombreInput)[0].value = e.innerHTML;
     hideProjects();
 }
 

@@ -22,58 +22,65 @@ if (isset($_POST['informacion'])  && !isset($_POST['updateInfo'])){
                     $querty ->          execute();
                     $querty ->          store_result();
                     if($querty -> num_rows == 0){
-                        $queryID =          $connection->query("SELECT ID FROM consultors ORDER BY ID DESC Limit 1");
-                        $queryID =          $queryID->fetch_object();
-                        $ID =               $queryID->ID;
-                        $ID =               $ID+1;
-                        $insertar =         $connection->prepare("INSERT INTO consultors (ID, SN, Firstname, Lastname, Email, Roster, State, Type, Hash, Status, Phone, Sponsor, Assignment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                        $insertar ->        bind_param('issssssisisss', $I, $S, $F, $L, $E, $R, $St, $T, $H, $Sta, $P, $Sp, $As);
-                        $I =                $ID;
-                        $S =                $arreglo[0];
-                        $F =                $arreglo[3];
-                        $L =                $arreglo[4];
-                        $E =                $arreglo[5]; //
-                        $St =               $arreglo[7];
-                        $R =                $arreglo[6];
-                        $P =                $arreglo[10];
-                        $Sp =               $arreglo[11];
-                        $As =               $arreglo[12];
-                        if($R == "MX"){
-                            $St = "";
+                        try{
+                            $queryID =          $connection->query("SELECT ID FROM consultors ORDER BY ID DESC Limit 1");
+                            $queryID =          $queryID->fetch_object();
+                            $ID =               $queryID->ID;
+                            $ID =               $ID+1;
+                            $insertar =         $connection->prepare("INSERT INTO consultors (ID, SN, Firstname, Lastname, Email, Roster, State, Type, Hash, Status, Phone, Sponsor, Assignment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            $insertar ->        bind_param('issssssisisss', $I, $S, $F, $L, $E, $R, $St, $T, $H, $Sta, $P, $Sp, $As);
+                            $I =                $ID;
+                            $S =                $arreglo[0];
+                            $F =                $arreglo[3];
+                            $L =                $arreglo[4];
+                            $E =                $arreglo[5]; //
+                            $St =               $arreglo[7];
+                            $R =                $arreglo[6];
+                            $P =                $arreglo[10];
+                            $Sp =               $arreglo[11];
+                            $As =               $arreglo[12];
+                            if($R == "MX"){
+                                $St = "";
+                            }
+                            $T =                    $arreglo[8];
+                            $H =                    sha1($arreglo[1]);
+                            $Sta =                  1;
+                            $insertar ->            execute();
+                            ///////////////////
+                            $i =                    0;
+                            $dowMap =               array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+                            /////////
+                            $schedule =             $arreglo[9];
+                            $scheduleDays =         $connection->prepare("SELECT ID, Sun, Mon, Tue, Wed, Thu, Fri, Sat FROM schedules WHERE ID=?");
+                            $scheduleDays->         bind_param("s", $schedule);
+                            $scheduleDays ->        execute();
+                            $scheduleDays ->        store_result();
+                            if ($scheduleDays -> num_rows != 0){
+                                $scheduleDays ->        bind_result($SchID, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat);
+                                $scheduleDays ->        fetch();
+                                $Actualizar =           $connection->prepare("UPDATE consultors SET Sun = ?, Mon = ?, Tue = ?, Wed = ?,
+                                                        Thu =?, Fri = ?, Sat =?, Schedule = ? WHERE ID = ?");
+                                $Actualizar ->          bind_param('iiiiiiiii', $S, $M, $T, $W, $J, $V, $Sa, $Sch, $Id);
+                                $Id =                   $ID;
+                                $S =                    $Sun;
+                                $M =                    $Mon;
+                                $T =                    $Tue;
+                                $W =                    $Wed;
+                                $J =                    $Thu;
+                                $V =                    $Fri;
+                                $Sa =                   $Sat;
+                                $Sch =                  $SchID;
+                                $Actualizar ->          execute();
+                                $Actualizar ->          close();
+                            }
+                            //var_dump($arreglo);
+                            //var_dump($insertar);
+                            //echo " $I $S $F $L $E  $St $R $P $Sp $As $User $insertar User Added Successfully";
+                            echo "User Added Successfully";
+                            $insertar ->            close();
+                        }catch (Exception $e) {
+                            echo $e->getMessage();
                         }
-                        $T =                $arreglo[8];
-                        $H =                sha1($arreglo[1]);
-                        $Sta =              1;
-                        $insertar ->        execute();
-                        $insertar ->        close();
-                        ///////////////////
-                        $i =                0;
-                        $dowMap = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-                        /////////
-                        $schedule =             $arreglo[9];
-                        $scheduleDays =         $connection->prepare("SELECT ID, Sun, Mon, Tue, Wed, Thu, Fri, Sat FROM schedules WHERE ID=?");
-                        $scheduleDays->         bind_param("s", $schedule);
-                        $scheduleDays ->        execute();
-                        $scheduleDays ->        store_result();
-                        if ($scheduleDays -> num_rows != 0){
-                            $scheduleDays ->        bind_result($SchID, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat);
-                            $scheduleDays ->        fetch();
-                            $Actualizar =           $connection->prepare("UPDATE consultors SET Sun = ?, Mon = ?, Tue = ?, Wed = ?,
-                                                    Thu =?, Fri = ?, Sat =?, Schedule = ? WHERE ID = ?");
-                            $Actualizar ->          bind_param('iiiiiiiii', $S, $M, $T, $W, $J, $V, $Sa, $Sch, $Id);
-                            $Id =                   $ID;
-                            $S =                    $Sun;
-                            $M =                    $Mon;
-                            $T =                    $Tue;
-                            $W =                    $Wed;
-                            $J =                    $Thu;
-                            $V =                    $Fri;
-                            $Sa =                   $Sat;
-                            $Sch =                  $SchID;
-                            $Actualizar ->          execute();
-                            $Actualizar ->          close();
-                        }
-                        echo "User Added Successfully";
                     }else{
                         echo "Username Already Exists";
                     }

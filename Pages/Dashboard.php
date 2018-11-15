@@ -25,69 +25,75 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         <body onscroll="DetectScroll();" onload=" DetectScroll();">
             <div id="contenedor">
                 <div id="menu">
-                    <div id="logo">
-                        <div id="collapse" onclick="Collapse();">&nbsp;<i class="fas fa-angle-left fa-2x"></i></div>
-                        <img id="logoIMG" src="../Resources/bepclogo.png"/>
-                    </div>
                     <div id="informacion">
-                        <div id="opciones">
-                            <div class="opcion" onclick="LoadPage('Timecards.php')">Dashboard</div>
-                            <div class="opcion">
-                                Timecards
-                                <div class="dropdown-content">
-                                    <div class='links' onclick="LoadPage('Timecards.php');" >Timecards</div>
-                                    <div class='links' onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('AdminCards.php');"; }else{  echo "LoadPage('AddTimecard.php');"; } ?>" >New Timecard</div>
-                                </div>
-                            </div>
-                            <?php
-                                if($_SESSION['consultor']['Type'] == '0'){
-                                    ?>
-                                    <div class='opcion'>
-                                        Users
-                                        <div class="dropdown-content">
-                                            <div class='links' onclick="LoadPage('AddUser.php');" >Add User</div>
-                                            <div class='links' onclick="LoadPage('EditUser.php');" >Update</div>
-                                        </div>
-                                    </div>
-                                    <div class='opcion' onclick="LoadPage('CreateSchedule.php');" >
-                                        Schedules
-                                    </div>
-                                    <div class='opcion' onclick="LoadPage('AddPO.php');" >POs</div>
-                                    <div class='opcion' onclick="LoadPage('AddSponsor.php');" >Sponsors</div>
-                                    <div class='opcion' onclick="LoadPage('AddProject.php');" >Projects</div>
-                                    <div class='opcion' onclick="LoadPage('AddAssignment.php');" >
-                                        Assignments
-                                        <div class="dropdown-content">
-                                            <div class='links'>Link 1</div>
-                                            <div class='links'>Link 2</div>
-                                            <div class='links'>Link 3</div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
+                        <div id="logo" style="background-color: rgba(20, 20, 20, 20, 0.8);">
+                            <img id="logoIMG" src="../Resources/bepclogo.png"/>
+                        </div>
+                        <div id="busqueda">
+                            <button style=" width:  70px; height: 100%; border: none; background-color: white; float: left;" >Hola</button>                       
+                            <input style="width: calc(100% - 70px); height: calc(100% - 1px);" type="text" placeholder="Search projects and more">
                         </div>
                         <div id="user">
-                            <div id="profilepic">
-                                <?php
-                                    foreach (glob("./Resources/Images/UserPic/$IDUsuario.*") as $filename) {
-                                        echo "<img style='width: 100%; height: 100%; border-radius: 50px;' src='$filename'>";
-                                    }
-                                ?>
+                            <div class="circulito" id="profilepic">
                             </div>
-                            <div id="infoUsuario">
+                            <div class="circulito" id="profilepic">
+                            </div>
+                            <div class="circulito" id="profilepic">
+                            </div>
+                            <div class="circulito" id="profilepic">
+                            </div>
+                            <div class="circulito" id="profilepic">
                                 <?php
-                                    echo "<a href='#'>$UserName</a>";
+                                    /*foreach (glob("./Resources/Images/UserPic/$IDUsuario.*") as $filename) {
+                                        echo "<img style='width: 100%; height: 100%; border-radius: 50px;' src='$filename'>";
+                                    }*/
                                 ?>
-                                <br>
-                                <button id="logout" onclick="Logout();">Logout</button>
                             </div>
                         </div>
                     </div>
+                    <div id="opciones">
+                        <div class="opcion" onclick="LoadPage('Timecards.php')">Dashboard</div>
+                        <div class="opcion">
+                            Timecards
+                            <div class="dropdown-content">
+                                <div class='links' onclick="LoadPage('Timecards.php');" >Timecards</div>
+                                <div class='links' onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('AdminCards.php');"; }else{  echo "LoadPage('AddTimecard.php');"; } ?>" >New Timecard</div>
+                            </div>
+                        </div>
+                        <?php
+                            if($_SESSION['consultor']['Type'] == '0'){
+                                ?>
+                                <div class='opcion'>
+                                    Manage Users
+                                    <div class="dropdown-content">
+                                        <div class='links' onclick="LoadPage('AddUser.php');" >Add User</div>
+                                        <div class='links' onclick="LoadPage('EditUser.php');" >Update</div>
+                                    </div>
+                                </div>
+                                <div class='opcion' onclick="LoadPage('Contacts.php');" >
+                                    Contacts
+                                </div>
+                                <div class='opcion' onclick="LoadPage('CreateSchedule.php');" >
+                                    Schedules
+                                </div>
+                                <div class='opcion' onclick="LoadPage('AddPO.php');" >POs</div>
+                                <div class='opcion' onclick="LoadPage('AddSponsor.php');" >Sponsors</div>
+                                <div class='opcion' onclick="LoadPage('AddProject.php');" >Projects</div>
+                                <div class='opcion' onclick="LoadPage('AddAssignment.php');" >
+                                    Assignments
+                                    <div class="dropdown-content">
+                                        <div class='links'>Link 1</div>
+                                        <div class='links'>Link 2</div>
+                                        <div class='links'>Link 3</div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        ?>
+                    </div>
                 </div>
-                <div id="goHome" onclick='goHome(this);'>&nbsp;<i class="fas fa-angle-left fa-2x"></i></div>
                 <div id="contenido">
-                    <iframe id="load" onload="iframeLoaded();" scrolling='no'>
+                    <iframe id="load" onload="iframeLoaded();" scrolling='no' style="min-height: calc(100% - 55px) !important;">
 
                     </iframe>
                 </div>
