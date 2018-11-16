@@ -13,9 +13,9 @@ $Sponsor =              $_SESSION['consultor']["Sponsor"];
 $resultado =            array();
 include('../Resources/WebResponses/connection.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
-    if(isset($_GET['id'])){
-    $ID =                   $_GET['id']; //Reemplazar por el get
-    //$ID =                   2;
+    //if(isset($_GET['id'])){
+    //$ID =                   $_GET['id']; //Reemplazar por el get
+    $ID =                   2;
     $query =                $connection->prepare("SELECT * FROM consultors WHERE ID=?");
     $query ->               bind_param('i', $I);
     $I =                    $ID;
@@ -123,17 +123,17 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     <div id="contenido">
                         <div id="contenidoCTN">
                             <div id="opcaos">
-                                <div class="opcContenido">
+                                <div class="opcContenido" onclick="Displayear(0);">
                                     Related
                                 </div>
-                                <div class="opcContenido">
+                                <div class="opcContenido" onclick="Displayear(1);">
                                     Details
                                 </div>
                             </div>
                             <div id="advertenquia">
                                 
                             </div>
-                            <div id="timecards">
+                            <div id="timecards" class="contOpc">
                                 <div id="timecardsAm">
                                     Timecards +6
                                 </div>
@@ -187,15 +187,18 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     }
                                 ?>
                             </div>
+                            <div id="details" class="contOpc">
+                                LOLOLOLOLOLOLOLOLOLOLO
+                            </div>
                         </div>
                     </div>
                 </div>
             </body>
         </html>
         <?php
-    }else{
+    /*}else{
         echo "Forbidden Access";
-    }
+    }*/
 }else{
     header("Location: ../index.php");
 }

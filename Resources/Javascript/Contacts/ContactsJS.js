@@ -68,3 +68,16 @@ function DisplayError(e){
         alertas.style.opacity = 0;
     }, 3000); 
 }
+    
+function Displayear(e){
+    var displays =                  document.getElementsByClassName("contOpc");
+    //displays[e].style.display =     'none';
+    if(e == 1){
+        displays[1].style.display =     'inline-block';
+        displays[0].style.display =     'none';
+    }
+    else{
+        displays[0].style.display =     'inline-block';
+        displays[1].style.display =     'none';
+    }
+}
