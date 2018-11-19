@@ -13,9 +13,9 @@ $Sponsor =              $_SESSION['consultor']["Sponsor"];
 $resultado =            array();
 include('../Resources/WebResponses/connection.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
-    //if(isset($_GET['id'])){
-    //$ID =                   $_GET['id']; //Reemplazar por el get
-    $ID =                   2;
+    if(isset($_GET['id'])){
+    $ID =                   $_GET['id']; //Reemplazar por el get
+    //$ID =                   2;
     $query =                $connection->prepare("SELECT * FROM consultors WHERE ID=?");
     $query ->               bind_param('i', $I);
     $I =                    $ID;
@@ -188,7 +188,168 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 ?>
                             </div>
                             <div id="details" class="contOpc">
-                                LOLOLOLOLOLOLOLOLOLOLO
+                                <form id ="detailsForm">
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Contact Owner
+                                            </div>
+                                            <div class="campoDato">
+                                                <?php 
+                                                    echo $c['Firstname']." ".$c['Lastname'];
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Phone
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Name
+                                            </div>
+                                            <div class="campoDato">
+                                                <?php
+                                                    echo $c['Firstname']." ".$c['Lastname']
+                                                ?>
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Mobile
+                                            </div>
+                                            <div class="campoDato">
+                                                <?php 
+                                                    echo $c['Phone'];
+                                                ?>
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Account Name
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Email
+                                            </div>
+                                            <div class="campoDato">
+                                                <?php 
+                                                    echo $c['Email'];
+                                                ?>
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Title
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Reports To
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Division
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Contact Currency
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Resource Name
+                                            </div>
+                                            <div class="campoDato">
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Department
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='datos'>
+                                        <div class='left'>
+                                            <div class='nombreDato'>
+                                                Account
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='right'>
+                                            <div class='nombreDato'>
+                                                Functional Area
+                                            </div>
+                                            <div class="campoDato">
+                                                <div class='lapiz'>
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -196,9 +357,9 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             </body>
         </html>
         <?php
-    /*}else{
+    }else{
         echo "Forbidden Access";
-    }*/
+    }
 }else{
     header("Location: ../index.php");
 }
