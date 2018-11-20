@@ -9,14 +9,14 @@ and open the template in the editor.
 */
 @font-face{
     font-family:                    Bebas Neue;
-    src:                            url('BebasNeue Book.ttf');
+    src:                            url('../BebasNeue Book.ttf');
     font-style:                     normal;
     font-weight:                    normal;
 }
 
 @font-face{
     font-family:                    questrial;
-    src:                            url('Questrial-Regular.ttf');
+    src:                            url('../Questrial-Regular.ttf');
     font-style:                     normal;
     font-weight:                    normal;
 }
@@ -35,7 +35,7 @@ body, html{
 }
 #menu{
     width:                          100%;
-    height:                         100px;
+    height:                         150px;
     float:                          left;
     background-color:               white;
     /*background:                     linear-gradient(to bottom, rgba(7,32,73,0.8), rgba(7,32,73,0.8), rgba(7,32,73,0.8), pink, rgba(20,20,20,1));*/
@@ -47,18 +47,20 @@ body, html{
     height:                         calc(100% - 100px);
     float:                          left;
     color:                          black;
-    margin-top:                     100px;
+    margin-top:                     180px;
     /*background-color:               rgb(30, 37, 58);*/
 }
 #logo{
     width:                          10%;
-    height:                         100%;
+    height:                         80px;
     float:                          left;
+    margin-left:                    30px;
 }
 #logoIMG{
-    width:                          60%;
+    width:                          40%;
     height:                         100%;
     float:                          left;
+    margin-top:                     6%;
 }
 #busqueda{
     width:                          30%;
@@ -92,7 +94,7 @@ body, html{
 }
 #informacion{
     width:                          100%;
-    height:                         50px;
+    height:                         120px;
     float:                          left;
     color:                          white;
 }
@@ -102,7 +104,8 @@ ul{
 #opciones{
     width:                          100%;
     height:                         50px;
-    margin-top:                     50px;
+    margin-top:                     120px;
+    background-color:               white;
 }
 .opcion{
     width:                          calc(100% / 9);
@@ -112,6 +115,27 @@ ul{
     text-align:                     center;
     line-height:                    50px;
     color:                          black;
+    z-index:                        10;
+}
+#opcionesGrles{
+  width:                            650px;
+  height:                           80px;
+  float:                            right;
+  margin-right:                     60px;
+  margin-top:                       20px;
+}
+.opGral{
+    width:                          20%;
+    height:                         100%;
+    /*background-color:               green;*/
+    float:                          left;
+    text-align:                     center;
+    line-height:                    80px;
+    color:                          black;
+    font-family:                    Bebas Neue;
+    font-size:                      20px;
+    font-weight:                    bolder;
+    cursor:                         pointer;
 }
 .userOptions{
     width:                          20%;
@@ -253,6 +277,14 @@ a{
     height:                         30px;
     line-height:                    30px;
     background-color:               white;
+}
+
+#barrita{
+    width:                          100%;
+    height:                         10px;
+    background-color:               rgb(3, 165, 190);
+    margin-top:                     170px;
+    position:                       fixed;
 }
 
 .links:hover{

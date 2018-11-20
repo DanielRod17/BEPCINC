@@ -21,7 +21,7 @@ and open the template in the editor.
                         <img src="Resources/bee logo.png" id="beeLogo">
                     </div>
                     <div id="nombre">
-                        <span style="color:  rgb(239, 198, 18); 
+                        <span style="color:  rgb(239, 198, 18);
                               text-shadow:  1px 0 rgb(239, 198, 18), 0 -1px rgb(239, 198, 18);">BE</span><span style="color:  rgb(49, 63, 94);">TRACKING</span>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ and open the template in the editor.
             <div id="information">
                 <div class="hexagon">
                     <p>
-                        En el Cuadrante Mágico de Gartner, se nombró a Salesforce como 
+                        En el Cuadrante Mágico de Gartner, se nombró a Salesforce como
                         líder debido al centro de interacción con el cliente de CRM por 10 años consecutivos
                         <br>
                     </p>

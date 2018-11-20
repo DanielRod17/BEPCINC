@@ -26,14 +26,14 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <div id="contenedor">
                 <div id="menu">
                     <div id="informacion">
-                        <div id="logo" style="background-color: rgba(20, 20, 20, 20, 0.8);">
-                            <img id="logoIMG" src="../Resources/bepclogo.png"/>
+                        <div id="logo" style="background-color: rgba(200, 20, 20, 20, 0.8);">
+                            <img id="logoIMG" src="../Resources/bee logo.png"/>
                         </div>
-                        <div id="busqueda">
-                            <button style=" width:  70px; height: 100%; border: none; background-color: white; float: left;" >Hola</button>                       
+                        <!--div id="busqueda">
+                            <button style=" width:  70px; height: 100%; border: none; background-color: white; float: left;" >Hola</button>
                             <input style="width: calc(100% - 70px); height: calc(100% - 1px);" type="text" placeholder="Search projects and more">
-                        </div>
-                        <div id="user">
+                        </div-->
+                        <!--div id="user">
                             <div class="circulito" id="profilepic">
                             </div>
                             <div class="circulito" id="profilepic">
@@ -49,9 +49,26 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     }*/
                                 ?>
                             </div>
+                        </div-->
+                        <div id='opcionesGrles'>
+                            <div class='opGral'>
+                                HOME
+                            </div>
+                            <div class='opGral' onclick="LoadPage('Contacts.php');">
+                                CONTACTS
+                            </div>
+                            <div class='opGral'>
+                                TIMECARDS
+                            </div>
+                            <div class='opGral'>
+                                EXPENSES
+                            </div>
+                            <div class='opGral'>
+                                REPORTS
+                            </div>
                         </div>
                     </div>
-                    <div id="opciones">
+                    <!--div id="opciones">
                         <div class="opcion" onclick="LoadPage('Timecards.php')">Dashboard</div>
                         <div class="opcion">
                             Timecards
@@ -90,7 +107,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <?php
                             }
                         ?>
-                    </div>
+                    </div-->
+
+                </div>
+                <div id='barrita'>
                 </div>
                 <div id="contenido">
                     <iframe id="load" onload="iframeLoaded();" scrolling='no' style="min-height: calc(100% - 55px) !important;">
