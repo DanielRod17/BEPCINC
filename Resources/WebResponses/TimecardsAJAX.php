@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,7 +14,8 @@ if(isset($_POST['checkNames'])){
         $flag =             0;
         $idUsuario =        $_SESSION['consultor']['ID'];
         foreach($nombres as $nombre){
-            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
+            //$querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
+            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (EXISTS(SELECT ProjectID FROM consultor2project WHERE ConsultorID=?) OR PO = 0)");
             $querty ->          bind_param("si", $nome, $idi);
             $nome =             $nombre;
             $idi =              $idUsuario;
@@ -88,7 +89,7 @@ if(isset($_POST['insertar'])){
                     $Sa =               $linea[6];
                     $Su =               $linea[7];
                     $SD =               $_SESSION['fecha'];
-                    $CD =               date("d-m-Y H:i:s",time()-60*60*4);
+                    $CD =               date("Y-m-d H:i:s");
                     $insertar ->        execute();
                     $insertar ->        close();
                 }
@@ -118,8 +119,8 @@ if(isset($_POST['insertar'])){
 if(isset($_POST['fecha'])){
     $output =                   array();
     $_SESSION['fecha'] =        $_POST['fecha'];
-    $query =                    $connection->prepare("SELECT c.ID, Firstname, Lastname FROM consultors AS c 
-                                                        LEFT JOIN timecards AS t ON c.id = t.ConsultorID 
+    $query =                    $connection->prepare("SELECT c.ID, Firstname, Lastname FROM consultors AS c
+                                                        LEFT JOIN timecards AS t ON c.id = t.ConsultorID
                                                         WHERE DATE(t.StartingDay)=DATE(?) AND c.Type!='0'");
     $query ->                   bind_param("s", $feca);
     $feca =                     $_POST['fecha'];
@@ -145,7 +146,7 @@ if(isset($_POST['finishTimecard'])){
                 $ID =           $ID->ID;
                 $ID =           $ID+1;
             }
-            
+
             $querty =           $connection->query("SELECT Dailycount FROM timecards WHERE DATE(CreatedDate) = DATE(NOW()) ORDER BY ID DESC LIMIT 1 ");
             if($querty -> num_rows == 0){
                 $Daily =            1;
@@ -173,25 +174,25 @@ if(isset($_POST['nombreSearch'])){
     $fecha =            $_POST['fechaSearch'];
     $_SESSION['fechaSearch'] =  $fecha;
     $_SESSION['nombreSearch'] = $nombre;
-    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name 
-                                                    FROM lineas 
-                                                    LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID 
+    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name
+                                                    FROM lineas
+                                                    LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID
                                                     WHERE DATE(lineas.StartingDay)=DATE(?) AND lineas.ConsultorID = ?");
     $query ->                   bind_param("si", $feca, $idi);
     $feca =                     $_POST['fechaSearch'];
     $idi =                      $_POST['nombreSearch'];
     $query ->                   execute();
-    $meta =                     $query->result_metadata(); 
-    while ($field = $meta->fetch_field()) 
-    { 
-        $params[] = &$row[$field->name]; 
+    $meta =                     $query->result_metadata();
+    while ($field = $meta->fetch_field())
+    {
+        $params[] = &$row[$field->name];
     }
     call_user_func_array(array($query, 'bind_result'), $params);
-    while ($query->fetch()) { 
-        foreach($row as $key => $val) 
-        { 
-            $c[$key] = $val; 
-        } 
+    while ($query->fetch()) {
+        foreach($row as $key => $val)
+        {
+            $c[$key] = $val;
+        }
         $result[] = $c;
         array_push($arreglo, $result);
     }
@@ -208,7 +209,7 @@ if(isset($_POST['actualizar'])){
             $queryComaR =       $queryComa->fetch_object();
             $timecardID =       $queryComaR->ID;
             $lineas =           $_POST['lineas'];
-            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['nombreSearch']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");       
+            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['nombreSearch']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");
             $matrix;
             $counterLinea =     1;
             $arreglo =          array();
@@ -250,7 +251,7 @@ if(isset($_POST['actualizar'])){
                     $Sa =               $linea[6];
                     $Su =               $linea[7];
                     $SD =               $_SESSION['fechaSearch'];
-                    $CD =               date("d-m-Y H:i:s",time()-60*60*4);
+                    $CD =               date("Y-m-d H:i:s");
                     $insertar ->        execute();
                     $insertar ->        close();
                 }
@@ -283,7 +284,8 @@ if(isset($_POST['checkNaems'])){
         $flag =             0;
         $idUsuario =        $_SESSION['nombreSearch'];
         foreach($nombres as $nombre){
-            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
+            //$querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
+            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (EXISTS(SELECT ProjectID FROM consultor2project WHERE ConsultorID=?) OR PO = 0)");
             $querty ->          bind_param("si", $nome, $idi);
             $nome =             $nombre;
             $idi =              $idUsuario;
@@ -303,12 +305,3 @@ if(isset($_POST['checkNaems'])){
         echo "Select at least one project";
     }
 }
-
-
-
-
-
-
-
-
-

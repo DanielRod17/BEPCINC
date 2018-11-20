@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -27,8 +27,8 @@ if (isset($_POST['informacion'])  && !isset($_POST['updateInfo'])){
                             $queryID =          $queryID->fetch_object();
                             $ID =               $queryID->ID;
                             $ID =               $ID+1;
-                            $insertar =         $connection->prepare("INSERT INTO consultors (ID, SN, Firstname, Lastname, Email, Roster, State, Type, Hash, Status, Phone, Sponsor, Assignment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                            $insertar ->        bind_param('issssssisisss', $I, $S, $F, $L, $E, $R, $St, $T, $H, $Sta, $P, $Sp, $As);
+                            $insertar =         $connection->prepare("INSERT INTO consultors (ID, SN, Firstname, Lastname, Email, Roster, State, Type, Hash, Status, Phone, Sponsor, Assignment, Schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            $insertar ->        bind_param('issssssisisssi', $I, $S, $F, $L, $E, $R, $St, $T, $H, $Sta, $P, $Sp, $As, $Sch);
                             $I =                $ID;
                             $S =                $arreglo[0];
                             $F =                $arreglo[3];
@@ -39,6 +39,7 @@ if (isset($_POST['informacion'])  && !isset($_POST['updateInfo'])){
                             $P =                $arreglo[10];
                             $Sp =               $arreglo[11];
                             $As =               $arreglo[12];
+                            $Sch =              $arreglo[9];
                             if($R == "MX"){
                                 $St = "";
                             }
@@ -46,33 +47,7 @@ if (isset($_POST['informacion'])  && !isset($_POST['updateInfo'])){
                             $H =                    sha1($arreglo[1]);
                             $Sta =                  1;
                             $insertar ->            execute();
-                            ///////////////////
-                            $i =                    0;
-                            $dowMap =               array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-                            /////////
-                            $schedule =             $arreglo[9];
-                            $scheduleDays =         $connection->prepare("SELECT ID, Sun, Mon, Tue, Wed, Thu, Fri, Sat FROM schedules WHERE ID=?");
-                            $scheduleDays->         bind_param("s", $schedule);
-                            $scheduleDays ->        execute();
-                            $scheduleDays ->        store_result();
-                            if ($scheduleDays -> num_rows != 0){
-                                $scheduleDays ->        bind_result($SchID, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat);
-                                $scheduleDays ->        fetch();
-                                $Actualizar =           $connection->prepare("UPDATE consultors SET Sun = ?, Mon = ?, Tue = ?, Wed = ?,
-                                                        Thu =?, Fri = ?, Sat =?, Schedule = ? WHERE ID = ?");
-                                $Actualizar ->          bind_param('iiiiiiiii', $S, $M, $T, $W, $J, $V, $Sa, $Sch, $Id);
-                                $Id =                   $ID;
-                                $S =                    $Sun;
-                                $M =                    $Mon;
-                                $T =                    $Tue;
-                                $W =                    $Wed;
-                                $J =                    $Thu;
-                                $V =                    $Fri;
-                                $Sa =                   $Sat;
-                                $Sch =                  $SchID;
-                                $Actualizar ->          execute();
-                                $Actualizar ->          close();
-                            }
+                            ///////////////////          
                             //var_dump($arreglo);
                             //var_dump($insertar);
                             //echo " $I $S $F $L $E  $St $R $P $Sp $As $User $insertar User Added Successfully";
@@ -108,9 +83,9 @@ if(isset($_POST['usuario'])){
     if ($stmt -> num_rows != 0){
         $stmt ->                bind_result($ID, $SN, $FirstName, $LastName, $Email, $Roster, $State, $Type, $Phone, $Sponsor, $Assignment, $Status);
         $stmt ->                fetch();
-        $_SESSION['EditID'] =  $ID;  
-        $output = array("SN" => $SN, "FirstName" => $FirstName, "LastName" => $LastName, "Email" => $Email ,"Roster" => $Roster, 
-            "State" => $State, "Type" => $Type, "Status" => $Status, "Phone" => $Phone, "Sponsor" => $Sponsor, 
+        $_SESSION['EditID'] =  $ID;
+        $output = array("SN" => $SN, "FirstName" => $FirstName, "LastName" => $LastName, "Email" => $Email ,"Roster" => $Roster,
+            "State" => $State, "Type" => $Type, "Status" => $Status, "Phone" => $Phone, "Sponsor" => $Sponsor,
             "Assignment" => $Assignment);
         echo json_encode($output);
     }else{
@@ -199,4 +174,3 @@ if (isset($_POST['updateInfo'])){
         }
     }
 }
-

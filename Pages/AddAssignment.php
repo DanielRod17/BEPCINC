@@ -22,10 +22,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-            
+
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-            
+
             <script src="../Resources/Javascript/Assignment/AssignmentJS.js"></script>
             <link href="../Resources/CssAuto/css/jqueryui.css" type="text/css" rel="stylesheet"/>
             <meta charset="UTF-8">
@@ -40,7 +40,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 <form id="Assignment" class='masterForm' onsubmit='return RevisarInfo();'>
                     <div class="Linea">
                         <div class="plaecHolder">
-                            Project's Name
+                            Assignment's Name
                         </div>
                         <div class="entrada">
                             <input type='text' class='unico' id='Name' required>

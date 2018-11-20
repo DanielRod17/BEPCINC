@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -33,7 +33,7 @@ if(isset($_POST['newProject'])){
                 $ID =               $queryID->ID;
                 $ID =               $ID+1;
             }
-            $insertar =         $connection->prepare("INSERT INTO project (ID, Name, SponsorID, PLeader) VALUES (?, ?, ?, ?)");
+            $insertar =         $connection->prepare("INSERT INTO project (ID, Name, SponsorID, PLeader, Status) VALUES (?, ?, ?, ?, 1)");
             $insertar ->        bind_param('isss', $I, $N, $S, $P);
             $I =                $ID;
             $N =                $name;

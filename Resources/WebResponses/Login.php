@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -17,18 +17,16 @@ if(isset($_POST['usuario'])){
     $stmt ->                execute();
     $stmt ->                store_result();
     if ($stmt -> num_rows != 0){
-        $stmt ->                bind_result($ID, $SN, $FirstName, $LastName, $Email, $Phone, $Roster, $State, $Sponsor, $Assignment, $Type, $Schedule, $Sun, $Mon, $Tue, $Wed, $Thu, $Fri, $Sat, $Hash, $Status, $Login, $Logged, $SessionID, $Hours);
+        $stmt ->                bind_result($ID, $SN, $FirstName, $LastName, $Email, $Phone, $Roster, $State, $Type, $Schedule, $Hash, $Status, $Login, $Logged, $SessionID, $Hours);
         $stmt ->                fetch();
         $query =                $connection->query("UPDATE consultors SET LastLogin=NOW(), Logged='1', SessionID='$sID' WHERE ID='$ID'");
         $_SESSION['consultor'] = array("ID" => $ID, "SN" => $SN, "FirstName" => $FirstName, "Email" => $Email, "Phone" => $Phone, "Roster" => $Roster, "Sponsor" => $Sponsor, "Assignment" => $Assignment,
-            "State" => $State, "Type" => $Type, "Schedule" => $Schedule, "Sun" => $Sun, "Mon" => $Mon, "Tue" => $Tue, "Wed" => $Wed, "Thu" => $Thu,
-            "Fri" => $Fri, "Sat" => $Sat ,"Status" => $Status, "Login" => $Login, "Logged" => $Logged, 
+            "State" => $State, "Type" => $Type, "Schedule" => $Schedule, "Status" => $Status, "Login" => $Login, "Logged" => $Logged,
             "SessionID" => $SessionID, "Hours" => $Hours);
         echo "success";
     }
     else{
         echo    "Wrong Credentials";
     }
-    $stmt->                 close();          
+    $stmt->                 close();
 }
-

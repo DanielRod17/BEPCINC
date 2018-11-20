@@ -35,60 +35,62 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 <div id ="alertas"></div>
                 <div id="newCustomer">
                     <form onsubmit='return RevisarInfo();'>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Username
+                        <div class='generalForm'>
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Username
+                                </div>
+                                <div class="entrada">
+                                    <input type='text' class='unico' id='SN' required>
+                                </div>
                             </div>
-                            <div class="entrada">
-                                <input type='text' class='unico' id='SN' required>
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Password
+                                </div>
+                                <div class="entrada">
+                                    <input type='password' class='unico' id='Password' required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Password
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Confirm Password
+                                </div>
+                                <div class="entrada">
+                                    <input type='password' class='unico' id='CPassword' required>
+                                </div>
                             </div>
-                            <div class="entrada">
-                                <input type='password' class='unico' id='Password' required>
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    First Name
+                                </div>
+                                <div class="entrada">
+                                    <input type='text' class='unico' id='First' required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Confirm Password
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Last Name
+                                </div>
+                                <div class="entrada">
+                                    <input type='text' class='unico' id='Last' required>
+                                </div>
                             </div>
-                            <div class="entrada">
-                                <input type='password' class='unico' id='CPassword' required>
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Email
+                                </div>
+                                <div class="entrada">
+                                    <input type='text' class='unico' id='Email' required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                First Name
-                            </div>
-                            <div class="entrada">
-                                <input type='text' class='unico' id='First' required>
-                            </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Last Name
-                            </div>
-                            <div class="entrada">
-                                <input type='text' class='unico' id='Last' required>
-                            </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Email
-                            </div>
-                            <div class="entrada">
-                                <input type='text' class='unico' id='Email' required>
-                            </div>
-                        </div>
-                        <div class="Linea">
-                            <div class="plaecHolder">
-                                Phone
-                            </div>
-                            <div class="entrada">
-                                <input type='text' class='unico' id='Phone' required>
+                            <div class="Linea">
+                                <div class="plaecHolder">
+                                    Phone
+                                </div>
+                                <div class="entrada">
+                                    <input type='text' class='unico' id='Phone' required>
+                                </div>
                             </div>
                         </div>
                         <div class="Linea">

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -48,6 +48,8 @@ if(isset($_POST['newAssignment'])){
                     $queryPro ->        fetch();
                     $queryPo ->         bind_result($PuO);
                     $queryPo ->         fetch();
+                    $queryUs ->         bind_result($Cons);
+                    $queryUs ->         fetch();
                     $insertar =         $connection->prepare("INSERT INTO assignment (ID, Name, BR, PR, ProjectID, PO) VALUES (?, ?, ?, ?, ?, ?)");
                     $insertar ->        bind_param('isddii', $I, $N, $B, $P,$PI, $PO);
                     $I =                $ID;
@@ -56,11 +58,28 @@ if(isset($_POST['newAssignment'])){
                     $P =                $pr;
                     $PI =               $Pro;
                     $PO =               $PuO;
+                    $Us =               $Cons;
                     $insertar ->        execute();
                     $insertar ->        close();
-                    
-                    $queryUp =          $connection->query("UPDATE consultors SET Assignment = '$ID' WHERE SN='$em'");
-                    
+
+                    ///////////////////
+                    $ConProjID =        $connection->query("SELECT ID FROM consultor2project ORDER BY ID DESC Limit 1");
+                    $ConProjIDR =       $ConProjID->fetch_object();
+                    if($ConProjIDR === null){
+                        $IDCon =            1;
+                    }else{
+                        $IDCon =            $ConProjIDR->ID;
+                        $IDCon =            $IDCon + 1;
+                    }
+                    $queryUp =          $connection->prepare("INSERT INTO consultor2project (ID, ConsultorID, ProjectID) VALUES (?, ?, ?)");
+                    $queryUp ->         bind_param("iii", $Idi, $ConsuID, $ProjID);
+                    $Idi =              $IDCon;
+                    $ConsuID =          $Cons;
+                    $ProjID =           $Pro;
+                    $queryUp ->         execute();
+                    $queryUp ->         close();
+                    ///////////////////
+
                     echo "Assignment Added";
                 }else{
                     echo "Select a Valid Username";

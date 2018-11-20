@@ -20,17 +20,17 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-            
+
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
             <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-            
-            
+
+
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
             <link rel="stylesheet" href="/resources/demos/style.css">
             <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
             <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-            
-            
+
+
             <script src="../Resources/Javascript/Timecards/AdminCardsJS.js"></script>
             <link rel="stylesheet" href="../Resources/CSS/Timecards/Timecards_Layout.css">
             <script>
@@ -45,7 +45,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 });
             </script>
             <meta charset="UTF-8">
-            
+
             <title>
             </title>
         </head>
@@ -63,7 +63,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 }
                             }else{
                                 echo "No Projects Assigned";
-                            }  
+                            }
                         ?>
                     </div>
                     <div class='banner'>Global Projects</div>
@@ -77,7 +77,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 }
                             }else{
                                 echo "No Projects Assigned";
-                            }  
+                            }
                         ?>
                     </div>
                     </div>
@@ -92,7 +92,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                             echo "<div class='projItem' onclick=\"AssignName(this);\" >".$row['SN']."</div>";
                                         }
                                     }
-                                }  
+                                }
                             ?>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Timecards
                             </div>
                             <div id="search">
-                                View 
+                                View
                                 <select id="parameter">
                                     <option value="1">All</option>
                                     <option value="2">Other</option>
@@ -128,7 +128,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     <div id="tableInfo">
                         <button onclick="weekChange('0');"><<</button><input type="text" id="datepicker" onchange="actualizarTabla(this);" autocomplete="off"><button onclick="weekChange('1');">>></button>
                         <input type='submit' form='timeFormsUpdate' value='Save Changes'>
-                        <button onclick="Approve();" disabled id="approve">Submit</button>
+                        <!--button onclick="Approve();" disabled id="approve">Submit</button-->
                         <?php
                             if($_SESSION['consultor']['Type'] == '0'){
                                 ?>
@@ -176,7 +176,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     </table>
                 </div>
                 <div id="bottom">
-                    
+
                 </div>
             </div>
         </body>

@@ -26,7 +26,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <div id="contenedor">
                 <div id="menu">
                     <div id="informacion">
-                        <div id="logo" style="background-color: rgba(200, 20, 20, 20, 0.8);">
+                        <div id="logo" style="background-color: rgba(200, 20, 20, 20, 0.8);" onclick='Logout();'>
                             <img id="logoIMG" src="../Resources/bee logo.png"/>
                         </div>
                         <!--div id="busqueda">
@@ -68,7 +68,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             </div>
                         </div>
                     </div>
-                    <!--div id="opciones">
+                    <div id="opciones">
                         <div class="opcion" onclick="LoadPage('Timecards.php')">Dashboard</div>
                         <div class="opcion">
                             Timecards
@@ -107,7 +107,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <?php
                             }
                         ?>
-                    </div-->
+                    </div>
 
                 </div>
                 <div id='barrita'>
