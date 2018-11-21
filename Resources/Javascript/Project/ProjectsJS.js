@@ -27,9 +27,10 @@ $(document).ready(function()
         frame.attr('src', w);
         frame.fadeIn(500);
     });*/
-    $(".ctdName").click(function(){
+    $(".projName").click(function(){
         var Nombre =    $(this).attr('id');
-        var w =         "Contact.php?id="+Nombre;
+        var w =         "Project.php?id="+Nombre;
+        //alert(Nombre + " " + w);
         var frame = $('#load', window.parent.document);
         frame.fadeOut(300, function () {
             frame.attr('src', w);

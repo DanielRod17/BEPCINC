@@ -185,8 +185,8 @@ body, html{
     border-bottom-width:            1.3px;
     border-color:                   rgb(219, 219, 219);
 }
-.TCRDcolumna{
-    width:                          calc(92% / 3);
+.BUDcolumna{
+    width:                          calc(92% / 5);
     height:                         100%;
     float:                          left;
     line-height:                    25px;

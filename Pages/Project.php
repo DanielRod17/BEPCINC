@@ -12,7 +12,7 @@ $UserName =             $_SESSION['consultor']["SN"];
 $Sponsor =              $_SESSION['consultor']["Sponsor"];
 $resultado =            array();
 include('../Resources/WebResponses/connection.php');
-include('../Resources/InfoFill/ContactFill.php');
+include('../Resources/InfoFill/ProjectFill.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
     if(isset($_GET['id'])){
     $ID =                   $_GET['id']; //Reemplazar por el get
@@ -26,12 +26,12 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
         <html>
             <head>
-                <link rel="stylesheet" href="../Resources/CSS/Contacts/ContactInfo_Layout.css">
+                <link rel="stylesheet" href="../Resources/CSS/Project/ProjectInfo_Layout.css">
                 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
                 <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
                 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-                <script src="../Resources/Javascript/Contacts/ContactsJS.js"></script><meta charset="UTF-8">
+                <script src="../Resources/Javascript/Project/ProjectsJS.js"></script><meta charset="UTF-8">
                 <title>
                 </title>
             </head>
@@ -102,7 +102,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             </div>
                             <!-- -->
                               <?php
-                                  DisplayTimecards($connection, $ID);
+                                  DisplayBudgets($connection, $ID);
                               ?>
                             <!-- -->
                               <?php
