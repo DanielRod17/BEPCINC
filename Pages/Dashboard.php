@@ -110,8 +110,8 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     </div>
 
                 </div>
-                <div id='barrita'>
-                </div>
+                <!--div id='barrita'>
+                </div-->
                 <div id="contenido">
                     <iframe id="load" onload="iframeLoaded();" scrolling='no' style="min-height: calc(100% - 55px) !important;">
 

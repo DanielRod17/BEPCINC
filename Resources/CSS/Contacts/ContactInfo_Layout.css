@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : Nov 15, 2018, 11:15:27 AM
     Author     : luisr
 */
@@ -170,14 +170,14 @@ body, html{
     display:                        none;
     border-style:                   none !important;
 }
-#timecardsAm{
+.InfoAm{
     width:                          100%;
     height:                         60px;
     border-bottom-style:            solid;
     border-bottom-width:            1.3px;
     border-color:                   rgb(219, 219, 219);
 }
-#timecardsLine{
+.Line{
     width:                          100%;
     height:                         25px;
     border-bottom-style:            solid;
@@ -186,6 +186,18 @@ body, html{
 }
 .TCRDcolumna{
     width:                          23%;
+    height:                         100%;
+    float:                          left;
+    line-height:                    25px;
+}
+.PRJcolumna{
+    width:                          calc(92% / 3);
+    height:                         100%;
+    float:                          left;
+    line-height:                    25px;
+}
+.ASScolumna{
+    width:                          calc(92% / 5);
     height:                         100%;
     float:                          left;
     line-height:                    25px;
@@ -236,5 +248,5 @@ body, html{
     color:                          rgba(219, 219, 219, 0.6);
 }
 .fa-pencil-alt{
-    
+
 }

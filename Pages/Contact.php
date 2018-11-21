@@ -20,42 +20,82 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
     $query ->               bind_param('i', $I);
     $I =                    $ID;
     $query ->               execute();
-    $meta =                 $query->result_metadata(); 
-    while ($field = $meta->fetch_field()) 
-    { 
-        $params[] = &$row[$field->name]; 
+    $meta =                 $query->result_metadata();
+    while ($field = $meta->fetch_field())
+    {
+        $params[] = &$row[$field->name];
     }
     call_user_func_array(array($query, 'bind_result'), $params);
-    while ($query->fetch()) { 
-        foreach($row as $key => $val) 
-        { 
-            $c[$key] = $val; 
+    while ($query->fetch()) {
+        foreach($row as $key => $val)
+        {
+            $c[$key] = $val;
         }
         $result[] = $c;
     }
     $query ->               close();
-    
+
     ////////////////////////////////
     ////////////////////////////////
-    
+
     $stmt =                 $connection->prepare("SELECT * FROM timecards WHERE ConsultorID=?");
     $stmt ->                bind_param('i', $I);
     $I =                    $ID;
     $stmt ->                execute();
-    $meta =                 $stmt->result_metadata(); 
-    while ($field = $meta->fetch_field()) 
-    { 
-        $paramas[] = &$rowa[$field->name]; 
+    $meta =                 $stmt->result_metadata();
+    while ($field = $meta->fetch_field())
+    {
+        $paramas[] = &$rowa[$field->name];
     }
     call_user_func_array(array($stmt, 'bind_result'), $paramas);
-    while ($stmt->fetch()) { 
-        foreach($rowa as $keya => $vala) 
-        { 
-            $d[$keya] = $vala; 
+    while ($stmt->fetch()) {
+        foreach($rowa as $keya => $vala)
+        {
+            $d[$keya] = $vala;
         }
         $resultado[] = $d;
     }
     $stmt ->                close();
+
+    ////////////////////////////////////////
+    ////////////////////////////////////////
+
+    $stmt =                 $connection->prepare("SELECT p.*, sponsor.Name as SName
+                                                  FROM project p
+                                                  INNER JOIN sponsor ON (sponsor.ID = p.SponsorID)
+                                                  WHERE p.ID IN (SELECT ProjectID FROM consultor2project WHERE ConsultorID=?)");
+    $stmt ->                bind_param('i', $I);
+    $I =                    $ID;
+    $stmt ->                execute();
+    $meta =                 $stmt->result_metadata();
+    $arregloProj  =         array();
+    while ($field = $meta->fetch_field())
+    {
+        $paramasP[] = &$rowaP[$field->name];
+    }
+    call_user_func_array(array($stmt, 'bind_result'), $paramasP);
+    while ($stmt->fetch()) {
+        foreach($rowaP as $keyaP => $valaP)
+        {
+            $p[$keyaP] = $valaP;
+            if($keyaP == 'ID'){
+                array_push($arregloProj, $valaP);
+            }
+        }
+        $resultadoP[] = $p;
+    }
+    $stmt ->                close();
+
+    ////////////////////////////////////////
+    $Assignments =  array();
+    $ids =          join(",",$arregloProj);
+    $sql =          "SELECT * FROM assignment WHERE ProjectID IN ($ids)";
+    $queryAss =     $connection->query($sql);
+    while($row = $queryAss->fetch_array()){
+        array_push($Assignments, $row);
+    }
+    $resultadinho = $Assignments;
+    ////////////////////////////////////////
 ?>
         <html>
             <head>
@@ -63,7 +103,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
                 <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">           
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
                 <script src="../Resources/Javascript/Contacts/ContactsJS.js"></script><meta charset="UTF-8">
                 <title>
                 </title>
@@ -131,13 +171,13 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 </div>
                             </div>
                             <div id="advertenquia">
-                                
+
                             </div>
                             <div id="timecards" class="contOpc">
-                                <div id="timecardsAm">
+                                <div class="InfoAm">
                                     Timecards +6
                                 </div>
-                                <div id="timecardsLine" style="background-color: rgb(250, 250, 248)">
+                                <div class="Line" style="background-color: rgb(250, 250, 248)">
                                     <div class="TCRDcolumna">
                                         TIMECARD ID
                                     </div>
@@ -157,7 +197,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     if(count($resultado) > 0 && is_array($resultado)){
                                         foreach($resultado as $fila){
                                             ?>
-                                                <div id="timecardsLine">
+                                                <div class="Line">
                                                     <div class="TCRDcolumna">
                                                         <?php echo $fila['Name']; ?>
                                                     </div>
@@ -187,6 +227,120 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     }
                                 ?>
                             </div>
+                            <!-- -->
+                            <div id="projects" class="contOpc">
+                                <div class="InfoAm">
+                                    Projects
+                                </div>
+                                <div class="Line" style="background-color: rgb(250, 250, 248)">
+                                    <div class="PRJcolumna">
+                                        Name
+                                    </div>
+                                    <div class="PRJcolumna">
+                                        Sponsor
+                                    </div>
+                                    <div class="PRJcolumna">
+                                        Project Leader
+                                    </div>
+                                    <div class="more">
+                                    </div>
+                                </div>
+                                <?php
+                                    if(count($resultadoP) > 0 && is_array($resultadoP)){
+                                        foreach($resultadoP as $fila){
+                                            ?>
+                                                <div class="Line">
+                                                    <div class="PRJcolumna">
+                                                        <?php echo $fila['Name']; ?>
+                                                    </div>
+                                                    <div class="PRJcolumna">
+                                                        <?php echo $fila['SName']; ?>
+                                                    </div>
+                                                    <div class="PRJcolumna">
+                                                        <?php echo $fila['PLeader']; ?>
+                                                    </div>
+                                                    <div class="more">
+                                                        &nbsp;<i class="far fa-caret-square-down"></i>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <div id="timecardsLine">
+                                                <div class="TCRDcolumna">
+                                                    No timecards found
+                                                </div>
+                                            </div>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                            <!-- -->
+                            <!-- -->
+                            <div id="assignment" class="contOpc">
+                                <div class="InfoAm">
+                                    Assignments
+                                </div>
+                                <div class="Line" style="background-color: rgb(250, 250, 248)">
+                                    <div class="ASScolumna">
+                                        Name
+                                    </div>
+                                    <div class="ASScolumna">
+                                        BR
+                                    </div>
+                                    <div class="ASScolumna">
+                                        PR
+                                    </div>
+                                    <div class="ASScolumna">
+                                        Project
+                                    </div>
+                                    <div class="ASScolumna">
+                                        PO
+                                    </div>
+                                    <div class="more">
+                                    </div>
+                                </div>
+                                <?php
+                                    //var_dump($resultadinho);
+                                    //var_dump($ids);
+                                    if(count($resultadinho) > 0 && is_array($resultadinho)){
+                                        foreach($resultadinho as $fila){
+                                            ?>
+                                                <div class="Line">
+                                                    <div class="ASScolumna">
+                                                        <?php echo $fila['Name']; ?>
+                                                    </div>
+                                                    <div class="ASScolumna">
+                                                        <?php echo "$".$fila['BR']; ?>
+                                                    </div>
+                                                    <div class="ASScolumna">
+                                                        <?php echo "$".$fila['PR']; ?>
+                                                    </div>
+                                                    <div class="ASScolumna">
+                                                        <?php echo $fila['PR']; ?>
+                                                    </div>
+                                                    <div class="ASScolumna">
+                                                        <?php echo $fila['PO']; ?>
+                                                    </div>
+                                                    <div class="more">
+                                                        &nbsp;<i class="far fa-caret-square-down"></i>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <div id="timecardsLine">
+                                                <div class="TCRDcolumna">
+                                                    No timecards found
+                                                </div>
+                                            </div>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                            <!-- -->
                             <div id="details" class="contOpc">
                                 <form id ="detailsForm">
                                     <div class='datos'>
@@ -195,7 +349,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                                 Contact Owner
                                             </div>
                                             <div class="campoDato">
-                                                <?php 
+                                                <?php
                                                     echo $c['Firstname']." ".$c['Lastname'];
                                                 ?>
                                             </div>
@@ -230,7 +384,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                                 Mobile
                                             </div>
                                             <div class="campoDato">
-                                                <?php 
+                                                <?php
                                                     echo $c['Phone'];
                                                 ?>
                                                 <div class='lapiz'>
@@ -255,7 +409,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                                 Email
                                             </div>
                                             <div class="campoDato">
-                                                <?php 
+                                                <?php
                                                     echo $c['Email'];
                                                 ?>
                                                 <div class='lapiz'>
