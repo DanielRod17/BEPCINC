@@ -27,20 +27,22 @@ $(document).ready(function()
         frame.attr('src', w);
         frame.fadeIn(500);
     });*/
-    $(".projName").click(function(){
-        var Nombre =    $(this).attr('id');
-        var w =         "Administrators/Project.php?id="+Nombre;
+    $(".ctdName").click(function(){
         var frame = $("#load");
+        var Nombre =    $(this).attr('id');
+        var w =         "Administrators/Contact.php?id="+Nombre;
         frame.fadeOut(500, function () {
             $("#load").load(w);
             frame.fadeIn(500);
         });
-        //alert(Nombre + " " + w);
-        /*var frame = $('#load', window.parent.document);
+        /*var Nombre =    $(this).attr('id');
+        var w =         "Administrators/Contact.php?id="+Nombre;
+        var frame = $('#load', window.parent.document);
         frame.fadeOut(300, function () {
             frame.attr('src', w);
             frame.fadeIn(300);
-        });*/
+        });
+        */
     });
 });
 

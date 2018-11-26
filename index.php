@@ -6,8 +6,8 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <script src="Resources/Javascript/Login/LoginJS.js"></script>
-        <link rel="stylesheet" href="Resources/CSS/Login/Login_Layout.css">
+        <script src="Resources/Javascript/LoginJS.js"></script>
+        <link rel="stylesheet" href="Resources/CSS//Login_Layout.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <meta charset="UTF-8">

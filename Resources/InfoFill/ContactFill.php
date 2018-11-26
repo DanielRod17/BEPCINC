@@ -15,6 +15,7 @@ $Sponsor =              $_SESSION['consultor']['Sponsor'];
 $resultado =            array();
 //include('../Resources/WebResponses/connection.php');
 function DisplayTimecards($connection, $ID){
+  $totalCards =           0;
   $stmt =                 $connection->prepare("SELECT * FROM timecards WHERE ConsultorID=?");
   $stmt ->                bind_param('i', $I);
   $I =                    $ID;
@@ -26,6 +27,7 @@ function DisplayTimecards($connection, $ID){
   }
   call_user_func_array(array($stmt, 'bind_result'), $paramas);
   while ($stmt->fetch()) {
+      $totalCards++;
       foreach($rowa as $keya => $vala)
       {
           $d[$keya] = $vala;
@@ -37,7 +39,7 @@ function DisplayTimecards($connection, $ID){
   echo "
     <div id='timecards' class='contOpc cont'>
         <div class='InfoAm'>
-            Timecards +6
+            $totalCards Timecards
         </div>
         <div class='Line' style='background-color: rgb(250, 250, 248)'>
             <div class='TCRDcolumna'>
@@ -52,7 +54,7 @@ function DisplayTimecards($connection, $ID){
             <div class='more'>
             </div>
         </div>";
-            if(count($resultado) > 0 && is_array($resultado)){
+            if(!empty($resultado)){
                 foreach($resultado as $fila){
                     echo "<div class='Line'>
                         <div class='TCRDcolumna'>
@@ -70,11 +72,11 @@ function DisplayTimecards($connection, $ID){
                     </div>";
                 }
             }else{
-                echo "<div id='timecardsLine'>
-                    <div class='TCRDcolumna'>
+                echo "
+                    <div class='Line'>
                         No timecards found
                     </div>
-                </div>";
+                ";
             }
     echo "</div>";
 }
@@ -125,7 +127,7 @@ function DisplayProjects($connection, $ID){
             </div>
         </div>";
 
-            if(count($resultadoP) > 0 && is_array($resultadoP)){
+            if(!empty($resultadoP)){
                 foreach($resultadoP as $fila){
                   $content = $content."
                         <div class='Line'>
@@ -146,11 +148,9 @@ function DisplayProjects($connection, $ID){
                 }
             }else{
                 $content = $content."
-                    <div id='timecardsLine'>
-                        <div class='TCRDcolumna'>
-                            No timecards found
+                        <div class='Line'>
+                            No Projects found
                         </div>
-                    </div>
                 ";
             }
     $content = $content."</div>";
@@ -160,19 +160,23 @@ function DisplayProjects($connection, $ID){
 
 function DisplayAssignments($connection, $ID, $arregloProj){
 
-      $Assignments =  array();
-      $ids =          join(",",$arregloProj);
-      //$sql =          "SELECT * FROM assignment WHERE ProjectID IN ($ids)";
-      $sql =          "SELECT a.*, po.NoPO, project.Name as PName
-                      FROM assignment a
-                      INNER JOIN po ON (a.PO = po.ID)
-                      INNER JOIN project ON (a.ProjectID = project.ID)
-                      WHERE ProjectID IN (1, 2)";
-      $queryAss =     $connection->query($sql);
-      while($row = $queryAss->fetch_array()){
-          array_push($Assignments, $row);
+      if(!empty($arregloProj)){
+          $Assignments =  array();
+          $ids =          join(",",$arregloProj);
+          //$sql =          "SELECT * FROM assignment WHERE ProjectID IN ($ids)";
+          $sql =          "SELECT a.*, po.NoPO, project.Name as PName
+                          FROM assignment a
+                          INNER JOIN po ON (a.PO = po.ID)
+                          INNER JOIN project ON (a.ProjectID = project.ID)
+                          WHERE ProjectID IN ($ids)";
+          $queryAss =     $connection->query($sql);
+          while($row = $queryAss->fetch_array()){
+              array_push($Assignments, $row);
+          }
+          $resultadinho = $Assignments;
+      }else{
+          $resultadinho = array();
       }
-      $resultadinho = $Assignments;
 
       echo "<div id='assignment' class='contOpc cont'>
           <div class='InfoAm'>
@@ -200,7 +204,7 @@ function DisplayAssignments($connection, $ID, $arregloProj){
 
               //var_dump($resultadinho);
               //var_dump($ids);
-              if(count($resultadinho) > 0 && is_array($resultadinho)){
+              if(!empty($resultadinho)){
                   foreach($resultadinho as $fila){
                       echo "
                           <div class='Line'>
@@ -226,11 +230,10 @@ function DisplayAssignments($connection, $ID, $arregloProj){
                   }
               }else{
                   echo "
-                      <div id='timecardsLine'>
-                          <div class='TCRDcolumna'>
-                              No timecards found
+                          <div class='Line'>
+                              No assignments found
                           </div>
-                      </div>";
+                      ";
               }
         echo "</div>";
     }

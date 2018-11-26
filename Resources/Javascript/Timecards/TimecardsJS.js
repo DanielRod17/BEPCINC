@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,8 +11,8 @@ $(document).ready(function()
         var alertas = document.getElementById("alertas");
         setTimeout(() => {
             alertas.style.opacity = 0;
-        }, 0); 
-    }); 
+        }, 0);
+    });
     ////////
     window.onclick = function(event) {
         var modal =     document.getElementById("modal");
@@ -20,7 +20,7 @@ $(document).ready(function()
             hideProjects();
         }
     }
-    
+
     ////////
     $( ".project" ).autocomplete({
         source: "../Resources/WebResponses/AutocompleteProjectUser.php",
@@ -33,7 +33,7 @@ $(document).ready(function()
             alertas.style.opacity = 0;
         }, 0);
     });
-    
+
     $( ".hourDay" ).change(function() {
         //alert( "jejillo" );
         var total =         0;
@@ -64,7 +64,7 @@ function actualizarTabla(e){
     var fecha =             res[2] + "-"+ res[0] + "-" + res[1];
     res[0]--;
     $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
+        type:                   'post',
         url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function() {
@@ -85,7 +85,7 @@ function addDays(date, amount, type) {
     t = date.getTime(),
     d = new Date(),
     tzOff2;
-    
+
     if(type === '0')
         t -= (1000 * 60 * 60 * 24) * amount;
     else if(type === '1')
@@ -174,13 +174,13 @@ function guardarTimecard(){
     //alert ("Nombres\n" + Names);
     //alert ("Projects\n" + totalProjs);
     $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
+        type:                   'post',
         url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {checkNames: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             if(data === "Alles gut"){
                 $.ajax({ //PERFORM AN AJAX CALL
-                    type:                   'post', 
+                    type:                   'post',
                     url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
                     data:                   {insertar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
                     success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
@@ -219,16 +219,16 @@ function DisplayError(e){
     setTimeout(() => {
         alertas.style.opacity = 1;
     }, 0);
-    
+
     setTimeout(() => {
         alertas.style.opacity = 0;
-    }, 3000); 
+    }, 3000);
 }
 
 function Approve(){
     //alert("Aprobada Lemao");
     $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
+        type:                   'post',
         url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {finishTimecard: '1'}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
@@ -236,7 +236,7 @@ function Approve(){
             if(data === "Timecard Submitted!"){
                 document.getElementById('approve').disabled =           true;
                 document.getElementById('timeForms').reset();
-            }           
+            }
         }
     });
 }
@@ -269,4 +269,12 @@ function weekChange(e){
         }
         actualizarTabla(document.getElementById('datepicker'));
     }
+}
+
+function editTimecard(e){
+    alert("lolololol");
+}
+
+function viewTimecard(e){
+    alert("lalalalla");
 }

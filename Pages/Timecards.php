@@ -15,18 +15,22 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
     <html>
         <head>
-            <script src="../Resources/Javascript/Timecards/TimecardsJS.js"></script>
-            <link rel="stylesheet" href="../Resources/CSS/Timecards/Timecards_Layout.css">
+            <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_Layout.css">
+            <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
             <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
             <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+            <script src="../Resources/Javascript/Timecards/TimecardsJS.js"></script>
             <meta charset="UTF-8">
             <title>
             </title>
         </head>
         <body>
             <div id="contenedor">
+                <div class='titulo'>
+                    TIMECARDS
+                </div>
                 <div id="buscador">
                     <div id="searchParams">
                         <div>
@@ -37,7 +41,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Timecards
                             </div>
                             <div id="search">
-                                View 
+                                View
                                 <select id="parameter">
                                     <option value="1">All</option>
                                     <option value="2">Other</option>
@@ -50,75 +54,67 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         <button id="botonNew" onclick="nuevoTimecard();"><i class="fas fa-plus-circle"></i></button>
                     </div>
                 </div>
-                <div id="timecards">
-                    <div id="tableInfo">
+                <div class='infoTable'>
+                    <div class='contacto'>
+                        <div class='timeCard'>Timecard ID</div>
+                        <div class='resource'>Resource</div>
+                        <div class='startD'>Start Date</div>
+                        <div class='endD'>End Date</div>
+                        <div class='status'>Status</div>
+                        <div class='totalDays'>Days Worked</div>
+                        <div class='totalHours'>Total Hours</div>
                     </div>
-                    <table id="timeTable">
-                        <thead>
-                            <tr>
-                                <th>Timecard ID</th>
-                                <th>Resource</th>
-                                <th>Project</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                                <th>Total Days Worked</th>
-                                <th>Total Hours</th>
-                            </tr>
-                        </thead>
-                        <?php
+                    <?php
+                        if($_SESSION['consultor']['Type'] != '0'){
                             $query =            $connection->query("SELECT * FROM timecards WHERE ConsultorID='".$_SESSION['consultor']['ID']."'");
-                            while($row = $query->fetch_array()){
-                                $id =           $row['ID'];
-                                $start =        substr($row['StartingDay'], 0, 10);
-                                //$end =          strtotime(str_replace("/","-", $start));
-                                $end =          new DateTime($start);
-                                $end ->         add(new DateInterval('P6D'));
-                                $date =         $end ->format('Y-m-d');
-                                $queryDatos =   $connection->query("SELECT t.*, sponsor.Name as a, assignment.Name as b
-                                                                    FROM timecards t 
-                                                                    INNER JOIN sponsor ON (sponsor.ID = '".$_SESSION['consultor']['Sponsor']."') 
-                                                                    INNER JOIN assignment ON (assignment.ID = '".$_SESSION['consultor']['ID']."')");
-                                $queryDatosR =  $queryDatos->fetch_object();
-                                $Sponcor =      $queryDatosR->a;
-                                $Acign =        $queryDatosR->b;
-                                $timeID =       $queryDatosR->ID;
-                                $queryNo =      $connection->query("SELECT Name FROM assignment WHERE ID = (SELECT AssignmentID FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='$id' ORDER BY ID ASC Limit 1)");
-                                $queryNoR =     $queryNo->fetch_object();
-                                $nombrecito =   $queryNoR->Name;
-                                $hours =        0;
-                                $days =         0;
-                                
-                                $queryLineas =  $connection->query("SELECT AssignmentID, SUM(Mon), SUM(Tue), SUM(Wed), SUM(Thu), SUM(Fri), SUM(Sat), SUM(Sun) FROM `lineas` WHERE TimecardID='$id' GROUP BY AssignmentID");
-                                while($fila = $queryLineas->fetch_array()){
-                                    //if(intval($fila['AssignmentID']) >= 5 ){ ESTE
-                                    if(intval($fila['AssignmentID']) < 5 ){ 
-                                        for($j = 1 ; $j < 8; $j++){
-                                            $hours += $fila[$j];
-                                            if(intval($fila[$j]) !== 0){
-                                                $days++;
-                                            }
+                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
+                                                                FROM timecards t
+                                                                INNER JOIN consultors ON (consultors.ID = '".$_SESSION['consultor']['ID']."')");
+                        }
+                        else{
+                            $query =            $connection->query("SELECT * FROM timecards WHERE ID!='1'");
+                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
+                                                                    FROM timecards t
+                                                                    INNER JOIN consultors ON (consultors.ID = t.ID)");
+                        }
+                        while($row = $query->fetch_array()){
+                            $id =           $row['ID'];
+                            $start =        substr($row['StartingDay'], 0, 10);
+                            //$end =          strtotime(str_replace("/","-", $start));
+                            $end =          new DateTime($start);
+                            $end ->         add(new DateInterval('P6D'));
+                            $date =         $end ->format('Y-m-d');
+                            $queryDatosR =  $queryDatos->fetch_object();
+                            $Nombre =       $queryDatosR->firstN." ".$queryDatosR->lastN;
+                            $timeID =       $queryDatosR->ID;
+                            $hours =        0;
+                            $days =         0;
+
+                            $queryLineas =  $connection->query("SELECT AssignmentID, SUM(Mon), SUM(Tue), SUM(Wed), SUM(Thu), SUM(Fri), SUM(Sat), SUM(Sun) FROM `lineas` WHERE TimecardID='$id' GROUP BY AssignmentID");
+                            while($fila = $queryLineas->fetch_array()){
+                                //if(intval($fila['AssignmentID']) >= 5 ){ ESTE
+                                if(intval($fila['AssignmentID']) < 5 ){
+                                    for($j = 1 ; $j < 8; $j++){
+                                        $hours += $fila[$j];
+                                        if(intval($fila[$j]) !== 0){
+                                            $days++;
                                         }
                                     }
                                 }
-                                echo"
-                                    <tr>
-                                        <td>".$row['Name']."</td>
-                                        <td>$Sponcor</td>
-                                        <td>$nombrecito</td>
-                                        <td>$start</td>
-                                        <td>$date</td>
-                                        <td>Approved</td>
-                                        <td>$days</td>
-                                        <td>$hours</td>
-                                    </tr>
-                               ";   
                             }
-                        ?>
-                    </table>
-                </div>
-                <div id="bottom">
-                    
+                            echo"
+                                <div class='contacto'>
+                                    <div class='timeCard' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['Name']."</div>
+                                    <div class='resource'>$Nombre</div>
+                                    <div class='startD'>$start</div>
+                                    <div class='endD'>$date</div>
+                                    <div class='status'>Approved</div>
+                                    <div class='totalDays'>$days</div>
+                                    <div class='totalHours'>$hours</div>
+                                </div>
+                           ";
+                        }
+                    ?>
                 </div>
             </div>
         </body>

@@ -61,7 +61,7 @@ function DisplayBudgets($connection, $ID){
             <div class='more'>
             </div>
         </div>";
-            if(count($resultado) > 0 && is_array($resultado)){
+            if(!empty($resultado)){
                 foreach($resultado as $fila){
                     echo "<div class='Line'>
                         <div class='BUDcolumna'>
@@ -86,8 +86,8 @@ function DisplayBudgets($connection, $ID){
                 }
             }else{
                 echo "<div id='timecardsLine'>
-                    <div class='TCRDcolumna'>
-                        No timecards found
+                    <div class='Line'>
+                        No budgets found
                     </div>
                 </div>";
             }
@@ -140,7 +140,7 @@ function DisplayProjects($connection, $ID){
             </div>
         </div>";
 
-            if(count($resultadoP) > 0 && is_array($resultadoP)){
+            if(!empty($resultadoP)){
                 foreach($resultadoP as $fila){
                   $content = $content."
                         <div class='Line'>
@@ -162,8 +162,8 @@ function DisplayProjects($connection, $ID){
             }else{
                 $content = $content."
                     <div id='timecardsLine'>
-                        <div class='TCRDcolumna'>
-                            No timecards found
+                        <div class='Line'>
+                            No projects found
                         </div>
                     </div>
                 ";
@@ -175,19 +175,23 @@ function DisplayProjects($connection, $ID){
 
 function DisplayAssignments($connection, $ID, $arregloProj){
 
-      $Assignments =  array();
-      $ids =          join(",",$arregloProj);
-      //$sql =          "SELECT * FROM assignment WHERE ProjectID IN ($ids)";
-      $sql =          "SELECT a.*, po.NoPO, project.Name as PName
-                      FROM assignment a
-                      INNER JOIN po ON (a.PO = po.ID)
-                      INNER JOIN project ON (a.ProjectID = project.ID)
-                      WHERE ProjectID IN (1, 2)";
-      $queryAss =     $connection->query($sql);
-      while($row = $queryAss->fetch_array()){
-          array_push($Assignments, $row);
+      if(!empty($arregloProj)){
+          $Assignments =  array();
+          $ids =          join(",",$arregloProj);
+          //$sql =          "SELECT * FROM assignment WHERE ProjectID IN ($ids)";
+          $sql =          "SELECT a.*, po.NoPO, project.Name as PName
+                          FROM assignment a
+                          INNER JOIN po ON (a.PO = po.ID)
+                          INNER JOIN project ON (a.ProjectID = project.ID)
+                          WHERE ProjectID IN ($ids)";
+          $queryAss =     $connection->query($sql);
+          while($row = $queryAss->fetch_array()){
+              array_push($Assignments, $row);
+          }
+          $resultadinho = $Assignments;
+      }else{
+          $resultadinho = array();
       }
-      $resultadinho = $Assignments;
 
       echo "<div id='assignment' class='contOpc cont'>
           <div class='InfoAm'>
@@ -215,7 +219,7 @@ function DisplayAssignments($connection, $ID, $arregloProj){
 
               //var_dump($resultadinho);
               //var_dump($ids);
-              if(count($resultadinho) > 0 && is_array($resultadinho)){
+              if(!empty($resultadinho)){
                   foreach($resultadinho as $fila){
                       echo "
                           <div class='Line'>
@@ -242,8 +246,8 @@ function DisplayAssignments($connection, $ID, $arregloProj){
               }else{
                   echo "
                       <div id='timecardsLine'>
-                          <div class='TCRDcolumna'>
-                              No timecards found
+                          <div class='Line'>
+                              No assignments found
                           </div>
                       </div>";
               }

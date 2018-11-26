@@ -1,0 +1,88 @@
+.contacto{
+    width:                          100%;
+    height:                         25px;
+}
+.NameContact{
+    width:                          22%;
+    float:                          left;
+    cursor:                         pointer;
+}
+.AccName{
+    width:                          12%;
+    float:                          left;
+}
+.Phone{
+    width:                          22%;
+    float:                          left;
+}
+.Email{
+    width:                          22%;
+    float:                          left;
+}
+.ContactOw{
+    width:                          calc(22% - 80px);
+    float:                          left;
+}
+.contactoInfo{
+    margin-top:                     20px;
+    width:                          100%;
+    height:                         500px;
+    background-color:               red;
+    /*display:                        none;*/
+}
+
+
+/*Projects*/
+
+.proyecto{
+    width:                          100%;
+    height:                         25px;
+}
+.Name{
+    width:                          calc(30% - 80px);
+    float:                          left;
+    cursor:                         pointer;
+}
+.Sponsor{
+    width:                          23%;
+    float:                          left;
+}
+.Pleader{
+    width:                          23%;
+    float:                          left;
+}
+.Company{
+    width:                          24%;
+    float:                          left;
+}
+
+/* Timecards */
+
+.timeCard{
+    float:                           left;
+    width:                           22.5%;
+}
+.resource{
+    float:                           left;
+    width:                           22.5%;
+}
+.startD{
+    float:                           left;
+    width:                           12.5%;
+}
+.endD{
+    float:                           left;
+    width:                           12.5%;
+}
+.status{
+    float:                           left;
+    width:                           10%;
+}
+.totalDays{
+    float:                           left;
+    width:                           10%;
+}
+.totalHours{
+    float:                           left;
+    width:                           10%;
+}

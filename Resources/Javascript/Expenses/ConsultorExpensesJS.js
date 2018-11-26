@@ -23,7 +23,7 @@ $(document).ready(function()
 
     ////////
     $( ".project" ).autocomplete({
-        source: "../../Resources/WebResponses/AutocompleteProjectUser.php",
+        source: "../Resources/WebResponses/AutocompleteProjectUser.php",
         minLength: 0
     });
 
@@ -50,8 +50,8 @@ $(document).ready(function()
     });
 });
 
-function nuevoTimecard(){
-    var w =         "AddTimecard.php";
+function nuevoExpense(){
+    var w =         "AddExpense.php";
     var frame = $('#load', window.parent.document);
     frame.fadeOut(500, function () {
         frame.attr('src', w);
@@ -59,76 +59,24 @@ function nuevoTimecard(){
     });
 }
 
-function Search(nambre, fecha){
-    //
-
-    var table =         document.getElementById('timeTable');
-    var rowLength =     table.rows.length;
-    //alert(nambre + " " + fecha);
-    //
+function actualizarTabla(e){
+    var res =               e.value.split("/");
+    var fecha =             res[2] + "-"+ res[0] + "-" + res[1];
+    res[0]--;
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-        data:                   {nombreSearch: nambre, fechaSearch: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-        success: function(e) {
-            alert(e);
-            var lineas = JSON.parse(e);
-            for(var i = 0; i <= lineas.length; i++){
-                var row =   table.rows[i+1];
-                row.cells[0].children[1].value = lineas[i]['Name'];
-                row.cells[1].children[0].value = lineas[i]['Mon'];
-                row.cells[2].children[0].value = lineas[i]['Tue'];
-                row.cells[3].children[0].value = lineas[i]['Wed'];
-                row.cells[4].children[0].value = lineas[i]['Thu'];
-                row.cells[5].children[0].value = lineas[i]['Fri'];
-                row.cells[6].children[0].value = lineas[i]['Sat'];
-                row.cells[7].children[0].value = lineas[i]['Sun'];
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+        success: function() {
+            var fechaInicial =      new Date(res[2], res[0], res[1]);
+            var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
+            //alert(fechaInicial.toDateString());
+            for (var i = 0; i < 7 ; i++){
+                var d2 = addDays(fechaInicial, i, '0');
+                document.getElementById(days[i]).innerHTML = d2.toDateString().substring(0,10);
             }
         }
     });
-}
-
-function actualizarTabla(e){
-    if(e.value !== ""){
-        document.getElementById('sourceEm').disabled = false;
-        var res =               e.value.split("/");
-        var fecha =             res[2] + "-"+ res[0] + "-" + res[1];
-        res[0]--;
-        $.ajax({ //PERFORM AN AJAX CALL
-            type:                   'post',
-            url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-            data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-            success: function(e) {
-                var cadenita =  "";
-                var empleados = JSON.parse(e);
-                if(e.length > 2){
-                    $(".projItem").remove();
-                    for(var i = 0; i < empleados.length; i++){
-                        cadenita += "<div class='projItem' onclick=\"Search('"+empleados[i]['ID']+"', '"+fecha+"');\" >"+ empleados[i]['First'] +" "+ empleados[i]['Last'] +"</div>";
-                    }
-                    $( ".projectos" ).append( cadenita );
-                }
-                else
-                {
-                    $(".projItem").remove();
-                    $( ".projectos" ).append( cadenita );
-                }
-                var fechaInicial =      new Date(res[2], res[0], res[1]);
-                var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
-                //alert(fechaInicial.toDateString());
-                for (var i = 0; i < 7 ; i++){
-                    var d2 = addDays(fechaInicial, i, '0');
-                    document.getElementById(days[i]).innerHTML = d2.toDateString().substring(0,10);
-                }
-            }
-        });
-    }else{
-        document.getElementById('sourceEm').disabled = true;
-         var days = ['Sun', 'Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon'];
-        for (var i = 0; i < 7 ; i++){
-            document.getElementById(days[i]).innerHTML = days[i];
-        }
-    }
 }
 
 
@@ -169,7 +117,6 @@ function DisplayEmployees(){
 }
 
 function DisplayProjects(e){
-    document.getElementById("modalContent2").style.display =   'none';
     row =                           e;
     document.getElementById("modalContent").style.display =   'inline-block';
     var modales =                   document.getElementById("modal");
@@ -191,7 +138,7 @@ function hideProjects(){
 function AssignName(e){
     //alert(e.innerHTML);
     var nombreInput = "project " + row;
-    var name = document.getElementsByClassName(nombreInput)[0].value = e.innerHTML;
+    document.getElementsByClassName(nombreInput)[0].value = e.innerHTML;
     hideProjects();
 }
 
@@ -228,13 +175,13 @@ function guardarTimecard(){
     //alert ("Projects\n" + totalProjs);
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {checkNames: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             if(data === "Alles gut"){
                 $.ajax({ //PERFORM AN AJAX CALL
                     type:                   'post',
-                    url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+                    url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
                     data:                   {insertar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
                     success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
                         DisplayError(data);
@@ -282,7 +229,7 @@ function Approve(){
     //alert("Aprobada Lemao");
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {finishTimecard: '1'}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             DisplayError(data);
@@ -322,72 +269,4 @@ function weekChange(e){
         }
         actualizarTabla(document.getElementById('datepicker'));
     }
-}
-
-function updateTimecard(){
-    var banderita =     0;
-    var table =         document.getElementById('timeTable');
-    var rowLength =     table.rows.length;
-    var totalProjs =    new Array();
-    var Names =         new Array();
-    for(var i = 1; i < rowLength; i++){
-        var row = table.rows[i];
-        //your code goes here, looping over every row.
-        //cells are accessed as easy
-        //var cellLength = row.cells.length;
-        banderita = 1;
-        var Name =  row.cells[0].children[1].value;
-        var Mon =   row.cells[1].children[0].value;
-        var Tue =   row.cells[2].children[0].value;
-        var Wed =   row.cells[3].children[0].value;
-        var Thu =   row.cells[4].children[0].value;
-        var Fri =   row.cells[5].children[0].value;
-        var Sat =   row.cells[6].children[0].value;
-        var Sun =   row.cells[7].children[0].value;
-        ;
-        if(Name !== ""){
-            var info = new Array(Name, Mon, Tue, Wed, Thu, Fri, Sat, Sun);
-            totalProjs.push(info);
-            Names.push(Name);
-        }
-    }
-    //alert ("Nombres\n" + Names);
-    //alert ("Projects\n" + totalProjs);
-    $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-        data:                   {checkNaems: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-        success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
-            if(data === "Alles gut"){
-                $.ajax({ //PERFORM AN AJAX CALL
-                    type:                   'post',
-                    url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-                    data:                   {actualizar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-                    success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
-                        DisplayError(data);
-                        if(data === "Timecard Saved! Leaving the page will delete it"){
-                            document.getElementById('approve').disabled =           false;
-                            for(var i = 1; i < rowLength; i++){
-                                var row = table.rows[i];
-                                if(row.cells[0].children[1].value !== ""){
-                                    row.cells[9].innerHTML = 'Saved';
-                                }
-                            }
-                        }
-                        /*window.parent.$("body").animate({scrollTop:0}, 'fast');
-                        if(data == "User Added Successfully"){
-                            //document.getElementById('newCustomer').reset();
-                        }*/
-                    }
-                });
-            }else{
-                DisplayError(data);
-            }
-            /*window.parent.$("body").animate({scrollTop:0}, 'fast');
-            if(data == "User Added Successfully"){
-                //document.getElementById('newCustomer').reset();
-            }*/
-        }
-    });
-    return false;
 }
