@@ -17,17 +17,9 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
     ?>
     <html>
         <head>
-            <link rel="stylesheet" href="../Resources/CSS/MasterCSS.css">
-            <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-
-            <script src="../Resources/Javascript/Sponsor/SponsorJS.js"></script>
             <link href="../Resources/CssAuto/css/jqueryui.css" type="text/css" rel="stylesheet"/>
+            <link rel="stylesheet" href="../Resources/CSS/MasterCSS.css">
+            <script src="../Resources/Javascript/SponsorJS.js"></script>
             <meta charset="UTF-8">
             <title>
 
@@ -56,10 +48,18 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     </div>
                     <div class="Linea">
                         <div class="plaecHolder">
-                            Company
+                            Phone
                         </div>
                         <div class="entrada">
-                            <input type='text' class='unico' id='Company' required style="width: 50%;" >
+                            <input type='text' class='unico' id='Phone' required style="width: 50%;" step="0.01">
+                        </div>
+                    </div>
+                    <div class="Linea">
+                        <div class="plaecHolder">
+                            Manager's Name
+                        </div>
+                        <div class="entrada">
+                            <input type='text' class='unico' id='MName' style="width: 50%;" >
                         </div>
                     </div>
                     <div class="Linea" style="margin-bottom: 30px;">

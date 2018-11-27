@@ -11,67 +11,78 @@ session_start();
 if (isset($_POST['informacion'])  && !isset($_POST['updateInfo'])){
     $arreglo =              $_POST['informacion'];
     ///////////////////
-    if(strlen($arreglo[0]) >= 5){
-        if($arreglo[1] === $arreglo[2]){
-            if(strlen($arreglo[1]) >= 5 ){
-                if(is_numeric($arreglo[9])){
-                    //$querty =           $connection->query("SELECT ID FROM consultors WHERE SN = '".$arreglo[0]."'");
-                    $querty =           $connection->prepare("SELECT ID FROM consultors WHERE SN = ?");
-                    $querty ->          bind_param("s", $nome);
-                    $nome =             $arreglo[0];
-                    $querty ->          execute();
-                    $querty ->          store_result();
-                    if($querty -> num_rows == 0){
-                        try{
-                            $queryID =          $connection->query("SELECT ID FROM consultors ORDER BY ID DESC Limit 1");
-                            $queryID =          $queryID->fetch_object();
-                            $ID =               $queryID->ID;
-                            $ID =               $ID+1;
-                            $insertar =         $connection->prepare("INSERT INTO consultors (ID, SN, Firstname, Lastname, Email, Roster, State, Type, Hash, Status, Phone, Sponsor, Assignment, Schedule) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                            $insertar ->        bind_param('issssssisisssi', $I, $S, $F, $L, $E, $R, $St, $T, $H, $Sta, $P, $Sp, $As, $Sch);
-                            $I =                $ID;
-                            $S =                $arreglo[0];
-                            $F =                $arreglo[3];
-                            $L =                $arreglo[4];
-                            $E =                $arreglo[5]; //
-                            $St =               $arreglo[7];
-                            $R =                $arreglo[6];
-                            $P =                $arreglo[10];
-                            $Sp =               $arreglo[11];
-                            $As =               $arreglo[12];
-                            $Sch =              $arreglo[9];
-                            if($R == "MX"){
-                                $St = "";
-                            }
-                            $T =                    $arreglo[8];
-                            $H =                    sha1($arreglo[1]);
-                            $Sta =                  1;
-                            $insertar ->            execute();
-                            ///////////////////          
-                            //var_dump($arreglo);
-                            //var_dump($insertar);
-                            //echo " $I $S $F $L $E  $St $R $P $Sp $As $User $insertar User Added Successfully";
-                            echo "User Added Successfully";
-                            $insertar ->            close();
-                        }catch (Exception $e) {
-                            echo $e->getMessage();
-                        }
-                    }else{
-                        echo "Username Already Exists";
+    if($arreglo[1] === $arreglo[2]){
+        if(strlen($arreglo[1]) >= 5 ){
+            if(is_numeric($arreglo[21])){
+                //$querty =           $connection->query("SELECT ID FROM consultors WHERE SN = '".$arreglo[0]."'");
+                $querty =           $connection->prepare("SELECT ID FROM consultors WHERE Email = ?");
+                $querty ->          bind_param("s", $email);
+                $email =            $arreglo[0];
+                $querty ->          execute();
+                $querty ->          store_result();
+                if($querty -> num_rows == 0){
+                    try{
+                        $queryID =          $connection->query("SELECT ID FROM consultors ORDER BY ID DESC Limit 1");
+                        $queryID =          $queryID->fetch_object();
+                        $ID =               $queryID->ID;
+                        $ID =               $ID+1;
+                        $insertar =         $connection->prepare("INSERT INTO consultors (ID, Firstname, Lastname, Email, Phone, EmergencyPhone, ReportsTo, Title, Division, FunctionalArea, StartDate, EndDate, MailingAddress, MailingCity, MailingState, MailingCountry, ZipCode, NSS, RFC, Type, Schedule, Hash, Status)
+                                                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $insertar ->        bind_param('isssssisissssiiisssiisi', $I, $F, $L, $E, $P, $Ep, $Rt, $T, $D, $FA, $SD, $ED, $MA, $MC, $MS, $MCo, $Z, $NSS, $RFC, $Type, $Sch, $H, $St);
+
+                        $I =                $ID;
+                        $E =                $arreglo[0];
+                        $H =                sha1($arreglo[1]);
+                        $F =                $arreglo[3];
+                        $L =                $arreglo[4];
+                        $P =                $arreglo[5]; //
+                        $Ep =               $arreglo[6];
+                        $Rt =               $arreglo[7];
+                        //////////////////////////
+                        $Feca =             $arreglo[8];
+                        $Feca =             explode("/", $Feca);
+                        $SD =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+
+
+                        $Feca =             $arreglo[9];
+                        $Feca =             explode("/", $Feca);
+                        $ED =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+                        //////////////////////////
+                        $T =                $arreglo[10];
+                        $D =                $arreglo[11];
+                        $FA =               $arreglo[12];
+                        $MA =               $arreglo[13];
+                        $MCo =              $arreglo[14];
+                        $MS =               $arreglo[15];
+                        $MC =               $arreglo[16];
+                        $Z =                $arreglo[17];
+                        $NSS =              $arreglo[18];
+                        $RFC =              $arreglo[19];
+                        $Type =             $arreglo[20];
+                        $Sch =              $arreglo[21];
+                        $St =               1;
+                        $insertar ->        execute();
+                        ///////////////////
+                        //var_dump($arreglo);
+                        //var_dump($insertar);
+                        //echo " $I $S $F $L $E  $St $R $P $Sp $As $User $insertar User Added Successfully";
+                        echo "User Added Successfully";
+                        $insertar ->            close();
+                    }catch (Exception $e) {
+                        echo $e->getMessage();
                     }
                 }else{
-                    echo "Select a Schedule";
+                    echo "Email Already Registered";
                 }
             }else{
-                echo "Passwords Must Be At Least 5 Characters Long";
+                echo "Select a Schedule";
             }
         }else{
-            echo "Passwords Must Match";
+            echo "Passwords Must Be At Least 5 Characters Long";
         }
     }else{
-        echo "Username Must Include At Least 5 characters";
+        echo "Passwords Must Match";
     }
-    //var_dump($_POST['informacion']);
 }
 
 if(isset($_POST['usuario'])){
@@ -173,4 +184,45 @@ if (isset($_POST['updateInfo'])){
             echo "Username Must Include At Least 5 characters";
         }
     }
+}
+
+if(isset($_POST['getStates'])){
+    $output =               array();
+    $cities =               array();
+    $states =               array();
+    $state =                "";
+    $country =              $_POST['getStates'];
+    $statesSTMT =           $connection->prepare("SELECT id, name FROM states WHERE country_id=?");
+    $statesSTMT ->          bind_param("s", $country);
+    $statesSTMT ->          execute();
+    $statesSTMT ->          bind_result($ID, $name);
+    while($statesSTMT -> fetch()){
+        if($state == ""){
+            $state =          $ID;
+        }
+        $array =                    array("ID" => $ID, "Name" => $name);
+        array_push($states, $array);
+    }
+    array_push($output, $states);
+    $query =               $connection->query("SELECT id, name FROM cities WHERE state_id='$state'");
+    while($row = $query->fetch_array()){
+        $array =              array("ID" => $row['id'], "Name" => $row['name']);
+        array_push($cities, $array);
+    }
+    array_push($output, $cities);
+    echo json_encode($output);
+}
+
+if(isset($_POST['getCities'])){
+    $cities =               array();
+    $state =                $_POST['getCities'];
+    $citiesSTMT =           $connection->prepare("SELECT id, name FROM cities WHERE state_id=?");
+    $citiesSTMT ->          bind_param("s", $state);
+    $citiesSTMT ->          execute();
+    $citiesSTMT ->          bind_result($ID, $name);
+    while($citiesSTMT -> fetch()){
+        $array =                    array("ID" => $ID, "Name" => $name);
+        array_push($cities, $array);
+    }
+    echo json_encode($cities, JSON_UNESCAPED_UNICODE );
 }

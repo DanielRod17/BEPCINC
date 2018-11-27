@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,17 +14,21 @@ $(document).ready(function()
         var alertas = document.getElementById("alertas");
         setTimeout(() => {
             alertas.style.opacity = 0;
-        }, 0); 
-    }); 
+        }, 0);
+    });
 });
 
 
 function RevisarInfo(){
-    var number =      document.getElementById('Number').value;
-    var ammount =     document.getElementById('Ammount').value;
-    var info = new Array(number, ammount);
+    var info =          new Array();
+    var Form =          document.getElementById('PO');
+    var childs =        Form.elements;
+    for(I = 0; I < childs.length - 1; I++) {
+        var Value =       childs[I].value;
+        info.push(Value);
+    }
     $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
+        type:                   'post',
         url:                    '../Resources/WebResponses/PoAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {newPO: '1', informacion: info}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
@@ -44,7 +48,7 @@ function DisplayError(e){
     alertas.innerHTML = e;
     setTimeout(() => {
         alertas.style.opacity = 1;
-    }, 0);   
+    }, 0);
 }
 
 function EnableStates(e){
@@ -54,4 +58,3 @@ function EnableStates(e){
         document.getElementById('State').disabled = true;
     }
 }
-

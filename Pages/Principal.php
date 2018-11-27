@@ -7,13 +7,20 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
     <html>
         <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="../Resources/Javascript/PrincipalJS.js"></script>
-        <link rel="stylesheet" href="../Resources/CSS/Principal_Layout.css">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-        <meta charset="UTF-8">
-        <title></title>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="../Resources/Javascript/PrincipalJS.js"></script>
+            <link rel="stylesheet" href="../Resources/CSS/Principal_Layout.css">
+            <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+            <meta charset="UTF-8">
+            <title></title>
         </head>
         <body onscroll="DetectScroll();" onload=" DetectScroll();">
             <div id="contenedorPrincipal">

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -11,7 +11,6 @@ session_start();
 if(isset($_POST['newPO'])){
     $arreglo =          $_POST['informacion'];
     $number =           $arreglo[0];
-    $ammount =          $arreglo[1];
     $querty =           $connection->prepare("SELECT ID FROM po WHERE NoPO = ?");
     $querty ->          bind_param("s", $number);
     $querty ->          execute();
@@ -25,11 +24,13 @@ if(isset($_POST['newPO'])){
             $ID =               $queryID->ID;
             $ID =               $ID+1;
         }
-        $insertar =         $connection->prepare("INSERT INTO po (ID, NoPO, Ammount) VALUES (?, ?, ?)");
-        $insertar ->        bind_param('iss', $I, $N, $A);
+        $insertar =         $connection->prepare("INSERT INTO po (ID, NoPO, Ammount, Currency, Status) VALUES (?, ?, ?, ?, ?)");
+        $insertar ->        bind_param('issii', $I, $N, $A, $C, $S);
         $I =                $ID;
-        $N =                $number;
-        $A =                $ammount;
+        $N =                $arreglo[0];
+        $A =                $arreglo[1];
+        $C =                $arreglo[2];
+        $S =                $arreglo[3];
         $insertar ->        execute();
         $insertar ->        close();
         echo "PO Added";
