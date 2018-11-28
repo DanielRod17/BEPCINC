@@ -305,3 +305,43 @@ if(isset($_POST['checkNaems'])){
         echo "Select at least one project";
     }
 }
+
+if(isset($_POST['cardSearch'])){
+    $arreglo =          array();
+    $output =           array();
+    $fecha =            "";
+    $nombreSe =         "";
+    //$_SESSION['fechaSearch'] =  $fecha;
+    //$_SESSION['nombreSearch'] = $nombre;
+    $query =                    $connection->prepare(" SELECT lineas.*, assignment.Name, timecards.StartingDay
+                                                      FROM lineas
+                                                      LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID
+                                                      LEFT JOIN timecards ON lineas.TimecardID = timecards.ID
+                                                      WHERE lineas.TimecardID = ?");
+    $query ->                   bind_param("i", $idi);
+    $idi =                      $_POST['cardSearch'];
+    $query ->                   execute();
+    $meta =                     $query->result_metadata();
+    while ($field = $meta->fetch_field())
+    {
+        $params[] = &$row[$field->name];
+    }
+    call_user_func_array(array($query, 'bind_result'), $params);
+    while ($query->fetch()) {
+        foreach($row as $key => $val)
+        {
+            $c[$key] = $val;
+            if($key == "StartingDay" && $fecha == ""){
+                $_SESSION['fechaSearch'] = $val;
+            }
+            if($key == "ConsultorID" && $nombreSe == ""){
+                $_SESSION['nombreSearch'] = $val;
+            }
+        }
+        $result[] = $c;
+        array_push($arreglo, $result);
+    }
+    array_push($output, $arreglo);
+    array_push($output, $_SESSION['fechaSearch']);
+    echo json_encode($output);
+}

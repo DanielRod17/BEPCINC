@@ -91,7 +91,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 </div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddPO.php');" >POs</div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddSponsor.php');" >Sponsors</div>
-                                <div class='opcion' onclick="LoadPage('Administrators/Projects.php');" >Projects</div>
+                                <div class='opcion' onclick="LoadPage('Administrators/AddProject.php');" >Projects</div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddAssignment.php');" >
                                     Assignments
                                     <div class="dropdown-content">

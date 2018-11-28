@@ -33,12 +33,20 @@ if(isset($_POST['newProject'])){
                 $ID =               $queryID->ID;
                 $ID =               $ID+1;
             }
-            $insertar =         $connection->prepare("INSERT INTO project (ID, Name, SponsorID, PLeader, Status) VALUES (?, ?, ?, ?, 1)");
-            $insertar ->        bind_param('isss', $I, $N, $S, $P);
+            $queryMgr =         $connection->query("SELECT ManagerID FROM sponsor WHERE ID='$IDSp'");
+            $queryMgrR =        $queryMgr->fetch_object();
+            $mgrID =            $queryMgrR->ManagerID;
+            $insertar =         $connection->prepare("INSERT INTO project (ID, Name, SponsorID, PLeader, Status, StartDate, EndDate, ManagerID) VALUES (?, ?, ?, ?, 1, ?, ?, ?)");
+            $insertar ->        bind_param('isisssi', $I, $N, $S, $P, $SD, $ED, $M);
             $I =                $ID;
             $N =                $name;
             $S =                $IDSp;
             $P =                $leader;
+            $Feca =             explode("/", $arreglo[3]);
+            $SD =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+            $Feca =             explode("/", $arreglo[4]);
+            $ED =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+            $M =                $mgrID;
             $insertar ->        execute();
             $insertar ->        close();
             echo "Project Added";

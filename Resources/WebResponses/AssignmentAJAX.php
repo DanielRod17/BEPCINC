@@ -11,11 +11,14 @@ session_start();
 if(isset($_POST['newAssignment'])){
     $arreglo =          $_POST['informacion'];
     $name =             $arreglo[0];
-    $project =          $arreglo[1];
-    $po =               $arreglo[2];
-    $br =               $arreglo[3];
-    $pr =               $arreglo[4];
-    $em =               $arreglo[5];
+    $project =          $arreglo[3];
+    $po =               $arreglo[4];
+    $br =               $arreglo[1];
+    $pr =               $arreglo[2];
+    $noem =             explode("(", $arreglo[5]);
+    $noem =             explode(" ", $noem[0]);
+    $fm =               $noem[0];
+    $lm =               $noem[1];
     $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ?");
     $querty ->          bind_param("s", $name);
     $querty ->          execute();
@@ -31,8 +34,8 @@ if(isset($_POST['newAssignment'])){
             $queryPo ->        execute();
             $queryPo ->        store_result();
             if($queryPo -> num_rows > 0){
-                $queryUs =         $connection->prepare("SELECT ID FROM consultors WHERE SN = ?");
-                $queryUs ->        bind_param("s", $em);
+                $queryUs =         $connection->prepare("SELECT ID FROM consultors WHERE Firstname = ? AND Lastname = ?");
+                $queryUs ->        bind_param("ss", $fm, $lm);
                 $queryUs ->        execute();
                 $queryUs ->        store_result();
                 if($queryUs -> num_rows > 0){
@@ -44,14 +47,16 @@ if(isset($_POST['newAssignment'])){
                         $ID =               $queryID->ID;
                         $ID =               $ID+1;
                     }
+                    $queryUs ->         bind_result($consID);
+                    $queryUs ->         fetch();
                     $queryPro ->        bind_result($Pro);
                     $queryPro ->        fetch();
                     $queryPo ->         bind_result($PuO);
                     $queryPo ->         fetch();
                     $queryUs ->         bind_result($Cons);
                     $queryUs ->         fetch();
-                    $insertar =         $connection->prepare("INSERT INTO assignment (ID, Name, BR, PR, ProjectID, PO) VALUES (?, ?, ?, ?, ?, ?)");
-                    $insertar ->        bind_param('isddii', $I, $N, $B, $P,$PI, $PO);
+                    $insertar =         $connection->prepare("INSERT INTO assignment (ID, Name, BR, PR, ProjectID, PO, ConsultorID, StartDate, EndDate, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+                    $insertar ->        bind_param('isddiiiss', $I, $N, $B, $P,$PI, $PO, $CI, $SD, $ED);
                     $I =                $ID;
                     $N =                $name;
                     $B =                $br;
@@ -59,6 +64,14 @@ if(isset($_POST['newAssignment'])){
                     $PI =               $Pro;
                     $PO =               $PuO;
                     $Us =               $Cons;
+                    $CI =               $consID;
+                    /////////////
+                    $Feca =             explode("/", $arreglo[6]);
+                    $SD =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+
+                    $Feca =             explode("/", $arreglo[7]);
+                    $ED =               $Feca[2]."-".$Feca[0]."-".$Feca[1];
+                    /////////////
                     $insertar ->        execute();
                     $insertar ->        close();
 

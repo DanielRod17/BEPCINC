@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,19 +6,19 @@
 
 $(document).ready(function()
 {
-    
+
     $( "#Employee" ).autocomplete({
-        source: "../Resources/WebResponses/AutocompleteConsultor.php",
+        source: "../Resources/WebResponses/Autocomplete/AutocompleteConsultor.php",
         minLength: 0
     });
-    
+
     $( "#Project" ).autocomplete({
-        source: "../Resources/WebResponses/AutocompleteProject.php",
+        source: "../Resources/WebResponses/Autocomplete/AutocompleteProject.php",
         minLength: 0
     });
-    
+
     $( "#PO" ).autocomplete({
-        source: "../Resources/WebResponses/AutocompletePO.php",
+        source: "../Resources/WebResponses/Autocomplete/AutocompletePO.php",
         minLength: 0
     });
 
@@ -33,15 +33,15 @@ $(document).ready(function()
 
 
 function RevisarInfo(){
-    var name =          document.getElementById('Name').value;
-    var project =       document.getElementById('Project').value;
-    var po =            document.getElementById('PO').value;
-    var br =            document.getElementById('BR').value;
-    var pr =            document.getElementById('PR').value;
-    var em =            document.getElementById('Employee').value;
-    var info = new Array(name, project, po, br, pr, em);
+    var info =          new Array();
+    var Form =          document.getElementById('Assignment');
+    var childs =        Form.elements;
+    for(I = 0; I < childs.length - 1; I++) {
+        var Value =       childs[I].value;
+        info.push(Value);
+    }
     $.ajax({ //PERFORM AN AJAX CALL
-        type:                   'post', 
+        type:                   'post',
         url:                    '../Resources/WebResponses/AssignmentAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {newAssignment: '1', informacion: info}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
@@ -61,5 +61,5 @@ function DisplayError(e){
     alertas.innerHTML = e;
     setTimeout(() => {
         alertas.style.opacity = 1;
-    }, 0);   
+    }, 0);
 }

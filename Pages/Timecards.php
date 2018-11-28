@@ -16,10 +16,6 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         <head>
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_Layout.css">
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
-            <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
             <script src="../Resources/Javascript/Timecards/TimecardsJS.js"></script>
             <meta charset="UTF-8">
             <title>
@@ -50,7 +46,12 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         </div>
                     </div>
                     <div id="new">
-                        <button id="botonNew" onclick="nuevoTimecard();"><i class="fas fa-plus-circle"></i></button>
+                        <?php if($_SESSION['consultor']['Type'] == '2'){
+                        ?>
+                            <button id="botonNew" onclick="nuevoTimecard();"><i class="fas fa-plus-circle"></i></button>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class='infoTable'>
@@ -103,7 +104,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             }
                             echo"
                                 <div class='contacto'>
-                                    <div class='timeCard' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['Name']."</div>
+                                    <div class='timeCard' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['Name']."</div>
                                     <div class='resource'>$Nombre</div>
                                     <div class='startD'>$start</div>
                                     <div class='endD'>$date</div>

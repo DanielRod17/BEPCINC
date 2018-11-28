@@ -51,10 +51,20 @@ $(document).ready(function()
 });
 
 function nuevoTimecard(){
-    var w =         "AddTimecard.php";
+    /*var w =         "AddTimecard.php";
     var frame = $('#load', window.parent.document);
     frame.fadeOut(500, function () {
         frame.attr('src', w);
+        frame.fadeIn(500);
+    });*/
+    var frame = $("#load");
+    var e = "Consultors/AddTimecard.php";
+    //frame.load(e);
+    frame.fadeOut(500, function () {
+        //frame.attr('src', 'Warehouse/index.php');
+        //goHome.attr('class', 'Warehouse/index.php');
+        //frame.fadeIn(500);
+        $("#load").load(e);
         frame.fadeIn(500);
     });
 }
@@ -272,7 +282,16 @@ function weekChange(e){
 }
 
 function editTimecard(e){
-    alert("lolololol");
+    var frame = $("#load");
+    var e = "Administrators/AdminCards.php?id="+e;
+    //frame.load(e);
+    frame.fadeOut(500, function () {
+        //frame.attr('src', 'Warehouse/index.php');
+        //goHome.attr('class', 'Warehouse/index.php');
+        //frame.fadeIn(500);
+        $("#load").load(e);
+        frame.fadeIn(500);
+    });
 }
 
 function viewTimecard(e){

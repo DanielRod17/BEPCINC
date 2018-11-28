@@ -16,23 +16,8 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
     <html>
         <head>
-            <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-
-
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <link rel="stylesheet" href="/resources/demos/style.css">
-            <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-            <script src="../../Resources/Javascript/Timecards/TimecardsJS.js"></script>
-            <link rel="stylesheet" href="../../Resources/CSS/Timecards/Timecards_Layout.css">
+            <script src="../Resources/Javascript/Timecards/TimecardsJS.js"></script>
+            <link rel="stylesheet" href="../Resources/CSS/Timecards/Timecards_Layout.css">
             <script>
                 $( function() {
                     $( "#datepicker" ).datepicker({
@@ -106,9 +91,6 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <button id="searchButton">Go!</button>
                             </div>
                         </div>
-                    </div>
-                    <div id="new">
-                        <button id="botonNew" onclick="nuevoTimecard();"><i class="fas fa-plus-circle"></i></button>
                     </div>
                 </div>
                 <div id="timecards">

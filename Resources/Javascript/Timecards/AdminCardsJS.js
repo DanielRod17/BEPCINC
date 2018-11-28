@@ -23,7 +23,7 @@ $(document).ready(function()
 
     ////////
     $( ".project" ).autocomplete({
-        source: "../../Resources/WebResponses/AutocompleteProjectUser.php",
+        source: "../Resources/WebResponses/AutocompleteProjectUser.php",
         minLength: 0
     });
 
@@ -68,7 +68,7 @@ function Search(nambre, fecha){
     //
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {nombreSearch: nambre, fechaSearch: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(e) {
             alert(e);
@@ -96,7 +96,7 @@ function actualizarTabla(e){
         res[0]--;
         $.ajax({ //PERFORM AN AJAX CALL
             type:                   'post',
-            url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+            url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
             data:                   {fecha: fecha}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
             success: function(e) {
                 var cadenita =  "";
@@ -228,13 +228,13 @@ function guardarTimecard(){
     //alert ("Projects\n" + totalProjs);
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {checkNames: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             if(data === "Alles gut"){
                 $.ajax({ //PERFORM AN AJAX CALL
                     type:                   'post',
-                    url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+                    url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
                     data:                   {insertar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
                     success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
                         DisplayError(data);
@@ -282,7 +282,7 @@ function Approve(){
     //alert("Aprobada Lemao");
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {finishTimecard: '1'}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             DisplayError(data);
@@ -355,13 +355,13 @@ function updateTimecard(){
     //alert ("Projects\n" + totalProjs);
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {checkNaems: '1', names: Names}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             if(data === "Alles gut"){
                 $.ajax({ //PERFORM AN AJAX CALL
                     type:                   'post',
-                    url:                    '../../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+                    url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
                     data:                   {actualizar: '1', lineas: totalProjs, delete: banderita}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
                     success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
                         DisplayError(data);
@@ -390,4 +390,36 @@ function updateTimecard(){
         }
     });
     return false;
+}
+
+function cargarTimecard(e){
+    var table =         document.getElementById('timeTable');
+    var rowLength =     table.rows.length;
+    //alert(nambre + " " + fecha);
+    //
+    $.ajax({ //PERFORM AN AJAX CALL
+        type:                   'post',
+        url:                    '../Resources/WebResponses/TimecardsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        data:                   {cardSearch: e}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
+        success: function(e) {
+            var info =        JSON.parse(e);
+            var lineas =      info[0][0];
+            var fecha =       info[1].substr(0, 10);
+            var cadena =      fecha.split("-");
+            var feca =           cadena[1] + "/" + cadena[2] + "/" + cadena[0];
+            document.getElementById('datepicker').value = feca;
+            actualizarTabla(document.getElementById('datepicker'));
+            for(var i = 0; i <= lineas.length; i++){
+                var row =   table.rows[i+1];
+                row.cells[0].children[1].value = lineas[i]['Name'];
+                row.cells[1].children[0].value = lineas[i]['Mon'];
+                row.cells[2].children[0].value = lineas[i]['Tue'];
+                row.cells[3].children[0].value = lineas[i]['Wed'];
+                row.cells[4].children[0].value = lineas[i]['Thu'];
+                row.cells[5].children[0].value = lineas[i]['Fri'];
+                row.cells[6].children[0].value = lineas[i]['Sat'];
+                row.cells[7].children[0].value = lineas[i]['Sun'];
+            }
+        }
+    });
 }

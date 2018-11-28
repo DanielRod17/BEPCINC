@@ -3,7 +3,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
-/* 
+/*
     Created on : Oct 22, 2018, 9:26:18 AM
     Author     : luisr
 */
@@ -50,6 +50,7 @@ body, html{
     font-family:                    'Cairo';
     font-size:                      40px;
     font-weight:                    bold;
+    margin-top:                     20px;
     margin-bottom:                  20px;
 }
 .plaecHolder{
