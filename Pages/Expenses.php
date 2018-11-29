@@ -9,19 +9,15 @@ session_start();
 //echo $_SESSION['dataBase']. " ". $_SESSION['loggedin']. " ". $_SESSION['userID']. " ". $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
-$Sponsor =              $_SESSION['consultor']["Sponsor"];
-include('../../Resources/WebResponses/connection.php');
+include('../Resources/WebResponses/connection.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
 ?>
     <html>
         <head>
-            <link rel="stylesheet" href="../../Resources/CSS/Listas_Contenido/Listas_Layout.css">
-            <link rel="stylesheet" href="../../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
-            <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-            <script src="../../Resources/Javascript/Expenses/AdminExpensesJS.js"></script><meta charset="UTF-8">
+            <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_Layout.css">
+            <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
+            <script src="../Resources/Javascript/Expenses/AdminExpensesJS.js"></script>
+            <meta charset="UTF-8">
             <title>
             </title>
         </head>
@@ -63,10 +59,17 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             <div class="Company">COMPANY</div>
                         </div>
                         <?php
-                            $query =            $connection->query("SELECT p.*, sponsor.Name as SName, sponsor.Company as SCom
+                            /*$query =            $connection->query("SELECT p.*, sponsor.Name as SName, account_manager.SubAccountID as SAID ,subaccount.Name as Company
                                                                   FROM project p
                                                                   INNER JOIN sponsor ON( p.SponsorID = sponsor.ID)
-                                                                  WHERE Status='1'");
+                                                                  INNER JOIN account_manager ON(sponsor.ManagerID = account_manager.ID)
+                                                                  INNER JOIN subaccount ON(subaccount.ID = account_manager.SubAccountID)
+                                                                  WHERE Status='1'");*/
+                            if($_SESSION['consultor']['Type'] == 2){
+                                $query =          $connection->query("SELECT * FROM travels WHERE AssignmentID IN (SELECT ID FROM assignment WHERE ConsultorID='".$_SESSION['consultor']['ID']."')");
+                            }else{
+                                $query =          $connection->query("SELECT * FROM travels");
+                            }
                             while($row = $query->fetch_array()){
                                 echo"
                                     <div class='contacto'>
@@ -74,7 +77,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                         <div class='Name projName' id='".$row['ID']."'>".$row['Name']."</div>
                                         <div class='Sponsor'>".$row['SName']."</div>
                                         <div class='Pleader'>".$row['PLeader']."</div>
-                                        <div class='Company'>".$row['SCom']."</div>
+                                        <div class='Company'>".$row['Company']."</div>
                                     </div>
                                 ";
                                 //echo "<div class='contactoInfo'></div>";

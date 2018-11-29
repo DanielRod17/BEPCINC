@@ -65,9 +65,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                           Assignment  <select id='Assignment'>
                                           <option value='0'> No Consultor Selected </option>
                                       </select><br>
+                          Name <input type='text' id='Name' class='disabled' disabled><br>
                           Start Date <input type='text' id='Start' class='disabled' disabled><br>
                           End Date <input type='text' id='End' class='disabled' disabled><br>
-                          <input type='submit' value='submit' class='disabled' disabled>
+                          <input type='submit' value='submit' id='submit' class='disabled' disabled>
 
                     </form>
                 </div>

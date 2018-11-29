@@ -1,26 +1,6 @@
 var row = "";
 $(document).ready(function()
 {
-    /*$(".ctdName").click(function(){
-        var Nombre = $(this).attr('id');
-        alert(Nombre);
-        $.ajax({ //PERFORM AN AJAX CALL
-            type:                   'post',
-            url:                    '../Resources/WebResponses/ContactsAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
-            data:                   {newAssignment: '1', informacion: info}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
-            success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
-                //DisplayError(data);
-                $(this).parent().next(".contactoInfo").slideToggle(300);
-            }
-        });
-    });*/
-    //window.parent.$("body").animate({scrollTop:0}, 'fast');
-    /*var w =         "AddTimecard.php";
-    var frame = $('#load', window.parent.document);
-    frame.fadeOut(500, function () {
-        frame.attr('src', w);
-        frame.fadeIn(500);
-    });*/
     $(".projName").click(function(){
         var Nombre =    $(this).attr('id');
         var w =         "Administrators/Project.php?id="+Nombre;
@@ -31,11 +11,6 @@ $(document).ready(function()
             frame.fadeIn(300);
         });
     });
-
-    /*$( "#Consultor" ).autocomplete({
-        source: "../../Resources/WebResponses/AutocompleteSponsor.php",
-        minLength: 0
-    });*/
 });
 
 
@@ -71,6 +46,7 @@ function AssignExpense(){
         info.push(inputs[i].value);
     }
     info.push(selected);
+    alert(info);
     $.ajax({
         type:                 'post',
         url:                  '../../Resources/WebResponses/ExpensesAJAX.php',
@@ -94,7 +70,10 @@ function EnableFields(){
             var assignments =     JSON.parse(data);
             if(assignments.length > 0){
                 removeOptions();
-                DisableFields();
+                document.getElementById('submit').disabled =       false;
+                document.getElementById('Start').disabled =     false;
+                document.getElementById('End').disabled =       false;
+                document.getElementById('Name').disabled =       false;
                 for(var i = 0; i<assignments.length; i++){
                       var option =        document.createElement("option");
                       option.text =       assignments[i].Proj;
@@ -128,7 +107,7 @@ function DisableFields(){
   var inputs = document.getElementsByClassName('disabled');
   var j =       0;
   while(j < inputs.length) {
-      inputs[j].disabled = false;
+      inputs[j].disabled = true;
       j++;
   }
 }
