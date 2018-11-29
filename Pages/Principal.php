@@ -73,6 +73,11 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             Dashboard
                         </div>
                         <div class="opcion" onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('Timecards.php');\" >Admin. Cards</div>";}else{  echo "LoadPage('Timecards.php');\" >My Timecards</div>"; } ?>
+                        <div class="opcion">Expenses <div class='dropdown-content'>
+                            <div class='links' onclick="LoadPage('Expenses.php');">Expenses</div>
+                            <div class='links' onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('Administrators/AssignExpense.php');\" >Admin. Expenses</div>";}else{  echo "LoadPage('Consultors/AddExpense.php');\" >Add Expense</div>"; } ?>
+                          </div>
+                        </div>
                         <?php
                             if($_SESSION['consultor']['Type'] == '0'){
                                 ?>

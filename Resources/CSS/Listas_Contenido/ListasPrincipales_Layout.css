@@ -86,3 +86,33 @@
     float:                           left;
     width:                           10%;
 }
+
+/* Expenses */
+.eName{
+    float:                           left;
+    width:                           25%;
+}
+.eTName{
+    float:                           left;
+    width:                           23%;
+}
+.eCName{
+    float:                           left;
+    width:                           17%;
+}
+.eCategory{
+    float:                           left;
+    width:                           11%;
+}
+.eSubmitD{
+    float:                           left;
+    width:                           13%;
+}
+.eQty{
+    float:                           left;
+    width:                           5%;
+}
+.eStatus{
+    float:                           left;
+    width:                           6%;
+}
