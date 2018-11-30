@@ -48,7 +48,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     <div class='projectos'>
                         <?php
                             $userID =           $_SESSION['consultor']["ID"];
-                            $query =            $connection->query("SELECT Name FROM assignment WHERE ID = (SELECT Assignment FROM consultors WHERE ID='$userID')");
+                            $query =            $connection->query("SELECT Name FROM assignment WHERE ConsultorID = '$userID'");
                             if($query -> num_rows > 0){
                                 while($row = $query -> fetch_array()){
                                     echo "<div class='projItem' onclick=\"AssignName(this);\" >".$row['Name']."</div>";

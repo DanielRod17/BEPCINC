@@ -11,7 +11,7 @@ $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 $resultado =            array();
 include('../../Resources/WebResponses/connection.php');
-include('../../Resources/InfoFill/ProjectFill.php');
+include('../../Resources/InfoFill/ExpenseFill.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
     if(isset($_GET['id'])){
     $ID =                   $_GET['id']; //Reemplazar por el get
@@ -25,10 +25,13 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
         <html>
             <head>
-
                 <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_General.css">
-                <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Pages/Project_Layout.css">
-                <script src="../Resources/Javascript/Project/ProjectsJS.js"></script><meta charset="UTF-8">
+                <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Pages/Expense_Layout.css">
+                <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+                <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+                <script src="../Resources/Javascript/ContactsJS.js"></script><meta charset="UTF-8">
                 <title>
                 </title>
             </head>
@@ -40,7 +43,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 &nbsp;<i class="fas fa-address-card"></i>
                             </div>
                             <div id="presentacion">
-                                Contact
+                                Expense
                                 <br>
                                 <?php
                                     echo $c['Firstname']." ".$c['Lastname'];
@@ -50,36 +53,36 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         <div id="abajo">
                             <div id="titulos">
                                 <div class="dato">
-                                    Title
+                                    Name
                                 </div>
                                 <div class="dato">
-                                    Account Name
+                                    Travel
                                 </div>
                                 <div class="dato" style="width: 12% !important;">
-                                    Phone
+                                    Assignment
                                 </div>
                                 <div class="dato">
-                                    Email
+                                    Consultor
                                 </div>
                                 <div class="dato">
-                                    Contact Owner
+                                    Submit Date
                                 </div>
                             </div>
                             <div id="datos">
                                 <div class="dato">
-                                    D
+                                    <?php echo $c['Name']; ?>
                                 </div>
                                 <div class="dato">
-                                    Account Name
+                                    <?php echo $c['tName']; ?>
                                 </div>
                                 <div class="dato" style="width: 12% !important;">
-                                    <?php echo $c['Phone']; ?>
+                                    <?php echo $c['aName']; ?>
                                 </div>
                                 <div class="dato">
-                                    <?php echo $c['Email']; ?>
+                                    <?php echo $c['Firstname']." ".$c['Lastname']; ?>
                                 </div>
                                 <div class="dato">
-                                    Contact Owner
+                                    <?php echo substr($c['SubmitDate'], 0, 10); ?>
                                 </div>
                             </div>
                         </div>
@@ -99,12 +102,12 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             </div>
                             <!-- -->
                               <?php
-                                  DisplayBudgets($connection, $ID);
+                                  DisplayTimecards($connection, $ID);
                               ?>
                             <!-- -->
                               <?php
                                   $respuesta = DisplayProjects($connection, $ID);
-                                  //echo $respuesta[0];
+                                  echo $respuesta[0];
                               ?>
                             <!-- -->
                               <?php

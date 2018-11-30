@@ -74,23 +74,6 @@ if(isset($_POST['newAssignment'])){
                     /////////////
                     $insertar ->        execute();
                     $insertar ->        close();
-
-                    ///////////////////
-                    $ConProjID =        $connection->query("SELECT ID FROM consultor2project ORDER BY ID DESC Limit 1");
-                    $ConProjIDR =       $ConProjID->fetch_object();
-                    if($ConProjIDR === null){
-                        $IDCon =            1;
-                    }else{
-                        $IDCon =            $ConProjIDR->ID;
-                        $IDCon =            $IDCon + 1;
-                    }
-                    $queryUp =          $connection->prepare("INSERT INTO consultor2project (ID, ConsultorID, ProjectID) VALUES (?, ?, ?)");
-                    $queryUp ->         bind_param("iii", $Idi, $ConsuID, $ProjID);
-                    $Idi =              $IDCon;
-                    $ConsuID =          $Cons;
-                    $ProjID =           $Pro;
-                    $queryUp ->         execute();
-                    $queryUp ->         close();
                     ///////////////////
 
                     echo "Assignment Added";

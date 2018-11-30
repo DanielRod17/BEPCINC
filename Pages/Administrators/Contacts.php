@@ -46,7 +46,7 @@ include('../../Resources/WebResponses/connection.php');
                         </div>
                     </div>
                     <div id="new">
-                        <button id="botonNew" onclick="nuevoTimecard();"><i class="fas fa-plus-circle"></i></button>
+                        <button id="botonNew" onclick="LoadPage('Administrators/AddUser.php');"><i class="fas fa-plus-circle"></i></button>
                     </div>
                 </div>
                 <div class="infoTable">

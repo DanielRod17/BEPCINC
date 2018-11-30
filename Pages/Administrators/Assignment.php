@@ -11,7 +11,7 @@ $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 $resultado =            array();
 include('../../Resources/WebResponses/connection.php');
-include('../../Resources/InfoFill/ProjectFill.php');
+include('../../Resources/InfoFill/ContactFill.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
     if(isset($_GET['id'])){
     $ID =                   $_GET['id']; //Reemplazar por el get
@@ -25,10 +25,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
 ?>
         <html>
             <head>
-
                 <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_General.css">
-                <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Pages/Project_Layout.css">
-                <script src="../Resources/Javascript/Project/ProjectsJS.js"></script><meta charset="UTF-8">
+                <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Pages/Contact_Layout.css">
+                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+                <script src="../Resources/Javascript/ContactsJS.js"></script><meta charset="UTF-8">
                 <title>
                 </title>
             </head>
@@ -99,12 +99,12 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             </div>
                             <!-- -->
                               <?php
-                                  DisplayBudgets($connection, $ID);
+                                  DisplayTimecards($connection, $ID);
                               ?>
                             <!-- -->
                               <?php
                                   $respuesta = DisplayProjects($connection, $ID);
-                                  //echo $respuesta[0];
+                                  echo $respuesta[0];
                               ?>
                             <!-- -->
                               <?php

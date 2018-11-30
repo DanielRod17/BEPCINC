@@ -46,12 +46,14 @@ function AssignExpense(){
         info.push(inputs[i].value);
     }
     info.push(selected);
-    alert(info);
     $.ajax({
         type:                 'post',
         url:                  '../Resources/WebResponses/ExpensesAJAX.php',
         data:                 {asignarExpense: info},
         success:              function(data){
+            if(data === "Yes"){
+                data =          "Expense Created";
+            }
             DisplayError(data);
         }
     });

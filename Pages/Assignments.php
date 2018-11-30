@@ -24,7 +24,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         <body>
             <div id="contenedor">
                 <div class='titulo'>
-                    EXPENSES
+                    ASSIGNMENTS
                 </div>
                 <div id="buscador">
                     <div id="searchParams">
@@ -56,41 +56,40 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                 </div>
                 <div class='infoTable'>
                     <div class='contacto'>
-                        <div class='eName'>Expense Name</div>
-                        <div class='eTName'>Travel</div>
-                        <div class='eCName'>Consultor</div>
-                        <div class='eCategory'>Category</div>
-                        <div class='eSubmitD'>Submit Date</div>
-                        <div class='eQty'>Qty</div>
-                        <div class='eStatus'>Status</div>
+                        <div class='aName'>Name</div>
+                        <div class='aProj'>Project</div>
+                        <div class='aCons'>Consultor</div>
+                        <div class='aBR'>BR</div>
+                        <div class='aPR'>PR</div>
+                        <div class='aPO'>PO</div>
                     </div>
                     <?php
                         if($_SESSION['consultor']['Type'] != '0'){
-                            $query =            $connection->query("SELECT e.*, travels.Name as TName, consultors.Firstname, consultors.Lastname, expensecategory.Name as eName
-                                                                    FROM expenses e
-                                                                    INNER JOIN travels ON(e.TravelID = travels.ID)
-                                                                    INNER JOIN consultors ON(travels.ConsultorID = consultors.ID)
-                                                                    INNER JOIN expensecategory ON (expensecategory.ID = e.Category)
-                                                                    WHERE TravelID IN (SELECT ID FROM travels WHERE ConsultorID='".$_SESSION['consultor']['ID']."')");
+                            $query =            $connection->query("SELECT a.*, consultors.Firstname, consultors.Lastname, project.Name as pName, po.NoPO
+                                                                    FROM assignment a
+                                                                    INNER JOIN consultors ON(a.ConsultorID = consultors.ID)
+                                                                    INNER JOIN project ON (a.ProjectID = project.ID)
+                                                                    INNER JOIN po ON (a.PO = po.ID)
+                                                                    WHERE a.ID > 4 AND a.ConsultorID='".$_SESSION['consultor']['ID']."'");
                         }
                         else{
-                            $query =            $connection->query("SELECT e.*, travels.Name as TName, consultors.Firstname, consultors.Lastname, expensecategory.Name as eName
-                                                                    FROM expenses e
-                                                                    INNER JOIN travels ON(e.TravelID = travels.ID)
-                                                                    INNER JOIN consultors ON(travels.ConsultorID = consultors.ID)
-                                                                    INNER JOIN expensecategory ON (expensecategory.ID = e.Category)");
+                            $query =            $connection->query("SELECT a.*, consultors.Firstname, consultors.Lastname, project.Name as pName, po.NoPO
+                                                                    FROM assignment a
+                                                                    INNER JOIN consultors ON(a.ConsultorID = consultors.ID)
+                                                                    INNER JOIN project ON (a.ProjectID = project.ID)
+                                                                    INNER JOIN po ON (a.PO = po.ID)
+                                                                    WHERE a.ID > 4");
 
                         }
                         while($row = $query->fetch_array()){
                             echo"
                                 <div class='contacto'>
-                                    <div class='eName' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"LoadPage('Administrators/Expense.php?id=".$row['ID']."');\""; }else{ echo " onclick=\"viewExpense('".$row['ID']."');\""; }   echo">".$row['Name']."</div>
-                                    <div class='eTName'>".$row['TName']."</div>
-                                    <div class='eCName'>".$row['Firstname']." ".$row['Lastname']."</div>
-                                    <div class='eCategory'>".$row['eName']."</div>
-                                    <div class='eSubmitD'>".substr($row['SubmitDate'], 0, 10)."</div>
-                                    <div class='eQty'>".$row['Quantity']."</div>
-                                    <div class='eStatus'>".$row['Status']."</div>
+                                    <div class='aName' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"LoadPage('Administrators/Assignment.php?id=".$row['ID']."');\""; }else{ echo " onclick=\"viewExpense('".$row['ID']."');\""; }   echo">".$row['Name']."</div>
+                                    <div class='aProj'>".$row['pName']."</div>
+                                    <div class='aCons'>".$row['Firstname']." ".$row['Lastname']."</div>
+                                    <div class='aBR'>".$row['BR']."</div>
+                                    <div class='aPR'>".$row['PR']."</div>
+                                    <div class='aPO'>".$row['NoPO']."</div>
                                 </div>
                            ";
                         }

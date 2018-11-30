@@ -78,36 +78,41 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             <div class='links' onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('Administrators/AssignExpense.php');\" >Admin. Expenses</div>";}else{  echo "LoadPage('Consultors/AddExpense.php');\" >Add Expense</div>"; } ?>
                           </div>
                         </div>
+                        <div class='opcion'>
+                            Projects
+                            <div class="dropdown-content">
+                                <div class='links' onclick="LoadPage('Projects.php');" >Projects</div>
+                                <div class='links' onclick="LoadPage('Administrators/AddProject.php');">Add Project</div>
+                            </div>
+                        </div>
+                        <div class='opcion'>
+                            Assignments
+                            <div class="dropdown-content">
+                                <div class='links' onclick="LoadPage('Assignments.php');">Assignments</div>
+                                <div class='links' onclick="LoadPage('Administrators/AddAssignment.php');">Add Assignment</div>
+                            </div>
+                        </div>
                         <?php
                             if($_SESSION['consultor']['Type'] == '0'){
                                 ?>
                                 <div class='opcion'>
-                                    Manage Users
-                                    <div class="dropdown-content">
-                                        <div class='links' onclick="LoadPage('Administrators/AddUser.php');" >Add User</div>
-                                        <div class='links' onclick="LoadPage('Administrators/EditUser.php');" >Update</div>
-                                    </div>
-                                </div>
-                                <div class='opcion' onclick="LoadPage('Administrators/Contacts.php');" >
                                     Contacts
+                                    <div class="dropdown-content">
+                                        <div class='links' onclick="LoadPage('Administrators/Contacts.php');" >Users</div>
+                                        <div class='links' onclick="LoadPage('Administrators/EditUser.php');" >Update User</div>
+                                    </div>
                                 </div>
                                 <div class='opcion' onclick="LoadPage('Administrators/CreateSchedule.php');" >
                                     Schedules
                                 </div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddPO.php');" >POs</div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddSponsor.php');" >Sponsors</div>
-                                <div class='opcion' onclick="LoadPage('Administrators/AddProject.php');" >Projects</div>
-                                <div class='opcion' onclick="LoadPage('Administrators/AddAssignment.php');" >
-                                    Assignments
-                                    <div class="dropdown-content">
-                                        <div class='links'>Link 1</div>
-                                        <div class='links'>Link 2</div>
-                                        <div class='links'>Link 3</div>
-                                    </div>
+                                <div class='opcion' onclick="LoadPage('Administrators/CreateSchedule.php');" >
+                                    Accounts
                                 </div>
-                                <?php
-                            }
-                        ?>
+                                  <?php
+                              }
+                          ?>
                     </div>
 
                 </div>

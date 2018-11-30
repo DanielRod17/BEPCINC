@@ -12,7 +12,7 @@ if(isset($_POST['usuario'])){
     $password =             sha1($_POST['contra']);
     $sID =                  session_id();
     //echo $usuario." ".$password;
-    $stmt =                 $connection->prepare("SELECT ID, SN, Email, Firstname, Lastname, Division, StartDate, EndDate, Type, Status, LastLogin, Logged, SessionID FROM consultors WHERE SN=? AND Hash=?");
+    $stmt =                 $connection->prepare("SELECT ID, SN, Email, Firstname, Lastname, Division, StartDate, EndDate, Type, Status, LastLogin, Logged, SessionID FROM consultors WHERE Email=? AND Hash=?");
     $stmt ->                bind_param("ss", $usuario, $password);
     $stmt ->                execute();
     $stmt ->                store_result();

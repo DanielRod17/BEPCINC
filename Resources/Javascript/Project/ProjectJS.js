@@ -6,10 +6,9 @@
 $(document).ready(function()
 {
     $( "#Sponsor" ).autocomplete({
-        source: "../../Resources/WebResponses/Autocomplete/AutocompleteSponsor.php",
+        source: "../Resources/WebResponses/Autocomplete/AutocompleteSponsor.php",
         minLength: 0
     });
-
 
     $('#Project input').on( 'input', function() {
         var alertas = document.getElementById("alertas");

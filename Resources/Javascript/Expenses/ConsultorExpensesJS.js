@@ -100,3 +100,7 @@ function AssignExpense(){
     });
     return false;
 }
+
+function viewExpense(e){
+    alert(e);
+}

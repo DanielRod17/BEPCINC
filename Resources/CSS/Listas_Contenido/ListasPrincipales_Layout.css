@@ -112,3 +112,29 @@
     float:                           left;
     width:                           6%;
 }
+
+/* Assignments */
+.aName{
+    float:                           left;
+    width:                           25%;
+}
+.aProj{
+    float:                           left;
+    width:                           22%;
+}
+.aCons{
+    float:                           left;
+    width:                           25%;
+}
+.aBR{
+    float:                           left;
+    width:                           10%;
+}
+.aPR{
+    float:                           left;
+    width:                           10%;
+}
+.aPO{
+    float:                           left;
+    width:                           8%;
+}
