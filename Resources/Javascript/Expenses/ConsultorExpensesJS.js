@@ -89,7 +89,7 @@ function AssignExpense(){
         cache:                false,
         contentType:          false,
         processData:          false,
-        url:                  '../../Resources/WebResponses/ExpensesAJAX.php',
+        url:                  '../Resources/WebResponses/ExpensesAJAX.php',
         data:                 formData,
         success:              function(data){
             DisplayError(data);

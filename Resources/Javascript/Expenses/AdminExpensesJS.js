@@ -49,7 +49,7 @@ function AssignExpense(){
     alert(info);
     $.ajax({
         type:                 'post',
-        url:                  '../../Resources/WebResponses/ExpensesAJAX.php',
+        url:                  '../Resources/WebResponses/ExpensesAJAX.php',
         data:                 {asignarExpense: info},
         success:              function(data){
             DisplayError(data);
@@ -64,7 +64,7 @@ function EnableFields(){
     var select =            document.getElementById("Assignment");
     $.ajax({ //PERFORM AN AJAX CALL
         type:                   'post',
-        url:                    '../../Resources/WebResponses/ExpensesAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
+        url:                    '../Resources/WebResponses/ExpensesAJAX.php', //PHP CONTAINING ALL THE FUNCTIONS
         data:                   {searchConsultor: nombre}, //SEND THE VALUE TO EXECUTE A QUERY WITH THE PALLET ID
         success: function(data) { //IF THE REQUEST ITS SUCCESSFUL
             var assignments =     JSON.parse(data);

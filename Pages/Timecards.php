@@ -75,7 +75,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             $query =            $connection->query("SELECT * FROM timecards WHERE ID!='1'");
                             $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
                                                                     FROM timecards t
-                                                                    INNER JOIN consultors ON (consultors.ID = t.ID)");
+                                                                    INNER JOIN consultors ON (consultors.ID = t.ConsultorID)");
                         }
                         while($row = $query->fetch_array()){
                             $id =           $row['ID'];

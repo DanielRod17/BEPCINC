@@ -3,16 +3,12 @@
     height:                         25px;
 }
 .NameContact{
-    width:                          22%;
+    width:                          28%;
     float:                          left;
     cursor:                         pointer;
 }
-.AccName{
-    width:                          12%;
-    float:                          left;
-}
 .Phone{
-    width:                          22%;
+    width:                          28%;
     float:                          left;
 }
 .Email{

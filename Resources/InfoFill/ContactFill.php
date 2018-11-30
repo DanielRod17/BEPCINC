@@ -11,7 +11,6 @@
 //echo $_SESSION['dataBase']. ' '. $_SESSION['loggedin']. ' '. $_SESSION['userID']. ' '. $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']['ID'];
 $UserName =             $_SESSION['consultor']['SN'];
-$Sponsor =              $_SESSION['consultor']['Sponsor'];
 $resultado =            array();
 //include('../Resources/WebResponses/connection.php');
 function DisplayTimecards($connection, $ID){
@@ -85,7 +84,7 @@ function DisplayProjects($connection, $ID){
     $stmt =                 $connection->prepare("SELECT p.*, sponsor.Name as SName
                                                   FROM project p
                                                   INNER JOIN sponsor ON (sponsor.ID = p.SponsorID)
-                                                  WHERE p.ID IN (SELECT ProjectID FROM consultor2project WHERE ConsultorID=?)");
+                                                  WHERE p.ID IN (SELECT ProjectID FROM assignment WHERE ConsultorID=?)");
     $stmt ->                bind_param('i', $I);
     $I =                    $ID;
     $stmt ->                execute();
@@ -168,7 +167,7 @@ function DisplayAssignments($connection, $ID, $arregloProj){
                           FROM assignment a
                           INNER JOIN po ON (a.PO = po.ID)
                           INNER JOIN project ON (a.ProjectID = project.ID)
-                          WHERE ProjectID IN ($ids)";
+                          WHERE a.ConsultorID = $ID";
           $queryAss =     $connection->query($sql);
           while($row = $queryAss->fetch_array()){
               array_push($Assignments, $row);

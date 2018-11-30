@@ -6,7 +6,7 @@
 $(document).ready(function()
 {
     $( "#Sponsor" ).autocomplete({
-        source: "../Resources/WebResponses/Autocomplete/AutocompleteSponsor.php",
+        source: "../../Resources/WebResponses/Autocomplete/AutocompleteSponsor.php",
         minLength: 0
     });
 

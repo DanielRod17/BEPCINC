@@ -9,7 +9,6 @@ session_start();
 //echo $_SESSION['dataBase']. " ". $_SESSION['loggedin']. " ". $_SESSION['userID']. " ". $_SESSION['userName'];
 $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
-$Sponsor =              $_SESSION['consultor']["Sponsor"];
 $resultado =            array();
 include('../../Resources/WebResponses/connection.php');
 include('../../Resources/InfoFill/ContactFill.php');
