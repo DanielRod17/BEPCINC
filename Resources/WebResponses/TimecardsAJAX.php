@@ -15,7 +15,7 @@ if(isset($_POST['checkNames'])){
         $idUsuario =        $_SESSION['consultor']['ID'];
         foreach($nombres as $nombre){
             //$querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
-            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (EXISTS(SELECT ProjectID FROM consultor2project WHERE ConsultorID=?) OR PO = 0)");
+            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ConsultorID=? OR PO = 0)");
             $querty ->          bind_param("si", $nome, $idi);
             $nome =             $nombre;
             $idi =              $idUsuario;
@@ -285,7 +285,7 @@ if(isset($_POST['checkNaems'])){
         $idUsuario =        $_SESSION['nombreSearch'];
         foreach($nombres as $nombre){
             //$querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ID = (SELECT Assignment FROM consultors WHERE ID=?) OR PO = 0)");
-            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (EXISTS(SELECT ProjectID FROM consultor2project WHERE ConsultorID=?) OR PO = 0)");
+            $querty =           $connection->prepare("SELECT ID FROM assignment WHERE Name = ? AND (ConsultorID=? OR PO = 0)");
             $querty ->          bind_param("si", $nome, $idi);
             $nome =             $nombre;
             $idi =              $idUsuario;
@@ -313,7 +313,7 @@ if(isset($_POST['cardSearch'])){
     $nombreSe =         "";
     //$_SESSION['fechaSearch'] =  $fecha;
     //$_SESSION['nombreSearch'] = $nombre;
-    $query =                    $connection->prepare(" SELECT lineas.*, assignment.Name, timecards.StartingDay
+    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name, timecards.StartingDay
                                                       FROM lineas
                                                       LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID
                                                       LEFT JOIN timecards ON lineas.TimecardID = timecards.ID

@@ -75,7 +75,8 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             $query =            $connection->query("SELECT * FROM timecards WHERE ID!='1'");
                             $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
                                                                     FROM timecards t
-                                                                    INNER JOIN consultors ON (consultors.ID = t.ConsultorID)");
+                                                                    INNER JOIN consultors ON (consultors.ID = t.ConsultorID)
+                                                                    WHERE t.ID!='1'");
                         }
                         while($row = $query->fetch_array()){
                             $id =           $row['ID'];
@@ -93,12 +94,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             $queryLineas =  $connection->query("SELECT AssignmentID, SUM(Mon), SUM(Tue), SUM(Wed), SUM(Thu), SUM(Fri), SUM(Sat), SUM(Sun) FROM `lineas` WHERE TimecardID='$id' GROUP BY AssignmentID");
                             while($fila = $queryLineas->fetch_array()){
                                 //if(intval($fila['AssignmentID']) >= 5 ){ ESTE
-                                if(intval($fila['AssignmentID']) < 5 ){
-                                    for($j = 1 ; $j < 8; $j++){
-                                        $hours += $fila[$j];
-                                        if(intval($fila[$j]) !== 0){
-                                            $days++;
-                                        }
+                                for($j = 1 ; $j < 8; $j++){
+                                    $hours += $fila[$j];
+                                    if(intval($fila[$j]) !== 0){
+                                        $days++;
                                     }
                                 }
                             }
