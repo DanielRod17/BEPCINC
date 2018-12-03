@@ -100,7 +100,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             }
                             echo"
                                 <div class='contacto'>
-                                    <div class='timeCard' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['TimecardID']."</div>
+                                    <div class='timeCard' style='cursor: pointer;' onclick=\"LoadPage('Timecard.php?id=$id');\">".$row['TimecardID']."</div>
                                     <div class='resource'>$Nombre</div>
                                     <div class='tProj'>".$row['aName']."</div>
                                     <div class='startD'>$start</div>

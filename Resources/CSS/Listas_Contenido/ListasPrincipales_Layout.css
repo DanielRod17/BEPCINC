@@ -142,3 +142,23 @@
     float:                           left;
     width:                           8%;
 }
+
+/*Projects*/
+
+.poNumber{
+    float:                           left;
+    width:                           30%;
+    cursor:                          pointer;
+}
+.poAmmount{
+    float:                           left;
+    width:                           23%;
+}
+.poCurrency{
+    float:                           left;
+    width:                           25%;
+}
+.poStatus{
+    float:                           left;
+    width:                           14%;
+}

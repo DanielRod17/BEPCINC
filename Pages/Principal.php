@@ -105,7 +105,13 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 <div class='opcion' onclick="LoadPage('Administrators/CreateSchedule.php');" >
                                     Schedules
                                 </div>
-                                <div class='opcion' onclick="LoadPage('Administrators/AddPO.php');" >POs</div>
+                                <div class='opcion'>
+                                    POs
+                                    <div class="dropdown-content">
+                                        <div class='links' onclick="LoadPage('Administrators/POs.php');" >POs</div>
+                                        <div class='links' onclick="LoadPage('Administrators/AddPO.php');"  >Add PO</div>
+                                    </div>
+                                </div>
                                 <div class='opcion' onclick="LoadPage('Administrators/AddSponsor.php');" >Sponsors</div>
                                 <div class='opcion' onclick="LoadPage('Administrators/CreateSchedule.php');" >
                                     Accounts
