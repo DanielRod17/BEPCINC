@@ -13,11 +13,9 @@ $IDUsuario =            $_SESSION['consultor']['ID'];
 $UserName =             $_SESSION['consultor']['SN'];
 $resultado =            array();
 //include('../Resources/WebResponses/connection.php');
-function DisplayBudgets($connection, $ID){
-  $stmt =                 $connection->prepare("SELECT a.*, po.*
-                                                FROM assignment a
-                                                INNER JOIN po ON(a.PO = po.ID)
-                                                WHERE ProjectID = ?");
+function DisplayTimecards($connection, $ID){
+  $totalCards =           0;
+  $stmt =                 $connection->prepare("SELECT * FROM lineas WHERE AssignmentID=?");
   $stmt ->                bind_param('i', $I);
   $I =                    $ID;
   $stmt ->                execute();
@@ -28,6 +26,7 @@ function DisplayBudgets($connection, $ID){
   }
   call_user_func_array(array($stmt, 'bind_result'), $paramas);
   while ($stmt->fetch()) {
+      $totalCards++;
       foreach($rowa as $keya => $vala)
       {
           $d[$keya] = $vala;
@@ -39,23 +38,17 @@ function DisplayBudgets($connection, $ID){
   echo "
     <div id='timecards' class='contOpc cont'>
         <div class='InfoAm'>
-            BUDGET
+            $totalCards Timecards
         </div>
         <div class='Line' style='background-color: rgb(250, 250, 248)'>
-            <div class='BUDcolumna'>
-                ASSIGNMENT
+            <div class='TCRDcolumna'>
+                TIMECARD ID
             </div>
-            <div class='BUDcolumna'>
-                BR
+            <div class='TCRDcolumna'>
+                START DATE
             </div>
-            <div class='BUDcolumna'>
-                PR
-            </div>
-            <div class='BUDcolumna'>
-                PO
-            </div>
-            <div class='BUDcolumna'>
-                AMMOUNT
+            <div class='TCRDcolumna'>
+                END DATE
             </div>
             <div class='more'>
             </div>
@@ -63,20 +56,14 @@ function DisplayBudgets($connection, $ID){
             if(!empty($resultado)){
                 foreach($resultado as $fila){
                     echo "<div class='Line'>
-                        <div class='BUDcolumna'>
-                            ".$fila['Name']."
+                        <div class='TCRDcolumna'>
+                            ".$fila['TimecardID']."
                         </div>
-                        <div class='BUDcolumna'>
-                            $".$fila['BR']."
+                        <div class='TCRDcolumna'>
+                            ".substr($fila['StartingDay'], 0, 10)."
                         </div>
-                        <div class='BUDcolumna'>
-                            $".$fila['PR']."
-                        </div>
-                        <div class='BUDcolumna'>
-                            ".$fila['NoPO']."
-                        </div>
-                        <div class='BUDcolumna'>
-                            $".$fila['Ammount']."
+                        <div class='TCRDcolumna'>
+                            ".substr($fila['CreatedDate'], 0, 10)."
                         </div>
                         <div class='more'>
                             &nbsp;<i class='far fa-caret-square-down'></i>
@@ -84,11 +71,11 @@ function DisplayBudgets($connection, $ID){
                     </div>";
                 }
             }else{
-                echo "<div id='timecardsLine'>
+                echo "
                     <div class='Line'>
-                        No budgets found
+                        No timecards found
                     </div>
-                </div>";
+                ";
             }
     echo "</div>";
 }
@@ -160,11 +147,9 @@ function DisplayProjects($connection, $ID){
                 }
             }else{
                 $content = $content."
-                    <div id='timecardsLine'>
                         <div class='Line'>
-                            No projects found
+                            No Projects found
                         </div>
-                    </div>
                 ";
             }
     $content = $content."</div>";
@@ -182,7 +167,7 @@ function DisplayAssignments($connection, $ID, $arregloProj){
                           FROM assignment a
                           INNER JOIN po ON (a.PO = po.ID)
                           INNER JOIN project ON (a.ProjectID = project.ID)
-                          WHERE ProjectID IN ($ids)";
+                          WHERE a.ConsultorID = $ID";
           $queryAss =     $connection->query($sql);
           while($row = $queryAss->fetch_array()){
               array_push($Assignments, $row);
@@ -244,21 +229,22 @@ function DisplayAssignments($connection, $ID, $arregloProj){
                   }
               }else{
                   echo "
-                      <div id='timecardsLine'>
                           <div class='Line'>
                               No assignments found
                           </div>
-                      </div>";
+                      ";
               }
         echo "</div>";
     }
 
 function DisplayDetails($connection, $ID){
 
-  $query =                $connection->prepare("SELECT p.*, account_manager.Name as Ma
-                                                FROM project p
-                                                INNER JOIN account_manager ON (p.ManagerID = account_manager.ID)
-                                                WHERE p.ID=?");
+  $query =                $connection->prepare("SELECT a.*, project.Name as pName, consultors.Firstname, consultors.Lastname, po.NoPO
+                                                FROM assignment a
+                                                INNER JOIN project ON (project.ID = a.ProjectID)
+                                                INNER JOIN consultors ON (consultors.ID = a.ConsultorID)
+                                                INNER JOIN po ON (po.ID = a.PO)
+                                                WHERE a.ID=?");
   $query ->               bind_param('i', $I);
   $I =                    $ID;
   $query ->               execute();
@@ -278,12 +264,12 @@ function DisplayDetails($connection, $ID){
   $query ->               close();
 
   $content = "
-  <div id='details'  class='contOpc detOp'>
-      <form id ='projDetails'>
+  <div id='details' class='contOpc detOp'>
+      <form id ='detailsForm'>
           <div class='datos'>
               <div class='left'>
                   <div class='nombreDato'>
-                      Project Name
+                      Assignment's Name
                   </div>
                   <div class='campoDato'>
                       ".$c['Name']."
@@ -315,10 +301,34 @@ function DisplayDetails($connection, $ID){
               </div>
               <div class='right'>
                   <div class='nombreDato'>
-                      Account Manager
+                      PO
                   </div>
                   <div class='campoDato'>
-                      ".$c['Ma']."
+                      ".$c['NoPO']."
+                      <div class='lapiz'>
+                          <i class='fas fa-pencil-alt'></i>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class='datos'>
+              <div class='left'>
+                  <div class='nombreDato'>
+                      Project
+                  </div>
+                  <div class='campoDato'>
+                      ".$c['pName']."
+                      <div class='lapiz'>
+                          <i class='fas fa-pencil-alt'></i>
+                      </div>
+                  </div>
+              </div>
+              <div class='right'>
+                  <div class='nombreDato'>
+                      Consultor
+                  </div>
+                  <div class='campoDato'>
+                      ".$c['Firstname']." ".$c['Lastname']."
                       <div class='lapiz'>
                           <i class='fas fa-pencil-alt'></i>
                       </div>
@@ -338,115 +348,9 @@ function DisplayDetails($connection, $ID){
                   </div>
               </div>
           </div>
-          </div>
       </form>
   </div>";
   $respuesta = array($content, $c);
   return $respuesta;
-}
-
-function DisplayTimecards($connection, $ID){
-  $stmt =                 $connection->prepare("SELECT lineas.*, assignment.Name as aName, consultors.Firstname, consultors.Lastname
-                                                FROM lineas
-                                                INNER JOIN assignment ON (assignment.ID = lineas.AssignmentID)
-                                                INNER JOIN consultors ON (consultors.ID = lineas.ConsultorID)
-                                                WHERE AssignmentID IN (SELECT ID FROM assignment WHERE ProjectID=?)");
-  $stmt ->                bind_param('i', $I);
-  $I =                    $ID;
-  $stmt ->                execute();
-  $meta =                 $stmt->result_metadata();
-  $arregloProj  =         array();
-  while ($field = $meta->fetch_field())
-  {
-      $paramasP[] = &$rowaP[$field->name];
-  }
-  call_user_func_array(array($stmt, 'bind_result'), $paramasP);
-  while ($stmt->fetch()) {
-      foreach($rowaP as $keyaP => $valaP)
-      {
-          $p[$keyaP] = $valaP;
-          if($keyaP == 'ID'){
-              array_push($arregloProj, $valaP);
-          }
-      }
-      $resultadoP[] = $p;
-  }
-  $stmt ->                close();
-
-
-  $content = "<div id='timecards' class='contOpc cont'>
-      <div class='InfoAm'>
-          Timecards
-      </div>
-      <div class='Line' style='background-color: rgb(250, 250, 248)''>
-          <div class='TCcolumna'>
-              Name
-          </div>
-          <div class='TCcolumna'>
-              Assignment
-          </div>
-          <div class='TCcolumna'>
-              Resource
-          </div>
-          <div class='TCcolumna'>
-              Days Worked
-          </div>
-          <div class='TCcolumna'>
-              Hours Worked
-          </div>
-          <div class='more'>
-          </div>
-      </div>";
-      if(!empty($resultadoP)){
-          foreach($resultadoP as $fila){
-            $name =           $fila['Firstname']." ".$fila['Lastname'];
-            $hours =          0;
-            $days =           0;
-            $dias = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun');
-            foreach($dias as $day){
-                $hours += $fila["$day"];
-                if(intval($fila["$day"]) !== 0){
-                    $days++;
-                }
-            }
-            /*for($j = 0 ; $j < 10; $j++){
-                $hours += $fila[$j];
-                if(intval($fila[$j]) !== 0){
-                    $days++;
-                }
-            }*/
-            $content =        $content."
-                  <div class='Line'>
-                      <div class='TCcolumna'>
-                        ".$fila['TimecardID']."
-                      </div>
-                      <div class='TCcolumna'>
-                          ".$fila['aName']."
-                      </div>
-                      <div class='TCcolumna'>
-                          ".$name."
-                      </div>
-                      <div class='TCcolumna'>
-                          ".$days."
-                      </div>
-                      <div class='TCcolumna'>
-                          ".$hours."
-                      </div>
-                      <div class='more'>
-                          &nbsp;<i class='far fa-caret-square-down'></i>
-                      </div>
-                  </div>
-              ";
-          }
-      }else{
-          $content = $content."
-              <div id='timecardsLine'>
-                  <div class='Line'>
-                      No projects found
-                  </div>
-              </div>
-          ";
-      }
-      echo $content."</div>";
 }
 ?>

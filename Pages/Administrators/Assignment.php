@@ -11,7 +11,7 @@ $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 $resultado =            array();
 include('../../Resources/WebResponses/connection.php');
-include('../../Resources/InfoFill/ContactFill.php');
+include('../../Resources/InfoFill/AssignmentFill.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
     if(isset($_GET['id'])){
     $ID =                   $_GET['id']; //Reemplazar por el get
@@ -43,7 +43,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Contact
                                 <br>
                                 <?php
-                                    echo $c['Firstname']." ".$c['Lastname'];
+                                    echo $c['Name']." ".$c['Name'];
                                 ?>
                             </div>
                         </div>
@@ -73,10 +73,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     Account Name
                                 </div>
                                 <div class="dato" style="width: 12% !important;">
-                                    <?php echo $c['Phone']; ?>
+                                    <?php echo $ID." " . $c['Name']; ?>
                                 </div>
                                 <div class="dato">
-                                    <?php echo $c['Email']; ?>
+                                    <?php echo $c['Name']; ?>
                                 </div>
                                 <div class="dato">
                                     Contact Owner

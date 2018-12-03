@@ -58,6 +58,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     <div class='contacto'>
                         <div class='timeCard'>Timecard ID</div>
                         <div class='resource'>Resource</div>
+                        <div class='tProj'>Project</div>
                         <div class='startD'>Start Date</div>
                         <div class='endD'>End Date</div>
                         <div class='status'>Status</div>
@@ -66,45 +67,42 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                     </div>
                     <?php
                         if($_SESSION['consultor']['Type'] != '0'){
-                            $query =            $connection->query("SELECT * FROM timecards WHERE ConsultorID='".$_SESSION['consultor']['ID']."'");
-                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
-                                                                FROM timecards t
-                                                                INNER JOIN consultors ON (consultors.ID = '".$_SESSION['consultor']['ID']."')");
+                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN,  assignment.Name as aName
+                                                                    FROM lineas t
+                                                                    INNER JOIN consultors ON (consultors.ID = '".$_SESSION['consultor']['ID']."')
+                                                                    INNER JOIN assignment ON (t.AssignmentID = assignment.ID)");
                         }
                         else{
-                            $query =            $connection->query("SELECT * FROM timecards WHERE ID!='1'");
-                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN
-                                                                    FROM timecards t
+                            $queryDatos =       $connection->query("SELECT t.*, consultors.Firstname as firstN, consultors.Lastname as lastN,  assignment.Name as aName
+                                                                    FROM lineas t
                                                                     INNER JOIN consultors ON (consultors.ID = t.ConsultorID)
-                                                                    WHERE t.ID!='1'");
+                                                                    INNER JOIN assignment ON (t.AssignmentID = assignment.ID)
+                                                                    ");
                         }
-                        while($row = $query->fetch_array()){
+                        while($row = $queryDatos->fetch_array()){
                             $id =           $row['ID'];
                             $start =        substr($row['StartingDay'], 0, 10);
                             //$end =          strtotime(str_replace("/","-", $start));
                             $end =          new DateTime($start);
                             $end ->         add(new DateInterval('P6D'));
                             $date =         $end ->format('Y-m-d');
-                            $queryDatosR =  $queryDatos->fetch_object();
-                            $Nombre =       $queryDatosR->firstN." ".$queryDatosR->lastN;
-                            $timeID =       $queryDatosR->ID;
+                            $Nombre =       $row['firstN']." ".$row['lastN'];
+                            $timeID =       $row['ID'];
                             $hours =        0;
                             $days =         0;
 
-                            $queryLineas =  $connection->query("SELECT AssignmentID, SUM(Mon), SUM(Tue), SUM(Wed), SUM(Thu), SUM(Fri), SUM(Sat), SUM(Sun) FROM `lineas` WHERE TimecardID='$id' GROUP BY AssignmentID");
-                            while($fila = $queryLineas->fetch_array()){
-                                //if(intval($fila['AssignmentID']) >= 5 ){ ESTE
-                                for($j = 1 ; $j < 8; $j++){
-                                    $hours += $fila[$j];
-                                    if(intval($fila[$j]) !== 0){
-                                        $days++;
-                                    }
+
+                            for($j = 4 ; $j < 10; $j++){
+                                $hours += $row[$j];
+                                if(intval($row[$j]) !== 0){
+                                    $days++;
                                 }
                             }
                             echo"
                                 <div class='contacto'>
-                                    <div class='timeCard' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['Name']."</div>
+                                    <div class='timeCard' style='cursor: pointer;' ";   if($_SESSION['consultor']['Type'] == '0'){ echo" onclick=\"editTimecard('$id');\""; }else{ echo " onclick=\"viewTimecard('$id');\""; }   echo">".$row['TimecardID']."</div>
                                     <div class='resource'>$Nombre</div>
+                                    <div class='tProj'>".$row['aName']."</div>
                                     <div class='startD'>$start</div>
                                     <div class='endD'>$date</div>
                                     <div class='status'>Approved</div>

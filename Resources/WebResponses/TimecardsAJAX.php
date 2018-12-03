@@ -42,8 +42,8 @@ if(isset($_POST['usuarioBorrar'])){
 
 if(isset($_POST['insertar'])){
     if(isset($_SESSION['fecha'])){
-        $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fecha']."' AND ConsultorID='".$_SESSION['consultor']['ID']."' ");
-        if(isset($_SESSION['fecha']) && $_SESSION['fecha'] !== "" && $queryComa -> num_rows == 0){
+        //$queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fecha']."' AND ConsultorID='".$_SESSION['consultor']['ID']."' ");
+        //if(isset($_SESSION['fecha']) && $_SESSION['fecha'] !== "" && $queryComa -> num_rows == 0){
             $lineas =            $_POST['lineas'];
             if($_POST['delete'] == '1'){
                 $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
@@ -63,6 +63,14 @@ if(isset($_POST['insertar'])){
             }
             if($bandera == 0){
                 foreach($matrix as $linea){
+                    $querty =           $connection->query("SELECT Dailycount FROM lineas WHERE DATE(CreatedDate) = DATE(NOW()) ORDER BY ID DESC LIMIT 1 ");
+                    if($querty -> num_rows == 0){
+                        $Daily =            1;
+                    }else{
+                        $Daily =            $querty->fetch_object();
+                        $Daily =            $Daily->Dailycount;
+                        $Daily =            $Daily+1;
+                    }
                     $queryID =          $connection->query("SELECT ID FROM lineas ORDER BY ID DESC Limit 1");
                     $queryID =          $queryID->fetch_object();
                     if($queryID !== null){
@@ -75,12 +83,13 @@ if(isset($_POST['insertar'])){
                     $queryR =           $query->fetch_object();
                     $AsI =              $queryR->ID;
                     $Co =               $_SESSION['consultor']['ID'];
-                    $insertar =         $connection->prepare("INSERT INTO lineas (ID, AssignmentID, ConsultorID, TimecardID, Mon, Tue, Wed, Thu, Fri, Sat, Sun, StartingDay, CreatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $insertar ->        bind_param('iiiiiiiiiiiss', $I, $A, $C, $T, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
+                    $insertar =         $connection->prepare("INSERT INTO lineas (ID, AssignmentID, ConsultorID, TimecardID, Mon, Tue, Wed, Thu, Fri, Sat, Sun, StartingDay, CreatedDate, Dailycount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $insertar ->        bind_param('iiiiiiiiiiissi', $I, $A, $C, $T, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD, $Da);
                     $I =                $ID;
                     $A =                $AsI;
                     $C =                $Co;
                     $T =                1;
+                    $Da =               $Daily;
                     $Mo =               $linea[1];
                     $Tu =               $linea[2];
                     $We =               $linea[3];
@@ -102,7 +111,7 @@ if(isset($_POST['insertar'])){
                        echo ", ";
                }
             }
-        }else{
+        /*}else{
             if($queryComa -> num_rows > 0)
             {
                 echo "Week's timecard already registered";
@@ -110,7 +119,7 @@ if(isset($_POST['insertar'])){
             else{
                 echo "Select a Date";
             }
-        }
+        }*/
     }else{
          echo "Select a Date";
     }
@@ -135,30 +144,15 @@ if(isset($_POST['fecha'])){
 }
 
 if(isset($_POST['finishTimecard'])){
-    $queryLines =       $connection->query("SELECT ID FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
+    $queryLines =       $connection->query("SELECT ID, Dailycount FROM lineas WHERE ConsultorID='".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
     if($queryLines -> num_rows > 0){
         if(isset($_SESSION['fecha'])){
-            $querty =           $connection->query("SELECT ID FROM timecards ORDER BY ID DESC LIMIT 1 ");
-            if($querty -> num_rows == 0){
-                $ID =       1;
-            }else{
-                $ID =           $querty->fetch_object();
-                $ID =           $ID->ID;
-                $ID =           $ID+1;
-            }
-
-            $querty =           $connection->query("SELECT Dailycount FROM timecards WHERE DATE(CreatedDate) = DATE(NOW()) ORDER BY ID DESC LIMIT 1 ");
-            if($querty -> num_rows == 0){
-                $Daily =            1;
-            }else{
-                $Daily =            $querty->fetch_object();
-                $Daily =            $Daily->Dailycount;
-                $Daily =            $Daily+1;
-            }
-            $Name =             "TCH-".date("Y-m-d",time()-60*60*4)."-$Daily";
-            $queryInsert =      $connection->query("INSERT INTO timecards (ID, Name, ConsultorID, StartingDay, CreatedDate, Dailycount) VALUES ('$ID', '$Name', '".$_SESSION['consultor']['ID']."','".$_SESSION['fecha']."', '".date("Y-m-d H:i:s",time()-60*60*4)."', '$Daily')");
+            $queryRes =         $queryLines->fetch_object();
+            $Daily =            $queryRes->Dailycount;
+            $Name =             "TCH-".date("Y-m-d",time()-60*60*4)."-".$Daily;
+            //$queryInsert =      $connection->query("INSERT INTO timecards (ID, Name, ConsultorID, StartingDay, CreatedDate, Dailycount) VALUES ('$ID', '$Name', '".$_SESSION['consultor']['ID']."','".$_SESSION['fecha']."', '".date("Y-m-d H:i:s",time()-60*60*4)."', '$Daily')");
             echo "Timecard Submitted!";
-            $queryDel =         $connection->query("UPDATE lineas SET TimecardID='$ID', StartingDay='".$_SESSION['fecha']."' WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
+            $queryDel =         $connection->query("UPDATE lineas SET TimecardID='$Name', StartingDay='".$_SESSION['fecha']."' WHERE ConsultorID = '".$_SESSION['consultor']['ID']."' AND TimecardID='1'");
 
         }else{
             echo "Select a Date";
@@ -204,12 +198,11 @@ if(isset($_POST['actualizar'])){
     //$_SESSION['fechaSearch'] =  $fecha;
     //$_SESSION['nombreSearch'] = $nombre;
     if(isset($_SESSION['fechaSearch'])){
-        $queryComa =             $connection->query("SELECT ID FROM timecards WHERE StartingDay='".$_SESSION['fechaSearch']."' AND ConsultorID='".$_SESSION['nombreSearch']."' ");
+        $queryComa =             $connection->query("SELECT ID FROM lineas WHERE ID='".$_SESSION['cardIDSearch']."' AND ConsultorID='".$_SESSION['nombreSearch']."' ");
         if(isset($_SESSION['fechaSearch']) && $_SESSION['fechaSearch'] !== "" && $queryComa -> num_rows != 0){
             $queryComaR =       $queryComa->fetch_object();
             $timecardID =       $queryComaR->ID;
             $lineas =           $_POST['lineas'];
-            $queryDel =         $connection->query("DELETE FROM lineas WHERE ConsultorID = '".$_SESSION['nombreSearch']."' AND DATE(StartingDay)= DATE('".$_SESSION['fechaSearch']."')");
             $matrix;
             $counterLinea =     1;
             $arreglo =          array();
@@ -237,12 +230,9 @@ if(isset($_POST['actualizar'])){
                     $queryR =           $query->fetch_object();
                     $AsI =              $queryR->ID;
                     $Co =               $_SESSION['nombreSearch'];
-                    $insertar =         $connection->prepare("INSERT INTO lineas (ID, AssignmentID, ConsultorID, TimecardID, Mon, Tue, Wed, Thu, Fri, Sat, Sun, StartingDay, CreatedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                    $insertar ->        bind_param('iiiiiiiiiiiss', $I, $A, $C, $T, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
-                    $I =                $ID;
+                    $insertar =         $connection->prepare("UPDATE lineas SET AssignmentID=?, Mon=?, Tue=?, Wed=?, Thu=?, Fri=?, Sat=?, Sun=?, StartingDay=?, CreatedDate=? WHERE ID='".$_SESSION['cardIDSearch']."'");
+                    $insertar ->        bind_param('iiiiiiiiss', $A, $Mo, $Tu, $We, $Th, $Fr, $Sa, $Su, $SD, $CD);
                     $A =                $AsI;
-                    $C =                $Co;
-                    $T =                $timecardID;
                     $Mo =               $linea[1];
                     $Tu =               $linea[2];
                     $We =               $linea[3];
@@ -255,7 +245,7 @@ if(isset($_POST['actualizar'])){
                     $insertar ->        execute();
                     $insertar ->        close();
                 }
-                echo "Timecard Saved! Leaving the page will delete it";
+                echo "Timecard Updated!";
             }else{
                 echo "Set at least an hour for line(s):   ";
                foreach($arreglo as $key => $a){
@@ -313,13 +303,13 @@ if(isset($_POST['cardSearch'])){
     $nombreSe =         "";
     //$_SESSION['fechaSearch'] =  $fecha;
     //$_SESSION['nombreSearch'] = $nombre;
-    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name, timecards.StartingDay
+    $query =                    $connection->prepare("SELECT lineas.*, assignment.Name
                                                       FROM lineas
                                                       LEFT JOIN assignment ON lineas.AssignmentID = assignment.ID
-                                                      LEFT JOIN timecards ON lineas.TimecardID = timecards.ID
-                                                      WHERE lineas.TimecardID = ?");
+                                                      WHERE lineas.ID = ?");
     $query ->                   bind_param("i", $idi);
     $idi =                      $_POST['cardSearch'];
+    $_SESSION['cardIDSearch'] = $idi;
     $query ->                   execute();
     $meta =                     $query->result_metadata();
     while ($field = $meta->fetch_field())

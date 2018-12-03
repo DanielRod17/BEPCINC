@@ -23,7 +23,7 @@ $(document).ready(function()
 
     ////////
     $( ".project" ).autocomplete({
-        source: "../Resources/WebResponses/AutocompleteProjectUser.php",
+        source: "../Resources/WebResponses/Autocomplete/AutocompleteProjectUser.php",
         minLength: 0
     });
 

@@ -56,11 +56,11 @@
 
 .timeCard{
     float:                           left;
-    width:                           22.5%;
+    width:                           15.5%;
 }
 .resource{
     float:                           left;
-    width:                           22.5%;
+    width:                           14.5%;
 }
 .startD{
     float:                           left;
@@ -81,6 +81,10 @@
 .totalHours{
     float:                           left;
     width:                           10%;
+}
+.tProj{
+    float:                           left;
+    width:                           15%;
 }
 
 /* Expenses */

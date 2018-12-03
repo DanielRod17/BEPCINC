@@ -10,7 +10,7 @@ $Name =                 $_GET['term'];
 include('../connection.php');
 
 $user =                 $_SESSION['consultor']["ID"];
-$sql =                  $connection->query("SELECT Name FROM assignment WHERE Name LIKE '%$Name%' AND ID=(SELECT Assignment FROM consultors WHERE ID='$user') OR PO='0'");
+$sql =                  $connection->query("SELECT Name FROM assignment WHERE Name LIKE '%$Name%' AND (consultorID='2' OR PO='0')");
 $output = array();
 
  while($row = $sql->fetch_array())

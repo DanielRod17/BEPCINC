@@ -16,6 +16,12 @@
     float:                          left;
     line-height:                    25px;
 }
+.TCcolumna{
+    width:                          calc(92% / 5);
+    height:                         100%;
+    float:                          left;
+    line-height:                    25px;
+}
 .more{
     width:                          8%;
     height:                         100%;

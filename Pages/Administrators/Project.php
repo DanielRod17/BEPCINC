@@ -43,7 +43,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Contact
                                 <br>
                                 <?php
-                                    echo $c['Firstname']." ".$c['Lastname'];
+                                    echo $c['Name']." ".$c['Name'];
                                 ?>
                             </div>
                         </div>
@@ -73,10 +73,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     Account Name
                                 </div>
                                 <div class="dato" style="width: 12% !important;">
-                                    <?php echo $c['Phone']; ?>
+                                    <?php echo $c['Name']; ?>
                                 </div>
                                 <div class="dato">
-                                    <?php echo $c['Email']; ?>
+                                    <?php echo $c['Name']; ?>
                                 </div>
                                 <div class="dato">
                                     Contact Owner
@@ -109,6 +109,14 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                             <!-- -->
                               <?php
                                   DisplayAssignments($connection, $ID, $respuesta[1]);
+                              ?>
+                            <!-- -->
+                            <!-- -->
+                              <?php
+                                  DisplayTimecards($connection, $ID);
+                              ?>
+                              <?php
+                                  DisplayDetails($connection, $ID);
                               ?>
                             <!-- -->
                             <?php
