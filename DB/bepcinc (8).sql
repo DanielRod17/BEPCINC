@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2018 at 12:23 AM
+-- Generation Time: Dec 04, 2018 at 12:51 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -116,17 +116,13 @@ CREATE TABLE `assignment` (
 --
 
 INSERT INTO `assignment` (`ID`, `Name`, `BR`, `PR`, `ProjectID`, `PO`, `ConsultorID`, `StartDate`, `EndDate`, `Burden`, `Status`) VALUES
-(1, 'Incapacidad', '0.00', '0.00', 0, 0, NULL, '2018-11-28 16:20:44', '0000-00-00 00:00:00', '0.00', 1),
-(2, 'Permiso sin goce de sueldo', '0.00', '0.00', 0, 0, NULL, '2018-11-28 16:20:49', '0000-00-00 00:00:00', '0.00', 1),
-(3, 'Vacaciones', '0.00', '0.00', 0, 0, NULL, '2018-11-28 16:20:52', '0000-00-00 00:00:00', '0.00', 1),
-(4, 'Vacaciones - Mex', '0.00', '0.00', 0, 0, NULL, '2018-11-28 16:20:55', '0000-00-00 00:00:00', '0.00', 1),
-(5, 'Creacion de Uwus', '56.78', '65.23', 1, 1, NULL, '2018-11-28 16:21:19', '0000-00-00 00:00:00', '0.00', 0),
-(6, 'Creacion de Lolonios', '80.00', '12.65', 2, 1, NULL, '2018-11-28 16:21:16', '0000-00-00 00:00:00', '0.00', 0),
-(7, 'Toscana', '9.00', '9.00', 1, 2, 1, '2018-11-28 22:57:02', '0000-00-00 00:00:00', '0.00', 0),
-(8, 'Test', '12.00', '23.00', 1, 1, 3, '2018-11-28 22:57:06', '0000-00-00 00:00:00', '0.00', 0),
-(9, 'PoloPolo', '987.23', '34.10', 1, 2, 2, '2018-11-28 22:57:11', '0000-00-00 00:00:00', '0.00', 0),
-(10, 'Test Assignment', '32.00', '32.00', 5, 1, 2, '2018-11-01 06:00:00', '2018-11-28 07:00:00', '0.00', 1),
-(11, 'Test Project Namber Tu', '54.32', '32.30', 6, 5, 2, '2018-11-06 07:00:00', '2018-11-26 07:00:00', '0.00', 1);
+(1, 'Incapacidad', '0.00', '0.00', 0, 0, 0, '2018-12-03 16:32:24', '0000-00-00 00:00:00', '0.00', 1),
+(2, 'Permiso sin goce de sueldo', '0.00', '0.00', 0, 0, 0, '2018-12-03 16:32:26', '0000-00-00 00:00:00', '0.00', 1),
+(3, 'Vacaciones', '0.00', '0.00', 0, 0, 0, '2018-12-03 16:32:28', '0000-00-00 00:00:00', '0.00', 1),
+(4, 'Vacaciones - Mex', '0.00', '0.00', 0, 0, 0, '2018-12-03 16:32:29', '0000-00-00 00:00:00', '0.00', 1),
+(5, 'Test Assignment', '43.00', '21.00', 1, 1, 3, '2018-11-01 06:00:00', '2018-11-29 07:00:00', '0.00', 1),
+(6, 'Test Assignment 2', '3232.67', '45.87', 2, 2, 4, '2018-11-01 06:00:00', '2018-11-29 07:00:00', '0.00', 1),
+(7, 'Test Assignment 1', '2.00', '2.00', 1, 1, 2, '2018-12-02 07:00:00', '2018-12-31 07:00:00', '0.00', 1);
 
 -- --------------------------------------------------------
 
@@ -6533,18 +6529,6 @@ INSERT INTO `cities` (`id`, `name`, `state_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `consultor2project`
---
-
-CREATE TABLE `consultor2project` (
-  `ID` int(11) NOT NULL,
-  `ConsultorID` int(11) NOT NULL,
-  `ProjectID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `consultors`
 --
 
@@ -6583,15 +6567,11 @@ CREATE TABLE `consultors` (
 --
 
 INSERT INTO `consultors` (`ID`, `SN`, `Firstname`, `Lastname`, `Email`, `Phone`, `EmergencyPhone`, `ReportsTo`, `Title`, `Division`, `FunctionalArea`, `StartDate`, `EndDate`, `MailingAddress`, `MailingCity`, `MailingState`, `MailingCountry`, `ZipCode`, `NSS`, `RFC`, `Type`, `Schedule`, `Hash`, `Status`, `LastLogin`, `Logged`, `SessionID`) VALUES
-(1, 'Admin', 'Administrator', '', 'Admin', '', '', 0, '', 0, 0, '2018-11-29 23:19:50', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 0, 0, '665fbe0df3645ad2de231f7a242b2f5007df1309', 1, '2018-11-29 23:19:50', 1, '7h1ucmunh8a5difbjs8hv8d7tj'),
-(2, 'Daniel', 'Daniel', 'Rodriguez', 'daniel.rod.vega@hotmail.com', '65667523926', '', 0, '', 0, 0, '2018-11-29 23:18:09', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, '7b63da936a368ea61b30bdc35956ef735cdc467c', 1, '2018-11-29 23:18:09', 1, '7h1ucmunh8a5difbjs8hv8d7tj'),
-(3, 'Lemango', 'Lemango', 'Kai', 'LemangoKai@hotmail.com', '6566752392', '', 0, '', 0, 0, '2018-11-29 22:18:21', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, '7b63da936a368ea61b30bdc35956ef735cdc467c', 1, '2018-11-29 22:18:21', 1, 'k5a63v83idcoqr4717bg049212'),
-(4, 'Admina', 'Admina', 'Admina', 'Admina', 'Admina', '', 0, '', 0, 0, '2018-11-27 15:29:02', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, 'c14248beaf00e460e4024fe99e3b80e550573fa4', 1, '2018-11-27 15:29:02', 1, '8vtliqgpqd2hedmpcm3lh2bu35'),
-(5, 'luichave', 'Luis', 'Chavez', 'lchavez@bepcinc.com', '6563728136', '', 0, '', 0, 0, '2018-11-27 15:29:04', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, 'fc23d152a037446108f5ef19ed685dc951b0a953', 1, '2018-11-27 15:29:04', 1, 't5hbfd6g7tl2qbldnecppcs4e3'),
-(6, 'Palafox', 'Palafox', 'Palafox', 'Palafox', '6768768', '', 0, '', 0, 0, '2018-11-27 15:29:06', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, '9a25c728cbab9547e53ff8ed5729930fa3ee7118', 1, '2018-11-27 15:29:06', 0, NULL),
-(7, '', 'Lolololo', 'Lolololo', 'Lolololo', 'Lolololo', 'Lolololo', 1, 'Lolololo', 0, 9, '2018-11-06 07:00:00', '2018-11-28 07:00:00', 'Lolololo', 27566, 2427, 142, '21414142', 'Lolololo', 'Lolololo', 2, 1, 'f7f8080b97d5ee44c54eb084b1c1cbbcca7fadf0', 1, '2018-11-27 20:54:52', 0, NULL),
-(8, '', 'Test', 'Master', 'testMaster@hotmail.com', '34324324', '32532', 1, 'Validation Engineer', 0, 1, '2018-11-01 06:00:00', '2018-11-27 07:00:00', 'Plaza de Tixtla #710', 27723, 2432, 142, '32573', '7655677655662', 'ROVl2182838', 2, 2, 'd141f0d00da2e91c27b8a42e6fc4162c14afdbdb', 1, '2018-11-28 17:22:32', 0, NULL),
-(9, '', 'hfsakjhfsa', 'hfsakjhfsa', 'hfsakjhfsa', '535223532', '332623632', 2, 'Engineer afasf', 1, 6, '2018-11-01 06:00:00', '2018-11-29 07:00:00', 'hfsakjhfsa', 27723, 2432, 142, '32573', '521567761', 'ROVL21421215', 2, 1, 'ecd9e56761deb801bdf9e216ab0262b77d61956b', 1, '2018-11-29 23:12:38', 0, NULL);
+(0, 'Dummy', '', '', '', '', '', 0, '', 0, 0, '2018-11-30 15:38:45', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 0, 0, '', NULL, '2018-11-30 15:38:45', 0, NULL),
+(1, 'Admin', 'Administrator', '', 'Admin', '', '', 0, '', 0, 0, '2018-12-03 23:28:45', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 0, 0, '665fbe0df3645ad2de231f7a242b2f5007df1309', 1, '2018-12-03 23:28:45', 1, '6lo6fg52lsmmeek00gge4rfbtc'),
+(2, 'Daniel', 'Daniel', 'Rodriguez', 'daniel.rod.vega@hotmail.com', '65667523926', '', 0, '', 0, 0, '2018-12-03 17:34:19', '0000-00-00 00:00:00', '', 0, 0, 0, '', '', '', 2, 1, '7b63da936a368ea61b30bdc35956ef735cdc467c', 1, '2018-12-03 17:34:19', 1, '1ab3cre5jo29098teg312s6mrp'),
+(3, '', 'testUser', 'testUser', 'testUser@hotmail.com', '56644466', '643636', 1, 'Validation Engineer', 1, 1, '2018-11-30 20:35:37', '2018-11-29 07:00:00', 'Plaza de Tixtla #87', 43600, 3930, 231, '5432', '5765567865552', 'TEST4225255252', 2, 1, 'fe5b6e22eb30cdad08b2d6f62c722ba8e1f6cc15', 1, '2018-11-30 20:35:37', 1, 'a9dpto561j4fu8hm6ljhal5f5c'),
+(4, '', 'test1', 'test1', 'test1@safsa.com', '214124', '2124', 1, 'Engineer', 1, 1, '2018-11-30 22:56:37', '2018-11-30 07:00:00', 'Gomez morin 44', 27723, 2432, 142, '32573', 'f2125r2q', 'ROVL24215215', 2, 1, 'b444ac06613fc8d63795be9ad0beaf55011936ac', 1, '2018-11-30 22:56:37', 1, 'a9dpto561j4fu8hm6ljhal5f5c');
 
 -- --------------------------------------------------------
 
@@ -6661,8 +6641,7 @@ CREATE TABLE `expenses` (
 --
 
 INSERT INTO `expenses` (`ID`, `TravelID`, `Category`, `Name`, `SubmitDate`, `Quantity`, `Refundable`, `Attachments`, `Status`) VALUES
-(1, 10, 1, 'Cuba Motors', '2018-11-29 07:00:00', '0.00', 0, '', 0),
-(22, 11, 1, 'Lemonga', '2018-11-07 07:00:00', '323232.00', 1, '', 1);
+(26, 16, 3, 'Viaje a Mexico', '2018-11-01 06:00:00', '3221.00', 1, '2018-11-01/1.png~', 1);
 
 -- --------------------------------------------------------
 
@@ -6674,7 +6653,7 @@ CREATE TABLE `lineas` (
   `ID` int(11) NOT NULL,
   `AssignmentID` int(11) NOT NULL,
   `ConsultorID` int(11) NOT NULL,
-  `TimecardID` int(11) NOT NULL,
+  `TimecardID` varchar(30) NOT NULL,
   `Mon` tinyint(4) NOT NULL,
   `Tue` tinyint(4) NOT NULL,
   `Wed` tinyint(4) NOT NULL,
@@ -6683,21 +6662,21 @@ CREATE TABLE `lineas` (
   `Sat` tinyint(4) NOT NULL,
   `Sun` tinyint(4) NOT NULL,
   `StartingDay` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `CreatedDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `CreatedDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `LEditDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `RejectedDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ApprovedDate` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Dailycount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `lineas`
 --
 
-INSERT INTO `lineas` (`ID`, `AssignmentID`, `ConsultorID`, `TimecardID`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`, `StartingDay`, `CreatedDate`) VALUES
-(2, 1, 2, 3, 8, 9, 9, 8, 4, 0, 0, '2018-11-11 07:00:00', '2018-11-27 00:53:14'),
-(3, 3, 2, 3, 5, 4, 4, 4, 5, 6, 0, '2018-11-11 07:00:00', '2018-11-27 00:53:14'),
-(4, 2, 2, 3, 5, 9, 9, 8, 8, 8, 8, '2018-11-11 07:00:00', '2018-11-27 00:53:14'),
-(5, 2, 3, 4, 4, 0, 0, 0, 0, 0, 0, '2018-11-04 06:00:00', '2018-11-27 01:00:38'),
-(6, 4, 3, 4, 3, 8, 7, 7, 0, 0, 0, '2018-11-04 06:00:00', '2018-11-27 01:00:38'),
-(7, 1, 2, 5, 1, 3, 5, 6, 0, 0, 0, '2018-11-18 07:00:00', '2018-11-29 02:11:37'),
-(8, 1, 2, 2, 5, 8, 8, 0, 0, 0, 0, '2018-11-04 06:00:00', '2018-11-29 04:37:27');
+INSERT INTO `lineas` (`ID`, `AssignmentID`, `ConsultorID`, `TimecardID`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`, `Sun`, `StartingDay`, `CreatedDate`, `LEditDate`, `RejectedDate`, `ApprovedDate`, `Dailycount`) VALUES
+(1, 1, 2, 'TCH-2018-12-03-1', 6, 4, 6, 7, 2, 0, 0, '2018-12-03 20:08:37', '2018-12-04 01:22:22', '2018-12-03 07:00:00', '2018-12-11 07:00:00', '2018-12-28 07:00:00', 1),
+(2, 4, 2, 'TCH-2018-12-03-2', 7, 5, 7, 3, 0, 0, 0, '2018-12-03 16:44:09', '2018-12-04 01:22:05', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2),
+(3, 7, 2, 'TCH-2018-12-03-3', 5, 6, 7, 9, 1, 3, 0, '2018-12-09 07:00:00', '2018-12-04 01:34:35', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3);
 
 -- --------------------------------------------------------
 
@@ -6718,12 +6697,8 @@ CREATE TABLE `po` (
 --
 
 INSERT INTO `po` (`ID`, `NoPO`, `Ammount`, `Currency`, `Status`) VALUES
-(1, '123456', '56.67', 0, 0),
-(2, '993927896 et', '29250.00', 0, 0),
-(3, '56565tetetetet', '20.00', 0, 0),
-(4, '323232', '233434.78', 1, 1),
-(5, 'TestPONumber', '12242442.00', 1, 1),
-(6, 'Test PO 2', '3332242.00', 1, 1);
+(1, 'TESTPO@1', '345.00', 1, 1),
+(2, '993993993993993', '4544.62', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -6747,13 +6722,8 @@ CREATE TABLE `project` (
 --
 
 INSERT INTO `project` (`ID`, `Name`, `SponsorID`, `PLeader`, `StartDate`, `EndDate`, `ManagerID`, `Status`) VALUES
-(1, 'Creacion de Uwus', 1, 'C. Carrillo', '2018-11-27 21:52:53', '0000-00-00 00:00:00', 0, 1),
-(2, 'Uwuland', 1, 'asasf', '2018-11-27 21:52:53', '0000-00-00 00:00:00', 0, 1),
-(3, 'Tester', 1, 'Pelob', '2018-11-27 21:52:53', '0000-00-00 00:00:00', 0, 1),
-(4, 'Testers', 1, 'Peloba', '2018-11-27 21:52:53', '0000-00-00 00:00:00', 0, 1),
-(5, 'asfsagagaga', 2, 'Pelobanlomao', '2018-11-01 06:00:00', '2018-11-23 07:00:00', 2, 1),
-(6, 'Test Project Namber tu', 3, 'Project Leader F', '2018-11-01 06:00:00', '2018-11-29 07:00:00', 1, 1),
-(7, 'TEst Project 2', 1, 'asfasfasf', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 1);
+(1, 'Test Project #1', 1, 'Daniel', '2018-11-01 06:00:00', '2018-11-29 07:00:00', 1, 1),
+(2, 'Proyecto Test 2', 1, 'Test', '2018-11-01 06:00:00', '2018-11-29 07:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -6785,8 +6755,7 @@ INSERT INTO `schedules` (`ID`, `Name`, `Country`, `State`, `Sun`, `Mon`, `Tue`, 
 (1, 'Diurna', 'MX', '', 0, 9, 9, 9, 9, 9, 0, 48, 57),
 (2, 'Diurna_Normal_1', 'MX', '', 0, 8, 8, 8, 8, 8, 8, 48, 57),
 (3, 'Diurna_Normal_2', 'MX', '', 0, 9, 9, 9, 9, 9, 0, 48, 57),
-(4, 'Test_de_Schedule', 'US', 'Rhode Island', 3, 6, 0, 0, 3, 0, 5, 48, 59),
-(5, 'Schedule_Parkaisote', 'MX', '', 2, 0, 6, 5, 7, 0, 0, 48, 57);
+(4, 'Test_de_Schedule', 'US', 'Rhode Island', 3, 6, 0, 0, 3, 0, 5, 48, 59);
 
 -- --------------------------------------------------------
 
@@ -6808,9 +6777,7 @@ CREATE TABLE `sponsor` (
 
 INSERT INTO `sponsor` (`ID`, `Name`, `Email`, `Phone`, `ManagerID`) VALUES
 (1, 'Daniel', 'daniel.rod.vega@hotmail.com', '', 1),
-(2, 'Duncan', 'duncan@duncanister.com', '', 2),
-(3, 'Test Sponsor', 'testSponsor@hotmail.com', '6577783', 1),
-(4, 'TEst Sponsor 2', 'rwqqrwqrw@yahoo.com', '3r32', 1);
+(2, 'Test Sponsor', 'testSponsor@hotmail.com', '55444', 2);
 
 -- --------------------------------------------------------
 
@@ -6966,11 +6933,7 @@ CREATE TABLE `timecards` (
 --
 
 INSERT INTO `timecards` (`ID`, `Name`, `ConsultorID`, `StartingDay`, `CreatedDate`, `Dailycount`) VALUES
-(1, 'Dummy', 0, '2018-10-29 21:52:38', '2018-10-30 01:51:18', 0),
-(2, 'TCH-2018-11-26-1', 2, '2018-11-04 06:00:00', '2018-11-26 20:39:57', 1),
-(3, 'TCH-2018-11-26-2', 2, '2018-11-11 07:00:00', '2018-11-26 20:53:17', 2),
-(4, 'TCH-2018-11-26-3', 3, '2018-11-04 06:00:00', '2018-11-26 21:00:40', 3),
-(5, 'TCH-2018-11-28-1', 2, '2018-11-18 07:00:00', '2018-11-28 22:11:39', 1);
+(1, 'Dummy', 0, '2018-10-29 21:52:38', '2018-10-30 01:51:18', 0);
 
 -- --------------------------------------------------------
 
@@ -6993,8 +6956,8 @@ CREATE TABLE `travels` (
 --
 
 INSERT INTO `travels` (`ID`, `Name`, `AssignmentID`, `ConsultorID`, `Status`, `FromDate`, `ToDate`) VALUES
-(10, 'fsa', 9, 2, 1, '2018-11-05 07:00:00', '2018-11-29 07:00:00'),
-(11, 'Lemango Test', 8, 3, 1, '2018-11-14 07:00:00', '2018-11-30 07:00:00');
+(16, 'Test Expense Travel', 5, 3, 1, '2018-10-01 06:00:00', '2018-12-26 07:00:00'),
+(17, 'Viaje asksag', 6, 4, 1, '2018-11-01 06:00:00', '2018-11-29 07:00:00');
 
 --
 -- Indexes for dumped tables
@@ -7029,12 +6992,6 @@ ALTER TABLE `assignment`
 --
 ALTER TABLE `cities`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `consultor2project`
---
-ALTER TABLE `consultor2project`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `consultors`
@@ -7106,7 +7063,8 @@ ALTER TABLE `subaccount`
 -- Indexes for table `timecards`
 --
 ALTER TABLE `timecards`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ConsultorID` (`ConsultorID`);
 
 --
 -- Indexes for table `travels`
@@ -7134,7 +7092,7 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `states`
@@ -7146,7 +7104,17 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `travels`
 --
 ALTER TABLE `travels`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `timecards`
+--
+ALTER TABLE `timecards`
+  ADD CONSTRAINT `timecards_ibfk_1` FOREIGN KEY (`ConsultorID`) REFERENCES `consultors` (`ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
