@@ -53,14 +53,18 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         <div class="proyecto">
                             <div class="number">&nbsp;</div>
                             <div class="poNumber">PO Number</div>
+                            <div class="poProject">Project</div>
                             <div class="poAmmount">Ammount</div>
                             <div class="poCurrency">Currency</div>
                             <div class="poStatus">Status/Type</div>
                         </div>
                         <?php
-                            $query =            $connection->query("SELECT p.*
-                                                                FROM po p
-                                                                WHERE Status='1'");
+                            $query =            $connection->query("SELECT p.*, project.Name as pName, assignment.ProjectID as aID
+                                                                    FROM po p
+                                                                    INNER JOIN assignment ON (assignment.PO = p.ID)
+                                                                    INNER JOIN project ON (project.ID = assignment.ProjectID)
+                                                                    WHERE p.Status='1'
+                                                                    GROUP BY project.Name");
                             while($row = $query->fetch_array()){
                                 if($row['Currency'] == '0')
                                     $currency =       "MXN";
@@ -77,6 +81,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     <div class='contacto'>
                                         <div class='number'>".$row['ID']."</div>
                                         <div class='poNumber' onclick=\"LoadPage('Administrators/PO.php?id=".$row['ID']."');\" >".$row['NoPO']."</div>
+                                        <div class='poProject'>".$row['pName']."</div>
                                         <div class='poAmmount'>$".$row['Ammount']."</div>
                                         <div class='poCurrency'>".$currency."</div>
                                         <div class='poStatus'>$status</div>

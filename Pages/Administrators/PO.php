@@ -11,7 +11,7 @@ $IDUsuario =            $_SESSION['consultor']["ID"];
 $UserName =             $_SESSION['consultor']["SN"];
 $resultado =            array();
 include('../../Resources/WebResponses/connection.php');
-include('../../Resources/InfoFill/ContactFill.php');
+include('../../Resources/InfoFill/POFill.php');
 if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] == true){
     if(isset($_GET['id'])){
     $ID =                   $_GET['id']; //Reemplazar por el get
@@ -27,11 +27,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
             <head>
                 <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_General.css">
                 <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Pages/Contact_Layout.css">
-                <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-                <link href="https://fonts.googleapis.com/css?family=Montserrat|Cairo" rel="stylesheet">
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-                <script src="../Resources/Javascript/ContactsJS.js"></script><meta charset="UTF-8">
+                <script src="../Resources/Javascript/PoJS.js"></script><meta charset="UTF-8">
                 <title>
                 </title>
             </head>
@@ -46,7 +42,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                 Contact
                                 <br>
                                 <?php
-                                    echo $c['Firstname']." ".$c['Lastname'];
+                                    echo $c['NoPO']." ".$c['NoPO'];
                                 ?>
                             </div>
                         </div>
@@ -76,10 +72,10 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                     Account Name
                                 </div>
                                 <div class="dato" style="width: 12% !important;">
-                                    <?php echo $c['Phone']; ?>
+                                    <?php echo $c['NoPO']; ?>
                                 </div>
                                 <div class="dato">
-                                    <?php echo $c['Email']; ?>
+                                    <?php echo $c['NoPO']; ?>
                                 </div>
                                 <div class="dato">
                                     Contact Owner
@@ -105,18 +101,11 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                                   DisplayTimecards($connection, $ID);
                               ?>
                             <!-- -->
-                              <?php
-                                  $respuesta = DisplayProjects($connection, $ID);
-                                  echo $respuesta[0];
-                              ?>
                             <!-- -->
                               <?php
-                                  DisplayAssignments($connection, $ID, $respuesta[1]);
-                              ?>
-                            <!-- -->
-                            <?php
                                   echo $detailsResult[0];
-                             ?>
+                              ?>
+                            <!-- -->
                         </div>
                     </div>
                 </div>

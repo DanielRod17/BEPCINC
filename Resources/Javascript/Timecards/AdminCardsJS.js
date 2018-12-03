@@ -411,7 +411,7 @@ function cargarTimecard(e){
             actualizarTabla(document.getElementById('datepicker'));
             for(var i = 0; i <= lineas.length; i++){
                 var row =   table.rows[i+1];
-                for(var j = 0; j <= lineas[i].length; j++){
+                //for(var j = 0; j <= lineas[i].length; j++){
                     row.cells[0].children[1].value = lineas[i][i]['Name'];
                     row.cells[1].children[0].value = lineas[i][i]['Mon'];
                     row.cells[2].children[0].value = lineas[i][i]['Tue'];
@@ -420,7 +420,7 @@ function cargarTimecard(e){
                     row.cells[5].children[0].value = lineas[i][i]['Fri'];
                     row.cells[6].children[0].value = lineas[i][i]['Sat'];
                     row.cells[7].children[0].value = lineas[i][i]['Sun'];
-                }
+                //}
             }
         }
     });

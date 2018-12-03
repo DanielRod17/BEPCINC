@@ -143,22 +143,26 @@
     width:                           8%;
 }
 
-/*Projects*/
+/*POs*/
 
 .poNumber{
     float:                           left;
-    width:                           30%;
+    width:                           27%;
     cursor:                          pointer;
 }
 .poAmmount{
     float:                           left;
-    width:                           23%;
+    width:                           15%;
+}
+.poProject{
+    float:                           left;
+    width:                           20%;
 }
 .poCurrency{
     float:                           left;
-    width:                           25%;
+    width:                           20%;
 }
 .poStatus{
     float:                           left;
-    width:                           14%;
+    width:                           10%;
 }

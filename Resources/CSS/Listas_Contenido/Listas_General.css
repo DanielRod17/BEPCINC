@@ -7,21 +7,6 @@ and open the template in the editor.
     Created on : Nov 15, 2018, 11:15:27 AM
     Author     : luisr
 */
-
-@font-face{
-    font-family:                    Bebas Neue;
-    src:                            url('../BebasNeue Book.ttf');
-    font-style:                     normal;
-    font-weight:                    normal;
-}
-
-@font-face{
-    font-family:                    questrial;
-    src:                            url('../Questrial-Regular.ttf');
-    font-style:                     normal;
-    font-weight:                    normal;
-}
-
 body, html{
     width:                          100%;
     min-height:                     100%;

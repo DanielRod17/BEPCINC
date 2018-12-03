@@ -69,7 +69,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         </div>
                     </div>
                     <div id="opciones">
-                        <div class="opcion" onclick="LoadPage('Timecards.php')">
+                        <div class="opcion" onclick="LoadPage('Dashboard.php')">
                             Dashboard
                         </div>
                         <div class="opcion" onclick="<?php if($_SESSION['consultor']['Type'] == '0'){ echo "LoadPage('Timecards.php');\" >Admin. Cards</div>";}else{  echo "LoadPage('Timecards.php');\" >My Timecards</div>"; } ?>

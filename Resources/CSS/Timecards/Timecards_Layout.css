@@ -29,7 +29,7 @@ body, html{
 
 #alertas{
     width:                          350px;
-    min-height:                         45px;
+    min-height:                     45px;
     margin-top:                     calc(-65px);
     margin-left:                    calc(100% - 350px);
     z-index:                        9000;
@@ -183,7 +183,6 @@ th{
 }
 .updateProj{
     width:                          30%;
-    background:                     url(images/comment-author.gif) no-repeat scroll 7px 7px;
     color:                          rgba (70, 70, 70, 0.8);
 }
 .updateProj .icon{
