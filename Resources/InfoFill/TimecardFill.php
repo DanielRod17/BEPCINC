@@ -86,7 +86,7 @@ function DisplayBudgets($connection, $ID){
             }else{
                 echo "<div id='timecardsLine'>
                     <div class='Line'>
-                        No budgets found
+                        No timecards found
                     </div>
                 </div>";
             }

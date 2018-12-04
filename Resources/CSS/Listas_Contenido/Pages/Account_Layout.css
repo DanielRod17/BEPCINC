@@ -1,0 +1,12 @@
+.ACCcolumna{
+    width:                          calc(92% / 4);
+    height:                         100%;
+    float:                          left;
+    line-height:                    25px;
+}
+.SponColumna{
+    width:                          calc(92% / 3);
+    height:                         100%;
+    float:                          left;
+    line-height:                    25px;
+}

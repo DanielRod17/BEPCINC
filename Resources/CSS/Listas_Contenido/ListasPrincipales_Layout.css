@@ -166,3 +166,25 @@
     float:                           left;
     width:                           10%;
 }
+
+/* Accounts */
+.accName{
+    float:                           left;
+    width:                           calc(92% / 5);
+}
+.accIndustry{
+    float:                           left;
+    width:                           calc(92% / 5);
+}
+.accAddress{
+    float:                           left;
+    width:                           calc(92% / 5);
+}
+.accCompany{
+    float:                           left;
+    width:                           calc(92% / 5);
+}
+.accManager{
+    float:                           left;
+    width:                           calc(92% / 5);
+}

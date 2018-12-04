@@ -16,14 +16,14 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         <head>
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_Layout.css">
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
-            <script src="../../Resources/Javascript/Project/PoJS.js"></script><meta charset="UTF-8">
+            <script src="../../Resources/Javascript/AccountsJS.js"></script><meta charset="UTF-8">
             <title>
             </title>
         </head>
         <body>
             <div id="contenedor">
                 <div class='titulo'>
-                    POs
+                    ACCOUNTS
                 </div>
                 <div id="buscador">
                     <div id="searchParams">
@@ -45,49 +45,35 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
                         </div>
                     </div>
                     <div id="new">
-                        <button id="botonNew" onclick="LoadPage('Administrators/AddPO.php');"><i class="fas fa-plus-circle"></i></button>
+                        <button id="botonNew" onclick="LoadPage('Administrators/AddAccount.php');"><i class="fas fa-plus-circle"></i></button>
                     </div>
                 </div>
                 <div id="pos">
                     <div id="poTable">
                         <div class="proyecto">
                             <div class="number">&nbsp;</div>
-                            <div class="poNumber">PO Number</div>
-                            <div class="poProject">Project</div>
-                            <div class="poAmmount">Ammount</div>
-                            <div class="poCurrency">Currency</div>
-                            <div class="poStatus">Status/Type</div>
+                            <div class="accName">Name</div>
+                            <div class="accIndustry">Industry</div>
+                            <div class="accAddress">Address</div>
+                            <div class="accCompany">Company</div>
+                            <div class="accManager">Manager</div>
                         </div>
                         <?php
-                            $query =            $connection->query("SELECT p.*, project.Name as pName, assignment.ProjectID as aID
-                                                                    FROM po p
-                                                                    INNER JOIN assignment ON (assignment.PO = p.ID)
-                                                                    INNER JOIN project ON (project.ID = assignment.ProjectID)
-                                                                    WHERE p.Status='1'
-                                                                    GROUP BY project.Name");
+                            $query =            $connection->query("SELECT a.*, industries.Name as iName, divisions.Name as dName, account_manager.Name as aName
+                                                                    FROM account a
+                                                                    INNER JOIN industries ON (a.Industry = industries.ID)
+                                                                    INNER JOIN divisions ON (divisions.ID = a.Division)
+                                                                    INNER JOIN account_manager ON (account_manager.ID = a.ManagerID)");
                             while($row = $query->fetch_array()){
-                                if($row['Currency'] == '0')
-                                    $currency =       "MXN";
-                                else
-                                    $currency =       "USD";
-
-                                if($row['Status'] == '0')
-                                    $status =         "Inactive";
-                                else if($row['Status'] == '1')
-                                    $status =         "Active";
-                                else
-                                    $status =         "Temporal";
-                                echo"
-                                    <div class='contacto'>
-                                        <div class='number'>".$row['ID']."</div>
-                                        <div class='poNumber' onclick=\"LoadPage('Administrators/PO.php?id=".$row['ID']."');\" >".$row['NoPO']."</div>
-                                        <div class='poProject'>".$row['pName']."</div>
-                                        <div class='poAmmount'>$".$row['Ammount']."</div>
-                                        <div class='poCurrency'>".$currency."</div>
-                                        <div class='poStatus'>$status</div>
-                                    </div>
-                                ";
-                                //echo "<div class='contactoInfo'></div>";
+                              echo"
+                                  <div class='contacto'>
+                                      <div class='number'>".$row['ID']."</div>
+                                      <div class='accName' style='cursor: pointer' onclick=\"LoadPage('Administrators/Account.php?id=".$row['ID']."');\" >".$row['Name']."</div>
+                                      <div class='accIndustry'>".$row['iName']."</div>
+                                      <div class='accAddress'>".$row['Address']."</div>
+                                      <div class='accCompany'>".$row['Company']."</div>
+                                      <div class='accManager'>".$row['aName']."</div>
+                                  </div>";
                             }
                         ?>
                     </div>

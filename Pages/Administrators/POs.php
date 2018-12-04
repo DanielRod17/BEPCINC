@@ -16,7 +16,7 @@ if (isset($_SESSION['consultor']['Login']) && $_SESSION['consultor']['Login'] ==
         <head>
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/Listas_Layout.css">
             <link rel="stylesheet" href="../Resources/CSS/Listas_Contenido/ListasPrincipales_Layout.css">
-            <script src="../../Resources/Javascript/Project/PoJS.js"></script><meta charset="UTF-8">
+            <script src="../../Resources/Javascript/AccountsJS.js"></script><meta charset="UTF-8">
             <title>
             </title>
         </head>
